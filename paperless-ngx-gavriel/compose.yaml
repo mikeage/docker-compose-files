@@ -1,0 +1,129 @@
+---
+services:
+    broker:
+        image: docker.io/library/redis:8
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD, redis-cli, ping]
+            start_period: 5s
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        environment:
+            - TZ=Asia/Jerusalem
+        volumes:
+            - redis_data:/data
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+
+    mariadb:
+        image: docker.io/library/mariadb:12
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD-SHELL, mariadb-admin ping -h 127.0.0.1 -u"$$MARIADB_USER" -p"$$MARIADB_PASSWORD" --silent]
+            start_period: 20s
+            interval: 10s
+            timeout: 5s
+            retries: 6
+        volumes:
+            - db_data:/var/lib/mysql
+        environment:
+            MARIADB_DATABASE: ${DB_NAME}
+            MARIADB_USER: ${DB_USER}
+            MARIADB_PASSWORD: ${DB_PASSWORD}
+            MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+            TZ: Asia/Jerusalem
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+
+    webserver:
+        image: ghcr.io/paperless-ngx/paperless-ngx:latest
+        restart: unless-stopped
+        depends_on:
+            mariadb:
+                condition: service_healthy
+            broker:
+                condition: service_healthy
+            gotenberg:
+                condition: service_healthy
+            tika:
+                condition: service_healthy
+        ports:
+            - 8018:8000
+        healthcheck:
+            test: [CMD, curl, -f, http://localhost:8000]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        volumes:
+            - paperless_data:/usr/src/paperless/data
+            - paperless-ngx-gavriel-media:/usr/src/paperless/media
+            - type: tmpfs
+              target: /usr/src/paperless/consume
+            - type: tmpfs
+              target: /usr/src/paperless/export
+        environment:
+            PAPERLESS_REDIS: redis://broker:6379
+            PAPERLESS_DBENGINE: mariadb
+            PAPERLESS_DBHOST: mariadb
+            PAPERLESS_URL: https://paperless-ngx.gavriel.mikeage.net
+            PAPERLESS_DBPORT: 3306
+            PAPERLESS_ADMIN_USER: ${PAPERLESS_USER}
+            PAPERLESS_ADMIN_EMAIL: paperlessadmin-gavriel@mikeage.net
+            PAPERLESS_ADMIN_PASSWORD: ${PAPERLESS_PASSWORD}
+            PAPERLESS_TIKA_ENABLED: 1
+            PAPERLESS_OCR_LANGUAGE: heb+eng
+            PAPERLESS_OCR_LANGUAGES: heb
+            PAPERLESS_FILENAME_FORMAT: '{{ correspondent }}/{{ created_year }}/{{ title }}'
+            PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://gotenberg:3000
+            PAPERLESS_TIKA_ENDPOINT: http://tika:9998
+            PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
+            TZ: Asia/Jerusalem
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.paperless-ngx-gavriel.rule=Host(`paperless-ngx.gavriel.mikeage.net`)
+
+    gotenberg:
+        image: docker.io/gotenberg/gotenberg:8.24
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:3000/health]
+            start_period: 20s
+            interval: 30s
+            timeout: 5s
+            retries: 5
+        environment:
+            CHROMIUM_DISABLE_ROUTES: 1
+            TZ: Asia/Jerusalem
+        command:
+            - gotenberg
+            - --chromium-disable-javascript=true
+            - --chromium-allow-list=file:///tmp/.*
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+
+    tika:
+        image: docker.io/apache/tika:latest
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/9998; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\\
+                      n\" >&3; grep -Eq \"HTTP/1\\\\.[01] 200\" <&3'"]
+            start_period: 20s
+            interval: 30s
+            timeout: 5s
+            retries: 5
+        environment:
+            - TZ=Asia/Jerusalem
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+volumes:
+    redis_data:
+    db_data:
+    paperless_data:
+    paperless-ngx-gavriel-media:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/permanent/paperless_media.gavriel

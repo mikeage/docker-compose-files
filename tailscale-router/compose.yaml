@@ -1,0 +1,25 @@
+---
+services:
+    tailscale-router:
+        image: tailscale/tailscale
+        hostname: tailscale-router
+        network_mode: host
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD, tailscale, status]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        cap_add:
+            - NET_ADMIN
+            - SYS_MODULE
+        volumes:
+            - /dev/net/tun:/dev/net/tun
+            - /opt/tailscale/data:/var/lib/tailscale
+        environment:
+            - TS_EXTRA_ARGS=--login-server https://headscale.mikeage.net --accept-dns=false --advertise-exit-node --advertise-routes=192.168.0.0/16
+            - TS_STATE_DIR=/var/lib/tailscale
+            - TZ=Asia/Jerusalem
+        labels:
+            - com.centurylinklabs.watchtower.enable=true

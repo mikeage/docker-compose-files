@@ -1,0 +1,19 @@
+---
+services:
+    homarr:
+        image: ghcr.io/ajnart/homarr:latest
+        restart: unless-stopped
+        environment:
+            BASE_URL: https://homarr.internal.mikeage.net
+            PASSWORD: ${PASSWORD}
+            TZ: Asia/Jerusalem
+        volumes:
+            - /opt/homarr/configs:/app/data/configs
+            - /opt/homarr/icons:/app/public/icons
+            - /var/run/docker.sock:/var/run/docker.sock
+        ports:
+            - 7575:7575
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.homarr.rule=Host(`homarr.internal.mikeage.net`)

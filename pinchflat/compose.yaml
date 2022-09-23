@@ -1,0 +1,25 @@
+---
+services:
+    pinchflat:
+        image: ghcr.io/kieraneglin/pinchflat:latest
+        restart: unless-stopped
+        user: 1000:1000
+        environment:
+            TZ: Asia/Jerusalem
+            YT_DLP_WORKER_CONCURRENCY: 1
+        ports:
+            - 8945:8945
+        volumes:
+            - /opt/pinchflat/config:/config
+            - media:/downloads
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.pinchflat.rule=Host(`pinchflat.internal.mikeage.net`)
+volumes:
+    media:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/media

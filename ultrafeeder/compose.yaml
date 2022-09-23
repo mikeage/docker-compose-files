@@ -1,0 +1,141 @@
+---
+services:
+    radar1090:
+        image: ghcr.io/sdr-enthusiasts/docker-radar1090:latest
+        hostname: radar1090
+        restart: unless-stopped
+        environment:
+            - TZ=${FEEDER_TZ}
+            - RADAR1090_KEY=${RADAR1090_KEY}  # replace ${RADAR1090_KEY} with your sharing key
+            - VERBOSE=false           # set to true to get lots of feeder information in your container logs
+            - BEASTHOST=ultrafeeder   # replace ultrafeeder with the container name of your ADSB receiver or the IP address of your host machine if your feeder is not in the same container stack
+        tmpfs:
+            - /run:exec,size=256M
+            - /tmp:size=128M
+            - /var/log:size=32M
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+    opensky:
+        image: ghcr.io/sdr-enthusiasts/docker-opensky-network:latest
+        tty: true
+        restart: unless-stopped
+        depends_on:
+            - ultrafeeder
+        environment:
+            - TZ=${FEEDER_TZ}
+            - BEASTHOST=ultrafeeder
+            - LAT=${FEEDER_LAT}
+            - LONG=${FEEDER_LONG}
+            - ALT=${FEEDER_ALT_M}
+            - OPENSKY_USERNAME=${OPENSKY_USERNAME}
+            - OPENSKY_SERIAL=${OPENSKY_SERIAL}
+        tmpfs:
+            - /run:exec,size=64M
+            - /var/log
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+    # planewatch-dev:
+    #     image: ghcr.io/plane-watch/docker-plane-watch:latest
+    #     tty: true
+    #     restart: unless-stopped
+    #     depends_on:
+    #         - ultrafeeder
+    #     environment:
+    #         - BEASTHOST=ultrafeeder
+    #         - TZ=Asia/Jerusalem
+    #         - API_KEY=${PLANEWATCH_API_KEY}
+    #         - LAT=${FEEDER_LAT}
+    #         - LONG=${FEEDER_LONG}
+    #         - ALT=${FEEDER_ALT_M}
+    #         - PW_BEAST_ENDPOINT=feed.push.plane.watch:22345
+    #         - PW_MLAT_ENDPOINT=feed.push.plane.watch:22346
+    #     tmpfs:
+    #         - /run:exec,size=64M
+    #         - /var/log
+    #     labels:
+    #         - com.centurylinklabs.watchtower.enable=true
+    planewatch:
+        image: ghcr.io/plane-watch/docker-plane-watch:latest
+        tty: true
+        restart: unless-stopped
+        depends_on:
+            - ultrafeeder
+        environment:
+            - BEASTHOST=ultrafeeder
+            - TZ=Asia/Jerusalem
+            - API_KEY=${PLANEWATCH_API_KEY}
+            - LAT=${FEEDER_LAT}
+            - LONG=${FEEDER_LONG}
+            - ALT=${FEEDER_ALT_M}
+        tmpfs:
+            - /run:exec,size=64M
+            - /var/log
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+    ultrafeeder:
+        image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder
+    # Note - if you want to enable telegraf for use with InfluxDB/Prometheus and Grafana,
+    # use the following image instead:
+    # image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:telegraf
+        hostname: ultrafeeder
+        restart: unless-stopped
+    #device_cgroup_rules:
+      #- 'c 189:* rwm'
+        ports:
+            - 8085:80         # to expose the web interface
+        environment:
+            LOGLEVEL: error
+            TZ: ${FEEDER_TZ}
+            READSB_LAT: ${FEEDER_LAT}
+            READSB_LON: ${FEEDER_LONG}
+            READSB_ALT: ${FEEDER_ALT_M}m
+            READSB_GAIN: ${ADSB_SDR_GAIN:-}
+            READSB_MODEAC: true
+            READSB_RX_LOCATION_ACCURACY: 2
+            READSB_STATS_RANGE: true
+            READSB_EXTRA_ARGS: --write-json-globe-index --write-globe-history /var/globe_history
+            ULTRAFEEDER_CONFIG: adsb,ff-2027.lan,30005,beast_in; adsb,feed.adsb.fi,30004,beast_reduce_plus_out; mlat,feed.adsb.fi,31090,39000; 
+                adsb,in.adsb.lol,30004,beast_reduce_plus_out; mlat,in.adsb.lol,31090,39001; 
+                adsb,feed1.adsbexchange.com,30004,beast_reduce_plus_out,uuid=${ADSBX_UUID}; mlat,feed.adsbexchange.com,31090,39005,uuid=${ADSBX_UUID};
+                adsb,feed.airplanes.live,30004,beast_reduce_plus_out; mlat,feed.airplanes.live,31090,39006; 
+                adsb,feed.theairtraffic.com,30004,beast_reduce_plus_out; mlat,feed.theairtraffic.com,31090,39007; 
+                adsb,feed.radarplane.com,30001,beast_reduce_plus_out; mlat,feed.radarplane.com,31090,39008; 
+                adsb,feed.planespotters.net,30004,beast_reduce_plus_out; mlat,mlat.planespotters.net,31090,39009; 
+                adsb,data.avdelphi.com,24999,beast_reduce_plus_out; adsb,skyfeed.hpradar.com,30004,beast_reduce_plus_out; 
+                mlat,skyfeed.hpradar.com,31090
+            UUID: ${MULTIFEEDER_UUID}
+            MLAT_USER: ${FEEDER_NAME}
+            UPDATE_TAR1090: true
+            TAR1090_DEFAULTCENTERLAT: ${FEEDER_LAT}
+            TAR1090_DEFAULTCENTERLON: ${FEEDER_LONG}
+            TAR1090_MESSAGERATEINTITLE: true
+            TAR1090_PAGETITLE: ${FEEDER_NAME}
+            TAR1090_PLANECOUNTINTITLE: true
+            TAR1090_ENABLE_AC_DB: true
+            TAR1090_FLIGHTAWARELINKS: true
+            HEYWHATSTHAT_PANORAMA_ID: ${FEEDER_HEYWHATSTHAT_ID}
+            HEYWHATSTHAT_ALTS: ${FEEDER_HEYWHATSTHAT_ALTS}
+            TAR1090_SITESHOW: true
+            TAR1090_RANGE_OUTLINE_COLORED_BY_ALTITUDE: true
+            TAR1090_RANGE_OUTLINE_WIDTH: 2.0
+            TAR1090_RANGERINGSDISTANCES: 50,100,150,200
+            TAR1090_RANGERINGSCOLORS: '#1A237E,#0D47A1,#42A5F5,#64B5F6'
+            TAR1090_USEROUTEAPI: true
+            GRAPHS1090_DARKMODE: true
+            INFLUXDBV2_URL: ${INFLUX_URL:-}
+            INFLUXDBV2_TOKEN: ${INFLUX_TOKEN:-}
+            INFLUXDBV2_BUCKET: ${INFLUX_BUCKET:-}
+            PROMETHEUS_ENABLE: true
+        volumes:
+            - /opt/ultrafeeder/globe_history:/var/globe_history
+            - /opt/ultrafeeder/graphs1090:/var/lib/collectd
+            - /proc/diskstats:/proc/diskstats:ro
+            - /dev:/dev:ro
+        tmpfs:
+            - /run:exec,size=256M
+            - /tmp:size=128M
+            - /var/log:size=32M
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.ultrafeeder.rule=Host(`ultrafeeder.internal.mikeage.net`)

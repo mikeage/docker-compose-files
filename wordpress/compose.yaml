@@ -1,0 +1,48 @@
+---
+services:
+    wordpress:
+    # image: wordpress:latest
+        build: .
+        healthcheck:
+            test: [CMD, php, -r, exit((int)!@file_get_contents("http://127.0.0.1/"));]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        depends_on:
+            mariadb:
+                condition: service_healthy
+        links:
+            - mariadb:mysql
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Asia/Jerusalem
+            - WORDPRESS_DB_PASSWORD=${PASSWORD}
+            - WORDPRESS_DB_USER=${DB_USER}
+        ports:
+            - 8100:80
+        restart: unless-stopped
+        volumes:
+            - /opt/wordpress/html:/var/www/html
+        labels:
+            - com.centurylinklabs.watchtower.enable=false
+    mariadb:
+        image: mariadb:12
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD-SHELL, mariadb-admin ping -h 127.0.0.1 -u"$$MYSQL_USER" -p"$$MYSQL_PASSWORD" --silent]
+            start_period: 20s
+            interval: 10s
+            timeout: 5s
+            retries: 6
+        environment:
+            - MYSQL_DATABASE=${DATABASE}
+            - MYSQL_USER=${DB_USER}
+            - MYSQL_PASSWORD=${PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
+            - TZ=Asia/Jerusalem
+        volumes:
+            - /opt/wordpress/db:/var/lib/mysql
+        labels:
+            - com.centurylinklabs.watchtower.enable=true

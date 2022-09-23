@@ -1,0 +1,15 @@
+---
+services:
+    uptime-kuma:
+        environment:
+            - TZ=Asia/Jerusalem
+        image: louislam/uptime-kuma
+        ports:
+            - 3001:3001
+        volumes:
+            - /opt/uptime-kuma/data:/app/data
+        restart: unless-stopped
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.uptimekuma.rule=Host(`uptimekuma.internal.mikeage.net`)

@@ -1,0 +1,50 @@
+---
+services:
+    piwigo:
+        image: lscr.io/linuxserver/piwigo:latest
+        healthcheck:
+            test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/80; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n\"\
+                      \ >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        environment:
+            - PUID=1000
+            - PGID=1000
+            - TZ=Asia/Jerusalem
+        volumes:
+            - /opt/piwigo/config:/config
+            - /opt/piwigo/config/www/robots.txt:/app/www/public/robots.txt:ro
+            - /opt/piwigo/main_html:/gallery
+            - pictures:/gallery/galleries/:ro
+        ports:
+            - 8083:80
+        restart: unless-stopped
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+    mysql:
+        image: mariadb:12
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD-SHELL, mariadb-admin ping -h 127.0.0.1 -u"$$MYSQL_USER" -p"$$MYSQL_PASSWORD" --silent]
+            start_period: 20s
+            interval: 10s
+            timeout: 5s
+            retries: 6
+        environment:
+            - MYSQL_DATABASE=${DB_NAME}
+            - MYSQL_USER=${DB_USER}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
+        volumes:
+            - /opt/piwigo/db:/var/lib/mysql
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+volumes:
+    pictures:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/permanent/pictures

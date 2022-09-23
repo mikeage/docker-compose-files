@@ -1,0 +1,14 @@
+---
+services:
+    whatsrunning:
+        image: mikeage/whatsrunning:latest
+        restart: unless-stopped
+        ports:
+            - 80:5000
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        environment:
+            - HOST_HOSTNAME=${HOSTNAME}
+            - TZ=Asia/Jerusalem
+        labels:
+            - com.centurylinklabs.watchtower.enable=true

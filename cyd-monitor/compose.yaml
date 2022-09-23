@@ -1,0 +1,16 @@
+---
+services:
+    host-metrics-exporter:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: host-metrics-exporter
+        restart: unless-stopped
+        ports:
+            - 9105:9105
+        environment:
+            PORT: '9105'
+            PROC_PATH: /host/proc
+            SAMPLE_WINDOW: '0.25'
+        volumes:
+            - /proc:/host/proc:ro

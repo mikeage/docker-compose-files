@@ -1,0 +1,76 @@
+---
+services:
+    jellyfin:
+        image: jellyfin/jellyfin
+        user: 1000:1000
+        group_add:
+            - '105'
+            - '44'
+      # Render and video
+    # network_mode: "host"
+        ports:
+            - 8096:8096
+        volumes:
+            - /opt/jellyfin/config:/config
+            - /opt/jellyfin/cache:/cache
+            - mediaTV:/media/TV:ro
+            - mediaKidsTV:/media/KidsTV:ro
+            - mediaMovies:/media/Movies:ro
+            - mediaKidsMovies:/media/Kids:ro
+            - mediaMusic:/media/Music:ro
+            - mediaPlays:/media/Plays:ro
+#      - /path/to/media2:/media2:ro
+        restart: unless-stopped
+        environment:
+            JELLYFIN_PublishedServerUrl: http://jellyfin.internal.mikeage.net
+            TZ: Asia/Jerusalem
+        devices:
+            - /dev/dri/renderD128:/dev/dri/renderD128
+            - /dev/dri/card1:/dev/dri/card1
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.jellyfin.rule=Host(`jellyfin.internal.mikeage.net`)
+volumes:
+    media:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/media
+    mediaTV:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/temporary/sonarr/media/TV
+    mediaKidsTV:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/temporary/sonarr/media/KidsTV
+    mediaMovies:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/temporary/radarr/media/Movies
+    mediaKidsMovies:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/temporary/radarr/media/Kids
+    mediaPlays:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/media/Plays
+    mediaMusic:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/media/Music

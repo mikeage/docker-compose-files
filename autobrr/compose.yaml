@@ -1,0 +1,22 @@
+---
+services:
+    autobrr:
+        image: ghcr.io/autobrr/autobrr:latest
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD, curl, -fsS, http://127.0.0.1:7474/]
+            start_period: 20s
+            interval: 30s
+            timeout: 5s
+            retries: 5
+        user: 1000:1000
+        environment:
+            - TZ=Asia/Jerusalem
+        volumes:
+            - /opt/autobrr/config:/config
+        ports:
+            - 7474:7474
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.autobrr.rule=Host(`autobrr.internal.mikeage.net`)

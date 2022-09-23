@@ -1,0 +1,55 @@
+---
+services:
+    roundcubemail:
+        image: roundcube/roundcubemail:latest
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD, php, -r, exit((int)!@file_get_contents("http://127.0.0.1/"));]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        depends_on:
+            roundcubedb:
+                condition: service_healthy
+        links:
+            - roundcubedb
+        volumes:
+            - /opt/roundcube/config:/var/roundcube/config
+            - ./entrypoint-tasks/pre-setup:/entrypoint-tasks/pre-setup:ro
+        ports:
+            - 9001:80
+        labels:
+        # - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.roundcube.rule=Host(`roundcube.internal.mikeage.net`)
+        environment:
+            - ROUNDCUBEMAIL_DB_TYPE=pgsql
+            - ROUNDCUBEMAIL_DB_HOST=roundcubedb
+            - ROUNDCUBEMAIL_DB_NAME=${DB_NAME}
+            - ROUNDCUBEMAIL_DB_USER=${DB_USER}
+            - ROUNDCUBEMAIL_DB_PASSWORD=${DB_PASSWORD}
+            - ROUNDCUBEMAIL_SKIN=elastic
+            - ROUNDCUBEMAIL_DEFAULT_HOST=tls://dovecot.internal.mikeage.net  # Or 993 with ssl:// for aws3 directly
+            - ROUNDCUBEMAIL_DEFAULT_PORT=31143
+            - ROUNDCUBEMAIL_SMTP_SERVER=tls://outbound.mikeage.net
+            - ROUNDCUBEMAIL_SMTP_PORT=2525
+            - ROUNDCUBEMAIL_COMPOSER_PLUGINS=jfcherng-roundcube/show-folder-size,germancoding/tls_icon,kitist/html5_notifier,texxasrulez/spfstatus,johndoh/contextmenu
+            - ROUNDCUBEMAIL_PLUGINS=managesieve,archive,zipdownload,show_folder_size,tls_icon,html5_notifier,spfstatus,contextmenu,markasjunk
+
+
+    roundcubedb:
+        image: postgres:latest
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
+            start_period: 10s
+            interval: 10s
+            timeout: 5s
+            retries: 6
+        volumes:
+            - /opt/roundcube/db/postgres:/var/lib/postgresql
+        environment:
+            - POSTGRES_DB=${DB_NAME}
+            - POSTGRES_USER=${DB_USER}
+            - POSTGRES_PASSWORD=${DB_PASSWORD}

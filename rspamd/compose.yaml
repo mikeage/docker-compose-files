@@ -1,0 +1,49 @@
+---
+services:
+    redis:
+        image: redis:7
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD, redis-cli, ping]
+            start_period: 5s
+            interval: 10s
+            timeout: 5s
+            retries: 5
+        volumes:
+            - redis-data:/data
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+
+    rspamd:
+        image: rspamd/rspamd:latest
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD, rspamadm, control, stat]
+            start_period: 20s
+            interval: 30s
+            timeout: 5s
+            retries: 5
+        depends_on:
+            redis:
+                condition: service_healthy
+        ports:
+            - 11332:11332
+            - 11334:11334
+        volumes:
+            - /opt/rspamd/etc:/etc/rspamd
+            - rspamd-lib:/var/lib/rspamd
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+
+            - traefik.enable=true
+            - traefik.http.routers.rspamd.rule=Host(`rspamd.internal.mikeage.net`)
+            - traefik.http.services.rspamd.loadbalancer.server.port=11334
+
+            - traefik.tcp.routers.rspamdmilter.entrypoints=rspamdmilter
+            - traefik.tcp.routers.rspamdmilter.rule=HostSNI(`*`)
+            - traefik.tcp.routers.rspamdmilter.service=rspamdmilter
+            - traefik.tcp.services.rspamdmilter.loadbalancer.server.port=11332
+
+volumes:
+    redis-data:
+    rspamd-lib:

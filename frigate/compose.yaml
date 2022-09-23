@@ -1,0 +1,40 @@
+---
+services:
+    frigate:
+        privileged: true # this may not be necessary for all setups
+        restart: unless-stopped
+        #image: blakeblackshear/frigate:stable
+        image: ghcr.io/blakeblackshear/frigate:stable
+        # shm_size: 64mb # update for your cameras based on calculation above
+        shm_size: 170mb # update for your cameras based on calculation above
+        devices:
+      # - /dev/bus/usb:/dev/bus/usb  # passes the USB Coral, needs to be modified for other versions
+      # - /dev/apex_0:/dev/apex_0  # passes a PCIe Coral, follow driver instructions here https://coral.ai/docs/m2/get-started/#2a-on-linux
+            - /dev/dri/renderD128 # for intel hwaccel, needs to be updated for your hardware
+        cap_add:
+            - CAP_PERFMON
+        volumes:
+            - /etc/localtime:/etc/localtime:ro
+            - /opt/frigate/config:/config
+              # - /opt/frigate/config/config.yml:/config/config.yml:ro
+            - /mnt/frigate-media:/media/frigate
+            - type: tmpfs # Optional: 1GB of memory, reduces SSD/SD Card wear
+              target: /tmp/cache
+              tmpfs:
+                  size: 1000000000
+        ports:
+            - 5000:5000
+            - 8971:8971
+            - 1935:1935 # RTMP feeds
+            - 8554:8554   # RTSP feeds
+            - 8555:8555/tcp   # WebRTC over tcp
+            - 8555:8555/udp   # WebRTC over udp
+        environment:
+            FRIGATE_RTSP_PASSWORD: ${PASSWORD}
+            PLUS_API_KEY: ${API_KEY}
+            TZ: Asia/Jerusalem
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.frigate.rule=Host(`frigate.internal.mikeage.net`)
+            - traefik.http.services.frigate.loadbalancer.server.port=8971

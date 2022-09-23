@@ -1,0 +1,56 @@
+---
+name: autobrr
+reference: refs/heads/main
+working_dir: autobrr
+---
+name: autoheal
+reference: refs/heads/main
+working_dir: autoheal
+---
+name: cross-seed
+reference: refs/heads/main
+working_dir: cross-seed
+---
+name: cyd-monitor
+reference: refs/heads/main
+working_dir: cyd-monitor
+---
+name: dovecot
+reference: refs/heads/main
+working_dir: dovecot
+---
+name: getmail6
+reference: refs/heads/main
+working_dir: getmail6
+---
+name: immich
+reference: refs/heads/main
+working_dir: immich
+---
+name: qbittorrent
+reference: refs/heads/main
+working_dir: qbittorrent
+---
+name: qui
+reference: refs/heads/main
+working_dir: qui
+---
+name: roundcube
+reference: refs/heads/main
+working_dir: roundcube
+---
+name: rspamd
+reference: refs/heads/main
+working_dir: rspamd
+---
+name: rsyslog-dockerlogs
+reference: refs/heads/main
+working_dir: rsyslog-dockerlogs
+environment:
+    HOSTNAME: openmediavault
+---
+name: traefik-kop
+reference: refs/heads/main
+working_dir: traefik-kop
+environment:
+    HOSTNAME: openmediavault

@@ -1,0 +1,39 @@
+---
+services:
+    headscale:
+        image: docker.io/headscale/headscale:v0.26
+        restart: unless-stopped
+        environment:
+            - TZ=Asia/Jerusalem
+        ports:
+            - 5443:8080
+            # - "127.0.0.1:9090:9090"
+        volumes:
+            - /opt/headscale/config:/etc/headscale
+            - /opt/headscale/lib:/var/lib/headscale
+            - /opt/headscale/run:/var/run/headscale
+        command: serve
+        labels:
+            me.tale.headplane.target: headscale
+            com.centurylinklabs.watchtower.enable: true
+    headplane:
+        depends_on:
+            - headscale
+        image: ghcr.io/tale/headplane:0.6.0
+        restart: unless-stopped
+        environment:
+            - TZ=Asia/Jerusalem
+        ports:
+            - 3005:3005
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+            - /opt/headscale/headplane-config/config.yaml:/etc/headplane/config.yaml
+            - /opt/headscale/config/config.yaml:/etc/headscale/config.yaml
+            # If using dns.extra_records in Headscale (recommended), this should
+            # match the headscale.dns_records_path in your config.yaml
+            # - /opt/headscale/config/dns_records.json:/etc/headscale/dns_records.json
+            - /opt/headscale/headplane-data:/var/lib/headplane
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.headplane.rule=Host(`headplane.internal.mikeage.net`)

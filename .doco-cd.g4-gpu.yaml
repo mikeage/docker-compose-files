@@ -1,0 +1,50 @@
+---
+name: autoheal
+reference: refs/heads/main
+working_dir: autoheal
+---
+name: cyd-monitor
+reference: refs/heads/main
+working_dir: cyd-monitor
+---
+name: frigate
+reference: refs/heads/main
+working_dir: frigate
+---
+name: homeassistant
+reference: refs/heads/main
+working_dir: homeassistant
+---
+name: jellyfin
+reference: refs/heads/main
+working_dir: jellyfin
+---
+name: karakeep
+reference: refs/heads/main
+working_dir: karakeep
+---
+name: nextcloud
+reference: refs/heads/main
+working_dir: nextcloud
+---
+name: patchmon
+reference: refs/heads/main
+working_dir: patchmon
+---
+name: rsyslog-dockerlogs
+reference: refs/heads/main
+working_dir: rsyslog-dockerlogs
+environment:
+    HOSTNAME: g4-gpu
+---
+name: traefik-kop
+reference: refs/heads/main
+working_dir: traefik-kop
+environment:
+    HOSTNAME: g4-gpu
+---
+name: whatsrunning
+reference: refs/heads/main
+working_dir: whatsrunning
+environment:
+    HOSTNAME: g4-gpu

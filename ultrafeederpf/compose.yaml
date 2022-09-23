@@ -1,0 +1,84 @@
+---
+services:
+    planewatch:
+        image: ghcr.io/plane-watch/docker-plane-watch:latest
+        tty: true
+        restart: unless-stopped
+        depends_on:
+            - ultrafeeder
+        environment:
+            - BEASTHOST=ultrafeeder
+            - TZ=Asia/Jerusalem
+            - API_KEY=${PLANEWATCH_API_KEY}
+            - LAT=${FEEDER_LAT}
+            - LONG=${FEEDER_LONG}
+            - ALT=${FEEDER_ALT_M}
+        tmpfs:
+            - /run:exec,size=64M
+            - /var/log
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+    ultrafeeder:
+        image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder
+    # Note - if you want to enable telegraf for use with InfluxDB/Prometheus and Grafana,
+    # use the following image instead:
+    # image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:telegraf
+        hostname: ultrafeeder
+        restart: unless-stopped
+    #device_cgroup_rules:
+      #- 'c 189:* rwm'
+        ports:
+            - 8185:80         # to expose the web interface
+        environment:
+            LOGLEVEL: error
+            TZ: ${FEEDER_TZ}
+            READSB_LAT: ${FEEDER_LAT}
+            READSB_LON: ${FEEDER_LONG}
+            READSB_ALT: ${FEEDER_ALT_M}m
+            READSB_GAIN: ${ADSB_SDR_GAIN:-}
+            READSB_MODEAC: true
+            READSB_RX_LOCATION_ACCURACY: 2
+            READSB_STATS_RANGE: true
+            READSB_EXTRA_ARGS: --write-json-globe-index --write-globe-history /var/globe_history
+            ULTRAFEEDER_CONFIG: adsb,192.168.2.101,30054,planefinder_in; adsb,feed1.adsbexchange.com,30004,beast_reduce_plus_out,uuid=${ADSBX_UUID}; 
+                adsb,feed.adsb.fi,30004,beast_reduce_plus_out; adsb,in.adsb.lol,30004,beast_reduce_plus_out; 
+                adsb,feed.airplanes.live,30004,beast_reduce_plus_out; adsb,feed.theairtraffic.com,30004,beast_reduce_plus_out; 
+                adsb,feed.radarplane.com,30001,beast_reduce_plus_out; adsb,feed.planespotters.net,30004,beast_reduce_plus_out; 
+                adsb,data.avdelphi.com,24999,beast_reduce_plus_out; adsb,skyfeed.hpradar.com,30004,beast_reduce_plus_out
+            UUID: ${MULTIFEEDER_UUID}
+            MLAT_USER: ${FEEDER_NAME}
+            MLAT_INPUT_TYPE: radarcape_gps
+            UPDATE_TAR1090: true
+            TAR1090_DEFAULTCENTERLAT: ${FEEDER_LAT}
+            TAR1090_DEFAULTCENTERLON: ${FEEDER_LONG}
+            TAR1090_MESSAGERATEINTITLE: true
+            TAR1090_PAGETITLE: ${FEEDER_NAME}
+            TAR1090_PLANECOUNTINTITLE: true
+            TAR1090_ENABLE_AC_DB: true
+            TAR1090_FLIGHTAWARELINKS: true
+            HEYWHATSTHAT_PANORAMA_ID: ${FEEDER_HEYWHATSTHAT_ID}
+            HEYWHATSTHAT_ALTS: ${FEEDER_HEYWHATSTHAT_ALTS}
+            TAR1090_SITESHOW: true
+            TAR1090_RANGE_OUTLINE_COLORED_BY_ALTITUDE: true
+            TAR1090_RANGE_OUTLINE_WIDTH: 2.0
+            TAR1090_RANGERINGSDISTANCES: 50,100,150,200
+            TAR1090_RANGERINGSCOLORS: '#1A237E,#0D47A1,#42A5F5,#64B5F6'
+            TAR1090_USEROUTEAPI: true
+            GRAPHS1090_DARKMODE: true
+            INFLUXDBV2_URL: ${INFLUX_URL:-}
+            INFLUXDBV2_TOKEN: ${INFLUX_TOKEN:-}
+            INFLUXDBV2_BUCKET: ${INFLUX_BUCKET:-}
+            PROMETHEUS_ENABLE: true
+        volumes:
+            - /opt/ultrafeederPF/globe_history:/var/globe_history
+            - /opt/ultrafeederPF/graphs1090:/var/lib/collectd
+            - /proc/diskstats:/proc/diskstats:ro
+            - /dev:/dev:ro
+        tmpfs:
+            - /run:exec,size=256M
+            - /tmp:size=128M
+            - /var/log:size=32M
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.ultrafeederpf.rule=Host(`ultrafeederpf.internal.mikeage.net`)

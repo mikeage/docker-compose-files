@@ -1,0 +1,37 @@
+---
+services:
+    prowlarr:
+        image: lscr.io/linuxserver/prowlarr:develop
+        healthcheck:
+            test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/9696; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\\
+                      n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        environment:
+            PUID: 1000
+            PGID: 1000
+            TZ: Asia/Jerusalem
+        volumes:
+            - /opt/prowlarr/config:/config
+        ports:
+            - 9696:9696
+        restart: unless-stopped
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.prowlarr.rule=Host(`prowlarr.internal.mikeage.net`)
+    flaresolverr:
+        image: ghcr.io/flaresolverr/flaresolverr:latest
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD, python3, -c, 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8191/", timeout=5)']
+            start_period: 20s
+            interval: 30s
+            timeout: 5s
+            retries: 5
+        environment:
+            - LOG_LEVEL=info
+        labels:
+            - com.centurylinklabs.watchtower.enable=true

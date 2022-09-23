@@ -1,0 +1,59 @@
+---
+services:
+    web:
+        image: ghcr.io/karakeep-app/karakeep:${KARAKEEP:-release}
+        restart: unless-stopped
+        volumes:
+            - /opt/karakeep/data:/data
+        ports:
+            - 3008:3000
+        env_file:
+            - .env
+        environment:
+            MEILI_ADDR: http://meilisearch:7700
+            BROWSER_WEB_URL: http://chrome:9222
+      # OPENAI_API_KEY: ...
+            DATA_DIR: /data
+            TZ: Asia/Jerusalem
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.karakeep.rule=Host(`karakeep.internal.mikeage.net`)
+    chrome:
+        image: gcr.io/zenika-hub/alpine-chrome:124
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:9222/json/version]
+            start_period: 10s
+            interval: 30s
+            timeout: 5s
+            retries: 5
+        environment:
+            - TZ=Asia/Jerusalem
+        command:
+            - --no-sandbox
+            - --disable-gpu
+            - --disable-dev-shm-usage
+            - --remote-debugging-address=0.0.0.0
+            - --remote-debugging-port=9222
+            - --hide-scrollbars
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+    meilisearch:
+        image: getmeili/meilisearch:v1.11.1
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:7700/health]
+            start_period: 10s
+            interval: 30s
+            timeout: 5s
+            retries: 5
+        env_file:
+            - .env
+        environment:
+            MEILI_NO_ANALYTICS: 'true'
+            TZ: Asia/Jerusalem
+        volumes:
+            - /opt/karakeep/mellisearch:/meili_data
+        labels:
+            - com.centurylinklabs.watchtower.enable=true

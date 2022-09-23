@@ -1,0 +1,11 @@
+---
+services:
+    room-assistant:
+        image: mkerix/room-assistant
+        restart: unless-stopped
+        network_mode: host
+        volumes:
+            - /var/run/dbus:/var/run/dbus
+            - /opt/room-assistant/config:/room-assistant/config
+        cap_add:
+            - NET_ADMIN

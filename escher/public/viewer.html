@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Deep Zoom Viewer</title>
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    .viewerWrap { height: calc(100vh - 56px); }
+    #osd { width: 100%; height: 100%; background: #0b0c0f; }
+    .topbar .title a { color: inherit; text-decoration: none; }
+  </style>
+
+  <!-- OpenSeadragon -->
+  <script src="https://unpkg.com/openseadragon@4/build/openseadragon/openseadragon.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="title"><a href="/">← Back</a> <span id="name"></span></div>
+    <div class="meta">
+      <button id="openOriginal" title="Open original PNG in a new tab">Open original</button>
+    </div>
+  </header>
+
+  <div class="viewerWrap">
+    <div id="osd"></div>
+  </div>
+
+  <script type="module" src="/viewer.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,142 @@
+---
+services:
+    qbittorrent:
+        image: lscr.io/linuxserver/qbittorrent:latest
+        healthcheck:
+            test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
+                      r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        environment:
+            PUID: 1000
+            PGID: 1000
+            TZ: Asia/Jerusalem
+            WEBUI_PORT: 8012
+            TORRENTING_PORT: 28345
+        volumes:
+            - /opt/qbittorrent/config:/config
+            - /export/storage/torrent_downloads:/data/torrent_downloads
+        ports:
+            - 8012:8012
+            - 28345:28345
+            - 28345:28345/udp
+        restart: unless-stopped
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.internal.mikeage.net`)
+            - traefik.http.services.qbittorrent.loadbalancer.server.port=8012
+    qbittorrent-keep:
+        image: lscr.io/linuxserver/qbittorrent:latest
+        healthcheck:
+            test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
+                      r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        environment:
+            PUID: 1000
+            PGID: 1000
+            TZ: Asia/Jerusalem
+            WEBUI_PORT: 8014
+            TORRENTING_PORT: 28344
+        volumes:
+            - /opt/qbittorrent.keep/config:/config
+            - /export/storage/permanent/torrent_downloads:/data/torrent_downloads
+        ports:
+            - 8014:8014
+            - 28344:28344
+            - 28344:28344/udp
+        restart: unless-stopped
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.qbittorrent-keep.rule=Host(`qbittorrent-keep.internal.mikeage.net`)
+            - traefik.http.services.qbittorrent-keep.loadbalancer.server.port=8014
+    qbittorrent-sonarr:
+        image: lscr.io/linuxserver/qbittorrent:latest
+        healthcheck:
+            test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
+                      r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        environment:
+            PUID: 1000
+            PGID: 1000
+            TZ: Asia/Jerusalem
+            WEBUI_PORT: 8015
+            TORRENTING_PORT: 28343
+        volumes:
+            - /opt/qbittorrent.sonarr/config:/config
+            - /export/storage/temporary/sonarr/torrent_downloads:/data/torrent_downloads
+        ports:
+            - 8015:8015
+            - 28343:28343
+            - 28343:28343/udp
+        restart: unless-stopped
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.qbittorrent-sonarr.rule=Host(`qbittorrent-sonarr.internal.mikeage.net`)
+            - traefik.http.services.qbittorrent-sonarr.loadbalancer.server.port=8015
+    qbittorrent-radarr:
+        image: lscr.io/linuxserver/qbittorrent:latest
+        healthcheck:
+            test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
+                      r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        environment:
+            PUID: 1000
+            PGID: 1000
+            TZ: Asia/Jerusalem
+            WEBUI_PORT: 8016
+            TORRENTING_PORT: 28342
+        volumes:
+            - /opt/qbittorrent.radarr/config:/config
+            - /export/storage/temporary/radarr/torrent_downloads:/data/torrent_downloads
+        ports:
+            - 8016:8016
+            - 28342:28342
+            - 28342:28342/udp
+        restart: unless-stopped
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.qbittorrent-radarr.rule=Host(`qbittorrent-radarr.internal.mikeage.net`)
+            - traefik.http.services.qbittorrent-radarr.loadbalancer.server.port=8016
+    qbittorrent-gavriel:
+        image: lscr.io/linuxserver/qbittorrent:latest
+        healthcheck:
+            test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
+                      r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        environment:
+            PUID: 1001
+            PGID: 100
+            TZ: Asia/Jerusalem
+            WEBUI_PORT: 8013
+            TORRENTING_PORT: 28346
+        volumes:
+            - qbittorent-gavriel-config:/config
+            - /srv/dev-disk-by-uuid-9900c9f3-6ac9-4791-a4a9-cb3f9c140f53/homedirs/gavriel/torrents:/data
+        ports:
+            - 8013:8013
+        restart: unless-stopped
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.qbittorrent-gavriel.rule=Host(`qbittorrent.gavriel.mikeage.net`)
+            - traefik.http.services.qbittorrent-gavriel.loadbalancer.server.port=8013
+volumes:
+    qbittorent-gavriel-config:

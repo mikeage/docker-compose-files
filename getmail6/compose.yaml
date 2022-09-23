@@ -1,0 +1,13 @@
+---
+services:
+    netvision:
+        build: .
+        restart: unless-stopped
+        environment:
+            - RCFILE=/config/getmailrc
+            - INTERVAL=120
+        volumes:
+            - /opt/getmail6/config:/config:ro
+            - /opt/getmail6/state:/state
+        labels:
+            - com.centurylinklabs.watchtower.enable=false

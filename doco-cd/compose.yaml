@@ -1,0 +1,56 @@
+---
+services:
+    dococd:
+        image: ghcr.io/kimdre/doco-cd:latest
+        restart: unless-stopped
+        depends_on:
+            - apprise
+        ports:
+            - 127.0.0.1:8070:80
+        environment:
+            TZ: ${TZ}
+            LOG_LEVEL: ${LOG_LEVEL}
+            API_SECRET_FILE: /run/secrets/api_secret
+            POLL_CONFIG: |
+                - url: ${REPO_URL}
+                  reference: ${REPO_REFERENCE}
+                  interval: ${POLL_INTERVAL}
+                  target: ${DOCO_TARGET}
+            SOPS_AGE_KEY_FILE: /run/secrets/sops_age_key
+            SSH_PRIVATE_KEY_FILE: /run/secrets/ssh_private_key
+            APPRISE_API_URL: http://apprise:8000/notify
+            APPRISE_NOTIFY_LEVEL: ${APPRISE_NOTIFY_LEVEL}
+            APPRISE_NOTIFY_URLS_FILE: /run/secrets/apprise_notify_urls
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /opt/doco-cd/data:/data
+        secrets:
+            - api_secret
+            - apprise_notify_urls
+            - sops_age_key
+            - ssh_private_key
+        cap_drop:
+            - ALL
+        healthcheck:
+            test: [CMD, /doco-cd, healthcheck]
+            start_period: 15s
+            interval: 30s
+            timeout: 5s
+            retries: 3
+
+    apprise:
+        image: caronc/apprise:latest
+        restart: unless-stopped
+        environment:
+            TZ: ${TZ}
+            APPRISE_WORKER_COUNT: 1
+
+secrets:
+    api_secret:
+        file: /opt/doco-cd/secrets/api_secret
+    apprise_notify_urls:
+        file: /opt/doco-cd/secrets/apprise_notify_urls
+    sops_age_key:
+        file: /opt/doco-cd/secrets/sops_age_key.txt
+    ssh_private_key:
+        file: /opt/doco-cd/secrets/id_ed25519_doco

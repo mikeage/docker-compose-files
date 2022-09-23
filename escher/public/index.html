@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>M.C. Escher PNG Gallery</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="title">Hi-Res PNG Gallery (Deep Zoom)</div>
+    <div class="meta">
+      <input id="filter" placeholder="Filter..." />
+      <button id="reload" title="Reload manifest">Reload</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="status" class="status">Loading…</div>
+    <div id="grid" class="grid" aria-label="Thumbnail grid"></div>
+  </main>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>
+

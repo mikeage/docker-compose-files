@@ -1,0 +1,28 @@
+---
+services:
+    picard:
+        image: mikenye/picard:latest
+        restart: unless-stopped
+        ports:
+            - 5800:5800
+        volumes:
+            - /opt/picard/config:/config:rw
+            - media:/storage:rw
+        environment:
+            USER_ID: 1000
+            GROUP_ID: 1000
+            KEEP_APP_RUNNING: 1
+            DISPLAY_WIDTH: 1600
+            DISPLAY_HEIGHT: 900
+            TZ: Asia/Jerusalem
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.picard.rule=Host(`picard.internal.mikeage.net`)
+volumes:
+    media:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/media

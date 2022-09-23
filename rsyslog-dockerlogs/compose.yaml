@@ -1,0 +1,14 @@
+---
+services:
+    rsyslog-dockerlogs:
+        image: rsyslog/rsyslog-dockerlogs:latest
+        restart: unless-stopped
+        environment:
+            REMOTE_SERVER_NAME: logcollector.lan # your collector
+            REMOTE_SERVER_PORT: '514'
+            RSYSLOG_HOSTNAME: ${HOSTNAME}    # or hardcode
+      # Optional: include stderr too (enabled by default); add filters via labels later
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock:ro
+        labels:
+            - com.centurylinklabs.watchtower.enable=true

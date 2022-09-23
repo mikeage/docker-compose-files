@@ -1,0 +1,15 @@
+---
+services:
+    seedboxapi:
+        image: myanonamouse/seedboxapi
+        restart: unless-stopped
+        user: 1000:1000
+        volumes:
+            - /opt/myanonamouse/config:/config
+        environment:
+            - DEBUG=1
+      # - mam_id=t85MBJWSEF6c_bEobeeP_9EdQN6zC95wMVj4AY78Q3AiZhyDdXVxFGLmKRhldCiIG4-OzG8SjzyLnrcwTLbDYoSyLFQw6SGhNldfxog9xZjApL2eaQaKJph9gh6l46VhcG7GVRRxS4O2JNB3Gose2sCUO7mGeDgROpj8vFjXSgLlGDYSfG6b0ReriM_YnvUV5RU2DNeKoC_v30PJ2V9OILd0V6fcXl_gu3ntnLhV42_kwcfCHiM6KOt40fUetpCcZ3aI4CCgmluVxSvapGsLAGfrpZllzluncg0%3D
+            - interval=1
+            - TZ=Asia/Jerusalem
+        labels:
+            - com.centurylinklabs.watchtower.enable=true

@@ -1,0 +1,15 @@
+---
+services:
+    consul:
+        image: hashicorp/consul:latest
+        restart: unless-stopped
+        environment:
+            - TZ=Asia/Jerusalem
+        ports:
+            - 8500:8500      # Web UI / API
+            - 8600:8600/udp  # DNS (optional)
+        volumes:
+            - /opt/consul/data:/consul/data
+        command: agent -server -bootstrap -ui -client=0.0.0.0
+        labels:
+            - com.centurylinklabs.watchtower.enable=true

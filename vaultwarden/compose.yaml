@@ -1,0 +1,24 @@
+---
+services:
+    vaultwarden:
+        image: vaultwarden/server:latest
+        restart: unless-stopped
+        environment:
+            DOMAIN: https://vaultwarden.internal.mikeage.net
+            SIGNUPS_ALLOWED: 'false'
+            ADMIN_TOKEN: ${ADMIN_TOKEN}
+            SMTP_HOST: outbound.mikeage.net
+            SMTP_FROM: vaultwarden@mikeage.net
+            SMTP_PORT: 2525
+            SMTP_SECURITY: starttls
+            SMTP_USERNAME: ${EMAIL_USER}
+            SMTP_PASSWORD: ${EMAIL_PASSWORD}
+            TZ: Asia/Jerusalem
+        volumes:
+            - /opt/vaultwarden/data:/data
+        ports:
+            - 11001:80
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.vaultwarden.rule=Host(`vaultwarden.internal.mikeage.net`)

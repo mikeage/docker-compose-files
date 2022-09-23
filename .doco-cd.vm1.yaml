@@ -1,0 +1,150 @@
+---
+name: autoheal
+reference: refs/heads/main
+working_dir: autoheal
+---
+name: audiobookshelf
+reference: refs/heads/main
+working_dir: audiobookshelf
+---
+name: bazarr
+reference: refs/heads/main
+working_dir: bazarr
+---
+name: bentopdf
+reference: refs/heads/main
+working_dir: bentopdf
+---
+name: calibre-web
+reference: refs/heads/main
+working_dir: calibre-web
+---
+name: cyd-monitor
+reference: refs/heads/main
+working_dir: cyd-monitor
+---
+name: escher
+reference: refs/heads/main
+working_dir: escher
+---
+name: fr24feed
+reference: refs/heads/main
+working_dir: fr24feed
+---
+name: freshrss
+reference: refs/heads/main
+working_dir: freshrss
+---
+name: joplin
+reference: refs/heads/main
+working_dir: joplin
+---
+name: kapowarr
+reference: refs/heads/main
+working_dir: kapowarr
+---
+name: komga
+reference: refs/heads/main
+working_dir: komga
+---
+name: lidarr
+reference: refs/heads/main
+working_dir: lidarr
+---
+name: myanonamouse
+reference: refs/heads/main
+working_dir: myanonamouse
+---
+name: navidrome
+reference: refs/heads/main
+working_dir: navidrome
+---
+name: octoeverywhere
+reference: refs/heads/main
+working_dir: octoeverywhere
+---
+name: paperless-ngx
+reference: refs/heads/main
+working_dir: paperless-ngx
+---
+name: paperless-ngx-gavriel
+reference: refs/heads/main
+working_dir: paperless-ngx-gavriel
+---
+name: photo-gallery
+reference: refs/heads/main
+working_dir: photo-gallery
+---
+name: picard
+reference: refs/heads/main
+working_dir: picard
+---
+name: piwigo
+reference: refs/heads/main
+working_dir: piwigo
+---
+name: prowlarr
+reference: refs/heads/main
+working_dir: prowlarr
+---
+name: psitransfer
+reference: refs/heads/main
+working_dir: psitransfer
+---
+name: radarr
+reference: refs/heads/main
+working_dir: radarr
+---
+name: readarr
+reference: refs/heads/main
+working_dir: readarr
+---
+name: rsyslog-dockerlogs
+reference: refs/heads/main
+working_dir: rsyslog-dockerlogs
+environment:
+    HOSTNAME: vm1
+---
+name: search-not-foundarr
+reference: refs/heads/main
+working_dir: search-not-foundarr
+---
+name: seerr
+reference: refs/heads/main
+working_dir: seerr
+---
+name: sonarr
+reference: refs/heads/main
+working_dir: sonarr
+---
+name: tailscale-router
+reference: refs/heads/main
+working_dir: tailscale-router
+---
+name: traefik-kop
+reference: refs/heads/main
+working_dir: traefik-kop
+environment:
+    HOSTNAME: vm1
+---
+name: ultrafeeder
+reference: refs/heads/main
+working_dir: ultrafeeder
+---
+name: ultrafeederpf
+reference: refs/heads/main
+working_dir: ultrafeederpf
+---
+name: vaultwarden
+reference: refs/heads/main
+working_dir: vaultwarden
+---
+name: whatsrunning
+reference: refs/heads/main
+working_dir: whatsrunning
+environment:
+    HOSTNAME: vm1
+---
+name: wordpress
+reference: refs/heads/main
+working_dir: wordpress

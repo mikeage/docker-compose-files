@@ -1,0 +1,12 @@
+---
+services:
+    a1mini:
+        restart: unless-stopped
+        image: octoeverywhere/octoeverywhere:latest
+        environment:
+            - ACCESS_CODE=39994545
+            - SERIAL_NUMBER=0309DA462001807
+            - PRINTER_IP=a1mini.lan
+            - TZ=Asia/Jerusalem
+        volumes:
+            - /opt/octoeverywhere/a1mini:/data

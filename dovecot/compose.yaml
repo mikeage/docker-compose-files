@@ -1,0 +1,56 @@
+---
+services:
+    dovecot:
+        image: dovecot/dovecot:latest
+        restart: unless-stopped
+        healthcheck:
+            test: [CMD-SHELL, doveadm service status imap-login >/dev/null 2>&1]
+            start_period: 10s
+            interval: 30s
+            timeout: 5s
+            retries: 5
+        ports:
+            - 31143:31143
+            - 31024:31024
+            - 34190:34190
+        volumes:
+            - /opt/dovecot/conf.d:/etc/dovecot/conf.d:ro
+            - /opt/dovecot/passwd:/etc/dovecot/passwd:ro
+            # - /export/storage/permanent/mail:/srv/vmail
+            - /opt/dovecot/mail:/srv/vmail
+            - /opt/dovecot/mail-index:/srv/mail-index
+        labels:
+            - traefik.enable=true
+
+            - traefik.tcp.routers.lmtp.entrypoints=lmtp
+            - traefik.tcp.routers.lmtp.rule=HostSNI(`*`)
+            - traefik.tcp.routers.lmtp.service=lmtp
+            - traefik.tcp.services.lmtp.loadbalancer.server.port=31024
+
+            - traefik.tcp.routers.imap.entrypoints=imap
+            - traefik.tcp.routers.imap.rule=HostSNI(`*`)
+            - traefik.tcp.routers.imap.service=imap
+            - traefik.tcp.services.imap.loadbalancer.server.port=31143
+
+            - traefik.tcp.routers.managesieve.entrypoints=managesieve
+            - traefik.tcp.routers.managesieve.rule=HostSNI(`*`)
+            - traefik.tcp.routers.managesieve.service=managesieve
+            - traefik.tcp.services.managesieve.loadbalancer.server.port=34190
+    msmtpd:
+        image: crazymax/msmtpd:latest
+        restart: unless-stopped
+        expose:
+            - '2500'
+        environment:
+            - TZ=Asia/Jerusalem
+            - SMTP_HOST=outbound.mikeage.net
+            - SMTP_PORT=2525
+            - SMTP_TLS=on
+            - SMTP_STARTTLS=on
+            - SMTP_TLS_CHECKCERT=on
+            - SMTP_AUTH=on
+            - SMTP_USER=${SMTP_USER}
+            - SMTP_PASSWORD=${SMTP_PASSWORD}
+            - SMTP_DOMAIN=mikeage.net
+        labels:
+            - com.centurylinklabs.watchtower.enable=true

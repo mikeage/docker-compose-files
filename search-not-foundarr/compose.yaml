@@ -1,0 +1,35 @@
+---
+services:
+    cron:
+        image: ghcr.io/mikeage/search-not-foundarr:latest
+        restart: unless-stopped
+        environment:
+            ARR_SEARCH_COOLDOWN_HOURS: '24'
+            ARR_PAGE_SIZE: '250'
+            ARR_DEFAULT_SCHEDULE: '*/5 * * * *'
+            ARR_STATE_FILE: /state/state.json
+
+            SERVER_1_TYPE: sonarr
+            SERVER_1_HOSTNAME: https://sonarr.internal.mikeage.net
+            SERVER_1_API_KEY: ${SONARR_API_KEY}
+            SERVER_1_MISSING_WEIGHT: '75'
+            SERVER_1_CUTOFF_UNMET_WEIGHT: '25'
+            SERVER_1_SCHEDULE: 1-59/5 * * * *
+
+            SERVER_2_TYPE: radarr
+            SERVER_2_HOSTNAME: https://radarr.internal.mikeage.net
+            SERVER_2_API_KEY: ${RADARR_API_KEY}
+            SERVER_2_SCHEDULE: 2-59/5 * * * *
+
+            SERVER_3_TYPE: lidarr
+            SERVER_3_HOSTNAME: https://lidarr.internal.mikeage.net
+            SERVER_3_API_KEY: ${LIDARR_API_KEY}
+            SERVER_3_MISSING_WEIGHT: '90'
+            SERVER_3_CUTOFF_UNMET_WEIGHT: '10'
+            SERVER_3_SCHEDULE: 3-59/5 * * * *
+        volumes:
+            - state:/state
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+volumes:
+    state:

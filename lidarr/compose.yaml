@@ -1,0 +1,33 @@
+---
+services:
+    lidarr:
+        image: lscr.io/linuxserver/lidarr:latest
+        healthcheck:
+            test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8686; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\\
+                      n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        environment:
+            PUID: 1000
+            PGID: 1000
+            TZ: Asia/Jerusalem
+        volumes:
+            - /opt/lidarr/config:/config
+            # Pass the top level folder so that it can do hard links and atomic moves between torrent out and media in
+            - storage:/data
+        ports:
+            - 8686:8686
+        restart: unless-stopped
+        labels:
+            - com.centurylinklabs.watchtower.enable=true
+            - traefik.enable=true
+            - traefik.http.routers.lidarr.rule=Host(`lidarr.internal.mikeage.net`)
+volumes:
+    storage:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage

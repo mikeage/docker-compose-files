@@ -76,7 +76,7 @@ services:
             - traefik.http.routers.paperless-ngx.rule=Host(`paperless-ngx.internal.mikeage.net`)
 
     gotenberg:
-        image: docker.io/gotenberg/gotenberg:8.24@sha256:b116a40a1c24917e2bf3e153692da5acd2e78e7cd67e1b2d243b47c178f31c90
+        image: docker.io/gotenberg/gotenberg:8.30@sha256:206a6c708fc6d05257367d9ac902d6c56c50d2e3284d0596ea000814ef97f22c
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:3000/health]

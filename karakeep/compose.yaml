@@ -49,6 +49,7 @@ services:
             - .env
         environment:
             MEILI_NO_ANALYTICS: 'true'
+            MEILI_EXPERIMENTAL_DUMPLESS_UPGRADE: 'true'
             TZ: Asia/Jerusalem
         volumes:
             - /opt/karakeep/mellisearch:/meili_data

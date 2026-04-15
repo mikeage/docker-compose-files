@@ -19,8 +19,6 @@ services:
         depends_on:
             mariadb:
                 condition: service_healthy
-        labels:
-            - com.centurylinklabs.watchtower.enable=false
     mariadb:
         image: mariadb:12
         healthcheck:
@@ -40,5 +38,3 @@ services:
             - MYSQL_DATABASE=${DB_NAME}
             - TZ=Asia/Jerusalem
         restart: unless-stopped
-        labels:
-            - com.centurylinklabs.watchtower.enable=true

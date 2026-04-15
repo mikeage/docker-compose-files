@@ -14,8 +14,6 @@ services:
             - TZ=Asia/Jerusalem
         ports:
             - 8191:8191
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
     freshrss:
         image: freshrss/freshrss:latest
         restart: unless-stopped
@@ -42,7 +40,6 @@ services:
         ports:
             - 8086:80
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.freshrss.rule=Host(`freshrss.internal.mikeage.net`)
         post_start:
@@ -64,5 +61,3 @@ services:
             - TZ=Asia/Jerusalem
         volumes:
             - /opt/freshrss/db:/var/lib/mysql
-        labels:
-            - com.centurylinklabs.watchtower.enable=true

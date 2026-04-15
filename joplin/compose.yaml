@@ -18,8 +18,6 @@ services:
             - POSTGRES_USER=${POSTGRES_USER}
             - POSTGRES_DB=${POSTGRES_DATABASE}
             - TZ=Asia/Jerusalem
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
     app:
         image: joplin/server:latest
         healthcheck:
@@ -56,6 +54,5 @@ services:
             MAILER_NOREPLY_EMAIL: no-reply-joplin@mikeage.net
             TZ: Asia/Jerusalem
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.joplin.rule=Host(`joplin.internal.mikeage.net`)

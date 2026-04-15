@@ -20,7 +20,6 @@ services:
             - 8787:8787
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.readarr.rule=Host(`readarr.internal.mikeage.net`)
     audiobooks:
@@ -43,7 +42,6 @@ services:
             - 8788:8787
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.readarraudiobooks.rule=Host(`readarraudiobooks.internal.mikeage.net`)
 volumes:

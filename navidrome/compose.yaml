@@ -21,7 +21,6 @@ services:
             - /opt/navidrome/data:/data
             - music:/music:ro
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.navidrome.rule=Host(`navidrome.internal.mikeage.net`)
 volumes:

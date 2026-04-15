@@ -17,8 +17,6 @@ services:
             - 3080:3080
         command:
             - -cname=Videos,path=/videos,thumbs=/thumbs
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
 volumes:
     photo-gallery_data:
     photo-gallery_photos_dummy:

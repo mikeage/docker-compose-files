@@ -18,8 +18,6 @@ services:
             - TZ=Asia/Jerusalem
         env_file:
             - db.env
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
     redis:
         image: redis:alpine
         restart: unless-stopped
@@ -32,8 +30,6 @@ services:
     #command: redis-server --requirepass nextcloud_redis_pass
         volumes:
             - redis_data:/data
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
     nextcloud:
         build: ./fpm
         restart: unless-stopped

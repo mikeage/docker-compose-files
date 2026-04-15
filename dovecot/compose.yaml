@@ -52,5 +52,3 @@ services:
             - SMTP_USER=${SMTP_USER}
             - SMTP_PASSWORD=${SMTP_PASSWORD}
             - SMTP_DOMAIN=mikeage.net
-        labels:
-            - com.centurylinklabs.watchtower.enable=true

@@ -24,7 +24,6 @@ services:
             - 28345:28345/udp
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.internal.mikeage.net`)
             - traefik.http.services.qbittorrent.loadbalancer.server.port=8012
@@ -52,7 +51,6 @@ services:
             - 28344:28344/udp
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.qbittorrent-keep.rule=Host(`qbittorrent-keep.internal.mikeage.net`)
             - traefik.http.services.qbittorrent-keep.loadbalancer.server.port=8014
@@ -80,7 +78,6 @@ services:
             - 28343:28343/udp
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.qbittorrent-sonarr.rule=Host(`qbittorrent-sonarr.internal.mikeage.net`)
             - traefik.http.services.qbittorrent-sonarr.loadbalancer.server.port=8015
@@ -108,7 +105,6 @@ services:
             - 28342:28342/udp
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.qbittorrent-radarr.rule=Host(`qbittorrent-radarr.internal.mikeage.net`)
             - traefik.http.services.qbittorrent-radarr.loadbalancer.server.port=8016
@@ -134,7 +130,6 @@ services:
             - 8013:8013
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.qbittorrent-gavriel.rule=Host(`qbittorrent.gavriel.mikeage.net`)
             - traefik.http.services.qbittorrent-gavriel.loadbalancer.server.port=8013

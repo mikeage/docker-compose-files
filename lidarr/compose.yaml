@@ -21,7 +21,6 @@ services:
             - 8686:8686
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.lidarr.rule=Host(`lidarr.internal.mikeage.net`)
 volumes:

@@ -21,8 +21,6 @@ services:
             - 51413:51413
             - 51413:51413/udp
         restart: unless-stopped
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
 volumes:
     torrent_downloads:
         driver: local

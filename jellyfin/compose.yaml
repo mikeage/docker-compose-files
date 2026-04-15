@@ -28,7 +28,6 @@ services:
             - /dev/dri/renderD128:/dev/dri/renderD128
             - /dev/dri/card1:/dev/dri/card1
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.jellyfin.rule=Host(`jellyfin.internal.mikeage.net`)
 volumes:

@@ -16,8 +16,6 @@ services:
         tmpfs:
             - /run:exec,size=64M
             - /var/log
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
     ultrafeeder:
         image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder
     # Note - if you want to enable telegraf for use with InfluxDB/Prometheus and Grafana,
@@ -79,6 +77,5 @@ services:
             - /tmp:size=128M
             - /var/log:size=32M
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.ultrafeederpf.rule=Host(`ultrafeederpf.internal.mikeage.net`)

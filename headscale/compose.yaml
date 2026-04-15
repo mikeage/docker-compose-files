@@ -15,7 +15,6 @@ services:
         command: serve
         labels:
             me.tale.headplane.target: headscale
-            com.centurylinklabs.watchtower.enable: true
     headplane:
         depends_on:
             - headscale
@@ -34,6 +33,5 @@ services:
             # - /opt/headscale/config/dns_records.json:/etc/headscale/dns_records.json
             - /opt/headscale/headplane-data:/var/lib/headplane
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.headplane.rule=Host(`headplane.internal.mikeage.net`)

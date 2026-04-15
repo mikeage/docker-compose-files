@@ -10,5 +10,3 @@ services:
         environment:
             - HOST_HOSTNAME=${HOSTNAME}
             - TZ=Asia/Jerusalem
-        labels:
-            - com.centurylinklabs.watchtower.enable=true

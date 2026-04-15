@@ -11,9 +11,6 @@ services:
             retries: 5
         volumes:
             - redis-data:/data
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
-
     rspamd:
         image: rspamd/rspamd:latest
         restart: unless-stopped
@@ -33,8 +30,6 @@ services:
             - /opt/rspamd/etc:/etc/rspamd
             - rspamd-lib:/var/lib/rspamd
         labels:
-            - com.centurylinklabs.watchtower.enable=true
-
             - traefik.enable=true
             - traefik.http.routers.rspamd.rule=Host(`rspamd.internal.mikeage.net`)
             - traefik.http.services.rspamd.loadbalancer.server.port=11334

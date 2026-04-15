@@ -19,7 +19,6 @@ services:
         command: daemon
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.cross-seed-sonarr.rule=Host(`cross-seed-sonarr.internal.mikeage.net`)
     radarr:
@@ -41,6 +40,5 @@ services:
         command: daemon
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.cross-seed-radarr.rule=Host(`cross-seed-radarr.internal.mikeage.net`)

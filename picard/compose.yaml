@@ -16,7 +16,6 @@ services:
             DISPLAY_HEIGHT: 900
             TZ: Asia/Jerusalem
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.picard.rule=Host(`picard.internal.mikeage.net`)
 volumes:

@@ -21,7 +21,6 @@ services:
             - 8002:25600
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.komga.rule=Host(`komga.internal.mikeage.net`)
 volumes:

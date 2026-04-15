@@ -21,7 +21,6 @@ services:
             - 8989:8989
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.sonarr.rule=Host(`sonarr.internal.mikeage.net`)
 volumes:

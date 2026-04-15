@@ -22,7 +22,6 @@ services:
             - /opt/audiobookshelf/config:/config
             - /opt/audiobookshelf/metadata:/metadata
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.audiobookshelf.rule=Host(`audiobookshelf.internal.mikeage.net`)
 volumes:

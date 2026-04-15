@@ -20,8 +20,6 @@ services:
         ports:
             - 8084:8083
         restart: unless-stopped
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
     calibre:
         image: lscr.io/linuxserver/calibre:latest
         healthcheck:
@@ -43,7 +41,6 @@ services:
             - 8081:8081
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.calibre.rule=Host(`calibre.internal.mikeage.net`)
             - traefik.http.services.calibre.loadbalancer.server.port=8080

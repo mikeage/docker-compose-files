@@ -10,5 +10,3 @@ services:
       # Optional: include stderr too (enabled by default); add filters via labels later
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
-        labels:
-            - com.centurylinklabs.watchtower.enable=true

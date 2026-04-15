@@ -23,7 +23,6 @@ services:
         environment:
             - SEARXNG_BASE_URL=https://searxng.internal.mikeage.net/
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.searxng.rule=Host(`searxng.internal.mikeage.net`)
 

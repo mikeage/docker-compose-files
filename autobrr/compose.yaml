@@ -17,6 +17,5 @@ services:
         ports:
             - 7474:7474
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.autobrr.rule=Host(`autobrr.internal.mikeage.net`)

@@ -34,7 +34,6 @@ services:
             PLUS_API_KEY: ${API_KEY}
             TZ: Asia/Jerusalem
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.frigate.rule=Host(`frigate.internal.mikeage.net`)
             - traefik.http.services.frigate.loadbalancer.server.port=8971

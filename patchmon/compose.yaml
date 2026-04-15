@@ -32,9 +32,6 @@ services:
             interval: 3s
             timeout: 5s
             retries: 7
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
-
     redis:
         image: redis:7-alpine
         restart: unless-stopped
@@ -46,9 +43,6 @@ services:
             interval: 3s
             timeout: 5s
             retries: 7
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
-
     backend:
         image: ghcr.io/patchmon/patchmon-backend:latest
         restart: unless-stopped
@@ -86,9 +80,6 @@ services:
                 condition: service_healthy
             redis:
                 condition: service_healthy
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
-
     frontend:
         image: ghcr.io/patchmon/patchmon-frontend:latest
         restart: unless-stopped
@@ -98,7 +89,6 @@ services:
             backend:
                 condition: service_healthy
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.patchmon.rule=Host(`patchmon.internal.mikeage.net`)
 

@@ -10,5 +10,3 @@ services:
             - BIND_IP=${HOSTNAME}
             - REDIS_PASS=${REDIS_PASS}
             - TZ=Asia/Jerusalem
-        labels:
-            - com.centurylinklabs.watchtower.enable=true

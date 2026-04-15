@@ -19,6 +19,5 @@ services:
         ports:
             - 11001:80
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.vaultwarden.rule=Host(`vaultwarden.internal.mikeage.net`)

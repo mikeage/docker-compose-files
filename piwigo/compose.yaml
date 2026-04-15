@@ -21,8 +21,6 @@ services:
         ports:
             - 8083:80
         restart: unless-stopped
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
     mysql:
         image: mariadb:12
         restart: unless-stopped
@@ -39,8 +37,6 @@ services:
             - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
         volumes:
             - /opt/piwigo/db:/var/lib/mysql
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
 volumes:
     pictures:
         driver: local

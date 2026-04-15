@@ -13,9 +13,6 @@ services:
             - TZ=Asia/Jerusalem
         volumes:
             - redis_data:/data
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
-
     mariadb:
         image: docker.io/library/mariadb:12
         restart: unless-stopped
@@ -33,9 +30,6 @@ services:
             MARIADB_PASSWORD: ${DB_PASSWORD}
             MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
             TZ: Asia/Jerusalem
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
-
     webserver:
         image: ghcr.io/paperless-ngx/paperless-ngx:latest
         restart: unless-stopped
@@ -80,7 +74,6 @@ services:
             PAPERLESS_OCR_USER_ARGS: '{"invalidate_digital_signatures": true}'
             TZ: Asia/Jerusalem
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.paperless-ngx-gavriel.rule=Host(`paperless-ngx.gavriel.mikeage.net`)
 
@@ -100,9 +93,6 @@ services:
             - gotenberg
             - --chromium-disable-javascript=true
             - --chromium-allow-list=file:///tmp/.*
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
-
     tika:
         image: docker.io/apache/tika:latest
         restart: unless-stopped
@@ -115,8 +105,6 @@ services:
             retries: 5
         environment:
             - TZ=Asia/Jerusalem
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
 volumes:
     redis_data:
     db_data:

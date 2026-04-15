@@ -20,7 +20,6 @@ services:
             - 6767:6767
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.bazarr.rule=Host(`bazarr.internal.mikeage.net`)
 volumes:

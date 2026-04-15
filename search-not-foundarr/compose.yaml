@@ -29,7 +29,5 @@ services:
             SERVER_3_SCHEDULE: 3-59/5 * * * *
         volumes:
             - state:/state
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
 volumes:
     state:

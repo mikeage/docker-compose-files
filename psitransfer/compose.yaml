@@ -18,8 +18,6 @@ services:
             - PSITRANSFER_ADMIN_PASS=${ADMIN_PASSWORD}
             - PSITRANSFER_UPLOAD_PASS=${UPLOAD_PASSWORD}
             - TZ=Asia/Jerusalem
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
 volumes:
     psitransfer_data:
         driver: local

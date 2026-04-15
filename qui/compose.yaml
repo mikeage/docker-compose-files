@@ -8,6 +8,5 @@ services:
         volumes:
             - /opt/qui/config:/config
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.qui.rule=Host(`qui.internal.mikeage.net`)

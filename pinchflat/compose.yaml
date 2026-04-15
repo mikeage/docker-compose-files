@@ -13,7 +13,6 @@ services:
             - /opt/pinchflat/config:/config
             - media:/downloads
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.pinchflat.rule=Host(`pinchflat.internal.mikeage.net`)
 volumes:

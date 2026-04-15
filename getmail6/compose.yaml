@@ -9,5 +9,3 @@ services:
         volumes:
             - /opt/getmail6/config:/config:ro
             - /opt/getmail6/state:/state
-        labels:
-            - com.centurylinklabs.watchtower.enable=false

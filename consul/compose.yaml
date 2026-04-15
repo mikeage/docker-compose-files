@@ -11,5 +11,3 @@ services:
         volumes:
             - /opt/consul/data:/consul/data
         command: agent -server -bootstrap -ui -client=0.0.0.0
-        labels:
-            - com.centurylinklabs.watchtower.enable=true

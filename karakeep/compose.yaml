@@ -16,7 +16,6 @@ services:
             DATA_DIR: /data
             TZ: Asia/Jerusalem
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.karakeep.rule=Host(`karakeep.internal.mikeage.net`)
     chrome:
@@ -37,8 +36,6 @@ services:
             - --remote-debugging-address=0.0.0.0
             - --remote-debugging-port=9222
             - --hide-scrollbars
-        labels:
-            - com.centurylinklabs.watchtower.enable=true
     meilisearch:
         image: getmeili/meilisearch:v1.11.1
         restart: unless-stopped
@@ -55,5 +52,3 @@ services:
             TZ: Asia/Jerusalem
         volumes:
             - /opt/karakeep/mellisearch:/meili_data
-        labels:
-            - com.centurylinklabs.watchtower.enable=true

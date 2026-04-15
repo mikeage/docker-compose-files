@@ -21,7 +21,6 @@ services:
             - 7878:7878
         restart: unless-stopped
         labels:
-            - com.centurylinklabs.watchtower.enable=true
             - traefik.enable=true
             - traefik.http.routers.radarr.rule=Host(`radarr.internal.mikeage.net`)
 volumes:

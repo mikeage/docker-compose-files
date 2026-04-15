@@ -1,7 +1,7 @@
 ---
 services:
     dovecot:
-        image: dovecot/dovecot:latest
+        image: dovecot/dovecot:latest@sha256:5248022fdc8519be311e9c813dbf469e5c415fbe004015c5770a5301f03a2885
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, doveadm service status imap-login >/dev/null 2>&1]
@@ -37,7 +37,7 @@ services:
             - traefik.tcp.routers.managesieve.service=managesieve
             - traefik.tcp.services.managesieve.loadbalancer.server.port=34190
     msmtpd:
-        image: crazymax/msmtpd:latest
+        image: crazymax/msmtpd:latest@sha256:76d834eef113cdc330c08c0c3fc8389de6239771c73ef40e7d614116b3356e40
         restart: unless-stopped
         expose:
             - '2500'

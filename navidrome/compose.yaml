@@ -1,7 +1,7 @@
 ---
 services:
     navidrome:
-        image: deluan/navidrome:latest
+        image: deluan/navidrome:latest@sha256:9fa40b3d8dec43ceb2213d1fa551da3dcfef6ac6d19c2e534efb92527c2bafd2
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:4533/]

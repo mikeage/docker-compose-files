@@ -1,7 +1,7 @@
 ---
 services:
     planewatch:
-        image: ghcr.io/plane-watch/docker-plane-watch:latest
+        image: ghcr.io/plane-watch/docker-plane-watch:latest@sha256:a7e4e13af03852900624f1a6bd193d697ae3c9d684bfeb3b817dcc680db2656f
         tty: true
         restart: unless-stopped
         depends_on:
@@ -17,7 +17,7 @@ services:
             - /run:exec,size=64M
             - /var/log
     ultrafeeder:
-        image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder
+        image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest@sha256:f980c799c12396b60a61ca0a909561a21b48c8a42066a772b8708ad6694eac42
     # Note - if you want to enable telegraf for use with InfluxDB/Prometheus and Grafana,
     # use the following image instead:
     # image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:telegraf

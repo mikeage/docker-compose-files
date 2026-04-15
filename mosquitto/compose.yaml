@@ -1,7 +1,7 @@
 ---
 services:
     mosquitto:
-        image: eclipse-mosquitto:latest
+        image: eclipse-mosquitto:latest@sha256:9cfdd46ad59f3e3e5f592f6baf57ab23e1ad00605509d0f5c1e9b179c5314d87
         restart: unless-stopped
         environment:
             - TZ=Asia/Jerusalem

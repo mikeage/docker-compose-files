@@ -1,7 +1,7 @@
 ---
 services:
     sonarr:
-        image: ghcr.io/cross-seed/cross-seed
+        image: ghcr.io/cross-seed/cross-seed:latest@sha256:e2bf5b593e4e7d699e6242423ad7966190cd52ba8eefafdfdbb0cb5b0b609b96
         healthcheck:
             test: [CMD, curl, -fsS, http://127.0.0.1:2468/api/ping]
             start_period: 20s
@@ -22,7 +22,7 @@ services:
             - traefik.enable=true
             - traefik.http.routers.cross-seed-sonarr.rule=Host(`cross-seed-sonarr.internal.mikeage.net`)
     radarr:
-        image: ghcr.io/cross-seed/cross-seed
+        image: ghcr.io/cross-seed/cross-seed:latest@sha256:e2bf5b593e4e7d699e6242423ad7966190cd52ba8eefafdfdbb0cb5b0b609b96
         healthcheck:
             test: [CMD, curl, -fsS, http://127.0.0.1:2468/api/ping]
             start_period: 20s

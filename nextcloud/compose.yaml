@@ -1,7 +1,7 @@
 ---
 services:
     mysql:
-        image: mariadb:10
+        image: mariadb:10@sha256:2f2b6bbcdbaf88afe53b76cb8d73927b623559180c5ab15db2049736f32ec590
         command: --transaction-isolation=READ-COMMITTED
         restart: unless-stopped
         healthcheck:
@@ -19,7 +19,7 @@ services:
         env_file:
             - db.env
     redis:
-        image: redis:alpine
+        image: redis:alpine@sha256:81b6f81d6a6c5b9019231a2e8eb10085e3a139a34f833dcc965a8a959b040b72
         restart: unless-stopped
         healthcheck:
             test: [CMD, redis-cli, ping]
@@ -57,7 +57,7 @@ services:
             redis:
                 condition: service_healthy
     web:
-        image: nginx:alpine-slim
+        image: nginx:alpine-slim@sha256:6a9338004bea53f33e1d44a0f644ed082c3076b03747566c9535b0c724c98d09
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1/status.php]

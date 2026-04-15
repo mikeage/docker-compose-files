@@ -1,7 +1,7 @@
 ---
 services:
     roundcubemail:
-        image: roundcube/roundcubemail:latest
+        image: roundcube/roundcubemail:latest@sha256:79632c9bc3a83f5d50226a76dfb3e9170124ca78cbc239e0a536fe44c262b752
         restart: unless-stopped
         healthcheck:
             test: [CMD, php, -r, exit((int)!@file_get_contents("http://127.0.0.1/"));]
@@ -38,7 +38,7 @@ services:
 
 
     roundcubedb:
-        image: postgres:latest
+        image: postgres:latest@sha256:52e6ffd11fddd081ae63880b635b2a61c14008c17fc98cdc7ce5472265516dd0
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']

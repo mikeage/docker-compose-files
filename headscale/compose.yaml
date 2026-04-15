@@ -1,7 +1,7 @@
 ---
 services:
     headscale:
-        image: docker.io/headscale/headscale:v0.26
+        image: docker.io/headscale/headscale:v0.26@sha256:ea9b5ee06274d757a4d52103de56cd11a9c393acb19d9a35f4b9fe52ada410de
         restart: unless-stopped
         environment:
             - TZ=Asia/Jerusalem
@@ -18,7 +18,7 @@ services:
     headplane:
         depends_on:
             - headscale
-        image: ghcr.io/tale/headplane:0.6.0
+        image: ghcr.io/tale/headplane:0.6.0@sha256:b56ea59fd9424470bdb335f0be5524915fc4c34cc826ce25e583f440e4e56864
         restart: unless-stopped
         environment:
             - TZ=Asia/Jerusalem

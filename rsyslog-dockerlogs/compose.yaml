@@ -1,7 +1,7 @@
 ---
 services:
     rsyslog-dockerlogs:
-        image: rsyslog/rsyslog-dockerlogs:latest
+        image: rsyslog/rsyslog-dockerlogs:latest@sha256:b22e575e7d553c05119d7c7493fdf4ef30e4602dff9bf5e5a87f3ee6724df003
         restart: unless-stopped
         environment:
             REMOTE_SERVER_NAME: logcollector.lan # your collector

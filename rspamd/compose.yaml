@@ -1,7 +1,7 @@
 ---
 services:
     redis:
-        image: redis:7
+        image: redis:7@sha256:24ea35ee039d7345bef2377611e3b1a615231746de4cfea74c1414575ee56167
         restart: unless-stopped
         healthcheck:
             test: [CMD, redis-cli, ping]
@@ -12,7 +12,7 @@ services:
         volumes:
             - redis-data:/data
     rspamd:
-        image: rspamd/rspamd:latest
+        image: rspamd/rspamd:latest@sha256:d35a5c8367e98df7d8fd0c3c91e3b2d75a78bc82a9fbb0780d5c15f966ddd1c5
         restart: unless-stopped
         healthcheck:
             test: [CMD, rspamadm, control, stat]

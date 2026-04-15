@@ -1,7 +1,7 @@
 ---
 services:
     web:
-        image: ghcr.io/karakeep-app/karakeep:${KARAKEEP:-release}
+        image: ghcr.io/karakeep-app/karakeep:release@sha256:20754dbdafb11dfe288bbb1c2342a7855081b08ea069e86fcf2d4a2d945d3653
         restart: unless-stopped
         volumes:
             - /opt/karakeep/data:/data
@@ -19,7 +19,7 @@ services:
             - traefik.enable=true
             - traefik.http.routers.karakeep.rule=Host(`karakeep.internal.mikeage.net`)
     chrome:
-        image: gcr.io/zenika-hub/alpine-chrome:124
+        image: gcr.io/zenika-hub/alpine-chrome:124@sha256:1a0046448e0bb6c275c88f86e01faf0de62b02ec8572901256ada0a8c08be23f
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:9222/json/version]
@@ -37,7 +37,7 @@ services:
             - --remote-debugging-port=9222
             - --hide-scrollbars
     meilisearch:
-        image: getmeili/meilisearch:v1.11.1
+        image: getmeili/meilisearch:v1.11.1@sha256:2ab0c8bdf58b7305e48af7372c47d5638d51dc1bb3a59c8e2b07eca6fe7176e9
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:7700/health]

@@ -1,7 +1,7 @@
 ---
 services:
     homarr:
-        image: ghcr.io/ajnart/homarr:latest
+        image: ghcr.io/ajnart/homarr:latest@sha256:e103abadfb527186af5b4bd43df4eff7c67afa5cd4df8e65fa97910c8840b2a9
         restart: unless-stopped
         environment:
             BASE_URL: https://homarr.internal.mikeage.net

@@ -1,7 +1,7 @@
 ---
 services:
     cron:
-        image: ghcr.io/mikeage/search-not-foundarr:latest
+        image: ghcr.io/mikeage/search-not-foundarr:latest@sha256:170c08ff71e39991a3fb79dc3c371d1b5d75cca14d1d871d01e7d16cae857880
         restart: unless-stopped
         environment:
             ARR_SEARCH_COOLDOWN_HOURS: '24'

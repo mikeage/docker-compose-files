@@ -1,7 +1,7 @@
 ---
 services:
     room-assistant:
-        image: mkerix/room-assistant
+        image: mkerix/room-assistant:latest@sha256:b500ec6805d9e4befc08f484b93f26600be071960d59097205972b895544485b
         restart: unless-stopped
         network_mode: host
         volumes:

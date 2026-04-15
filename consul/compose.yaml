@@ -1,7 +1,7 @@
 ---
 services:
     consul:
-        image: hashicorp/consul:latest
+        image: hashicorp/consul:latest@sha256:f278b51842bc26129911cccefdfaed52118ae00f692bc42be030d5c66d2370c0
         restart: unless-stopped
         environment:
             - TZ=Asia/Jerusalem

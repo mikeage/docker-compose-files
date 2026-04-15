@@ -1,7 +1,7 @@
 ---
 services:
     audiobookshelf:
-        image: ghcr.io/advplyr/audiobookshelf:latest
+        image: ghcr.io/advplyr/audiobookshelf:latest@sha256:a4a5841bba093d81e5f4ad1eaedb4da3fda6dbb2528c552349da50ad1f7ae708
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1/healthcheck]

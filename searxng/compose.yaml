@@ -1,7 +1,7 @@
 ---
 services:
     redis:
-        image: docker.io/valkey/valkey:8-alpine
+        image: docker.io/valkey/valkey:8-alpine@sha256:1cb6b20b70d927560cc4cc5397b5f045e74aa603ff7696274778880bb6fadc75
         command: valkey-server --save 30 1 --loglevel warning
         restart: unless-stopped
         healthcheck:
@@ -13,7 +13,7 @@ services:
         volumes:
             - valkey-data:/data
     searxng:
-        image: docker.io/searxng/searxng:latest
+        image: docker.io/searxng/searxng:latest@sha256:4c6b4f3e1fc10a907a40b7eaaf5b92d50f5b4097d6fb5b02041c0f9926233b36
         restart: unless-stopped
         ports:
             - 8523:8080

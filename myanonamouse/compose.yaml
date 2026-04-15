@@ -1,7 +1,7 @@
 ---
 services:
     seedboxapi:
-        image: myanonamouse/seedboxapi
+        image: myanonamouse/seedboxapi:latest@sha256:4712ede49e8c17ca1aee4cf61a145e249ddbb9498390b469c64b0b3086628259
         restart: unless-stopped
         user: 1000:1000
         volumes:

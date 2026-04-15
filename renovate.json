@@ -1,0 +1,157 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:best-practices",
+    "docker:pinDigests",
+    "docker:enableMajor"
+  ],
+  "labels": [
+    "dependencies",
+    "docker"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "docker"
+      ],
+      "matchUpdateTypes": [
+        "digest"
+      ],
+      "groupName": "docker digests"
+    },
+    {
+      "matchManagers": [
+        "docker-compose"
+      ],
+      "matchFileNames": [
+        "homeassistant/compose.yaml"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/home-assistant/home-assistant"
+      ],
+      "groupName": "manual-review: homeassistant",
+      "labels": [
+        "dependencies",
+        "docker",
+        "manual-review"
+      ],
+      "prPriority": 10,
+      "automerge": false,
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchManagers": [
+        "docker-compose"
+      ],
+      "matchFileNames": [
+        "doco-cd/compose.yaml"
+      ],
+      "groupName": "manual-review: doco-cd",
+      "labels": [
+        "dependencies",
+        "docker",
+        "manual-review"
+      ],
+      "prPriority": 10,
+      "automerge": false,
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "matchFileNames": [
+        "wordpress/Dockerfile"
+      ],
+      "matchPackageNames": [
+        "wordpress"
+      ],
+      "groupName": "manual-review: wordpress",
+      "labels": [
+        "dependencies",
+        "docker",
+        "manual-review"
+      ],
+      "prPriority": 10,
+      "automerge": false,
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "matchFileNames": [
+        "cyd-monitor/Dockerfile"
+      ],
+      "matchPackageNames": [
+        "ghcr.io/astral-sh/uv"
+      ],
+      "groupName": "manual-review: cyd-monitor",
+      "labels": [
+        "dependencies",
+        "docker",
+        "manual-review"
+      ],
+      "prPriority": 10,
+      "automerge": false,
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "matchFileNames": [
+        "escher/Dockerfile"
+      ],
+      "matchPackageNames": [
+        "node"
+      ],
+      "groupName": "manual-review: escher",
+      "labels": [
+        "dependencies",
+        "docker",
+        "manual-review"
+      ],
+      "prPriority": 10,
+      "automerge": false,
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchManagers": [
+        "dockerfile"
+      ],
+      "matchFileNames": [
+        "getmail6/Dockerfile"
+      ],
+      "matchPackageNames": [
+        "debian"
+      ],
+      "groupName": "manual-review: getmail6",
+      "labels": [
+        "dependencies",
+        "docker",
+        "manual-review"
+      ],
+      "prPriority": 10,
+      "automerge": false,
+      "dependencyDashboardApproval": true
+    },
+    {
+      "matchManagers": [
+        "docker-compose"
+      ],
+      "matchFileNames": [
+        "immich/compose.yaml"
+      ],
+      "groupName": "manual-review: immich",
+      "labels": [
+        "dependencies",
+        "docker",
+        "manual-review"
+      ],
+      "prPriority": 10,
+      "automerge": false,
+      "dependencyDashboardApproval": true
+    }
+  ]
+}

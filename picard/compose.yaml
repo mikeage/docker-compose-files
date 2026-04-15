@@ -1,7 +1,7 @@
 ---
 services:
     picard:
-        image: mikenye/picard:latest
+        image: mikenye/picard:latest@sha256:bd001b14893367c39eba74e3aebade9e1e62c146f841d7e6582ae3a635cba907
         restart: unless-stopped
         ports:
             - 5800:5800

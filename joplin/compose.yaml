@@ -1,7 +1,7 @@
 ---
 services:
     db:
-        image: postgres:16
+        image: postgres:16@sha256:5a65324fe84dc41709ff914e90b07f3e2f577073ed27bf917d4873aca0c9ec51
         healthcheck:
             test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
             start_period: 10s
@@ -19,7 +19,7 @@ services:
             - POSTGRES_DB=${POSTGRES_DATABASE}
             - TZ=Asia/Jerusalem
     app:
-        image: joplin/server:latest
+        image: joplin/server:latest@sha256:5d9e7f9d31b436cb1b99d1a6a65d8c5bf760829094617e8ad1e956fd925de888
         healthcheck:
             test: [CMD, node, -e, 'require("http").get("http://127.0.0.1:22300", (r) => process.exit(r.statusCode < 500 ? 0 : 1)).on("error", () => process.exit(1));']
             start_period: 20s

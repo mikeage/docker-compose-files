@@ -18,7 +18,7 @@ services:
     headplane:
         depends_on:
             - headscale
-        image: ghcr.io/tale/headplane:0.6.0@sha256:b56ea59fd9424470bdb335f0be5524915fc4c34cc826ce25e583f440e4e56864
+        image: ghcr.io/tale/headplane:0.6.2@sha256:cfb0807609198f90b9793e46e3b243b257bcdcef032847a3204d10201435b8dc
         restart: unless-stopped
         environment:
             - TZ=Asia/Jerusalem

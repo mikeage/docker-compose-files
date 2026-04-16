@@ -81,7 +81,7 @@ services:
             redis:
                 condition: service_healthy
     frontend:
-        image: ghcr.io/patchmon/patchmon-frontend:1.3.7@sha256:002c9c9c1fe36961b0cf45a4b6723a6dafe97fa24ea4e39bd2fcc6b9ab73b71d
+        image: ghcr.io/patchmon/patchmon-frontend:1.4.2@sha256:002c9c9c1fe36961b0cf45a4b6723a6dafe97fa24ea4e39bd2fcc6b9ab73b71d
         restart: unless-stopped
         ports:
             - 3007:3000

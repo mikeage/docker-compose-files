@@ -1,49 +1,49 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:best-practices",
-    "docker:pinDigests",
-    "docker:enableMajor"
-  ],
-  "labels": [
-    "dependencies",
-    "docker"
-  ],
-  "packageRules": [
-    {
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchUpdateTypes": [
-        "digest"
-      ],
-      "groupName": "docker digests"
-    },
-    {
-      "description": "Avoid major-version jumps for infrastructure and dependency images.",
-      "matchDatasources": [
-        "docker"
-      ],
-      "matchPackageNames": [
-        "apache/tika",
-        "docker.io/apache/tika",
-        "docker.io/gotenberg/gotenberg",
-        "docker.io/library/mariadb",
-        "docker.io/library/postgres",
-        "docker.io/library/redis",
-        "docker.io/valkey/valkey",
-        "getmeili/meilisearch",
-        "ghcr.io/immich-app/postgres",
-        "gotenberg/gotenberg",
-        "mariadb",
-        "postgres",
-        "redis",
-        "valkey/valkey"
-      ],
-      "matchUpdateTypes": [
-        "major"
-      ],
-      "enabled": false
-    }
-  ]
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+	"extends": [
+		"config:best-practices",
+		"docker:pinDigests",
+		"docker:enableMajor"
+	],
+	"labels": [
+		"dependencies",
+		"docker"
+	],
+	"packageRules": [
+		{
+			"matchDatasources": [
+				"docker"
+			],
+			"matchUpdateTypes": [
+				"digest"
+			],
+			"groupName": "docker digests"
+		},
+		{
+			"description": "Avoid major-version jumps for infrastructure and dependency images.",
+			"matchDatasources": [
+				"docker"
+			],
+			"matchPackageNames": [
+				"apache/tika",
+				"docker.io/apache/tika",
+				"docker.io/gotenberg/gotenberg",
+				"docker.io/library/mariadb",
+				"docker.io/library/postgres",
+				"docker.io/library/redis",
+				"docker.io/valkey/valkey",
+				"getmeili/meilisearch",
+				"ghcr.io/immich-app/postgres",
+				"gotenberg/gotenberg",
+				"mariadb",
+				"postgres",
+				"redis",
+				"valkey/valkey"
+			],
+			"matchUpdateTypes": [
+				"major"
+			],
+			"enabled": false
+		}
+	]
 }

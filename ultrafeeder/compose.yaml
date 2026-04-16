@@ -14,7 +14,7 @@ services:
             - /tmp:size=128M
             - /var/log:size=32M
     opensky:
-        image: ghcr.io/sdr-enthusiasts/docker-opensky-network:latest@sha256:c5ddf3ddf70986a532b38b0b68faf49ff90bdb965335863df255e72d82ae1805
+        image: ghcr.io/sdr-enthusiasts/docker-opensky-network:2.1.7-1@sha256:c5ddf3ddf70986a532b38b0b68faf49ff90bdb965335863df255e72d82ae1805
         tty: true
         restart: unless-stopped
         depends_on:
@@ -42,7 +42,7 @@ services:
     #         - API_KEY=${PLANEWATCH_API_KEY}
     #         - LAT=${FEEDER_LAT}
     #         - LONG=${FEEDER_LONG}
-    #         - ALT=${FEEDER_ALT_M}
+   #         - ALT=${FEEDER_ALT_M}
     #         - PW_BEAST_ENDPOINT=feed.push.plane.watch:22345
     #         - PW_MLAT_ENDPOINT=feed.push.plane.watch:22346
     #     tmpfs:
@@ -50,7 +50,7 @@ services:
     #         - /var/log
     #     labels:
     planewatch:
-        image: ghcr.io/plane-watch/docker-plane-watch:latest@sha256:a7e4e13af03852900624f1a6bd193d697ae3c9d684bfeb3b817dcc680db2656f
+        image: ghcr.io/plane-watch/docker-plane-watch:v0.0.6@sha256:a7e4e13af03852900624f1a6bd193d697ae3c9d684bfeb3b817dcc680db2656f
         tty: true
         restart: unless-stopped
         depends_on:

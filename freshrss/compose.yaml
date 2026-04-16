@@ -1,7 +1,7 @@
 ---
 services:
     flaresolverr:
-        image: ghcr.io/flaresolverr/flaresolverr:latest@sha256:7962759d99d7e125e108e0f5e7f3cdbcd36161776d058d1d9b7153b92ef1af9e
+        image: ghcr.io/flaresolverr/flaresolverr:v3.4.6@sha256:7962759d99d7e125e108e0f5e7f3cdbcd36161776d058d1d9b7153b92ef1af9e
         restart: unless-stopped
         healthcheck:
             test: [CMD, python3, -c, 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8191/", timeout=5)']
@@ -15,7 +15,7 @@ services:
         ports:
             - 8191:8191
     freshrss:
-        image: freshrss/freshrss:latest@sha256:9100f649f5c946f589f54cdb9be7a65996528f48f691ef90eb262a0e06e5a522
+        image: freshrss/freshrss:1.28.1@sha256:9100f649f5c946f589f54cdb9be7a65996528f48f691ef90eb262a0e06e5a522
         restart: unless-stopped
         healthcheck:
             test: [CMD, php, -r, exit((int)!@file_get_contents("http://127.0.0.1/"));]

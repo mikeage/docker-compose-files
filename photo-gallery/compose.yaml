@@ -1,7 +1,7 @@
 ---
 services:
     photo-gallery:
-        image: rigon/photo-gallery:latest@sha256:a328b6099823e5fe419c0c67077b5e648e019dc8361d8a81443b584beb7ce43f
+        image: rigon/photo-gallery:1.6.1@sha256:a328b6099823e5fe419c0c67077b5e648e019dc8361d8a81443b584beb7ce43f
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:3080/]

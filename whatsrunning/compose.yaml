@@ -1,7 +1,7 @@
 ---
 services:
     whatsrunning:
-        image: mikeage/whatsrunning:latest@sha256:3a01e8ca9ea78c273aa0adddc86112a7e05241be9f591494037e4cdf71dddcb5
+        image: mikeage/whatsrunning:v1.0-26@sha256:3a01e8ca9ea78c273aa0adddc86112a7e05241be9f591494037e4cdf71dddcb5
         restart: unless-stopped
         ports:
             - 80:5000

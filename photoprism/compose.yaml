@@ -39,7 +39,7 @@
 services:
     photoprism:
     ## Use photoprism/photoprism:preview for testing preview builds:
-        image: photoprism/photoprism:latest@sha256:5229f68bce0293320547f35c733de584d7c2d5725a0efbddb68d7a118a8fc21c
+        image: photoprism/photoprism:260305@sha256:5229f68bce0293320547f35c733de584d7c2d5725a0efbddb68d7a118a8fc21c
         depends_on:
             mariadb:
                 condition: service_healthy

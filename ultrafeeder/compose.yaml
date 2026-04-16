@@ -1,7 +1,7 @@
 ---
 services:
     radar1090:
-        image: ghcr.io/sdr-enthusiasts/docker-radar1090:latest@sha256:19658cdbed403bd2a1b368611fd8d6eb5d71735875be2eb3abe703f6c1da98a5
+        image: ghcr.io/sdr-enthusiasts/docker-radar1090:latest@sha256:5f1491ca84134b7e224188239881274a3669bd24704cbcb6aa76fc44d466570f
         hostname: radar1090
         restart: unless-stopped
         environment:

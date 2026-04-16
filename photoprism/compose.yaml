@@ -118,7 +118,7 @@ services:
     ## If MariaDB gets stuck in a restart loop, this points to a memory or filesystem issue:
     ## https://docs.photoprism.app/getting-started/troubleshooting/#fatal-server-errors
         restart: unless-stopped
-        image: mariadb:10@sha256:2f2b6bbcdbaf88afe53b76cb8d73927b623559180c5ab15db2049736f32ec590
+        image: mariadb:10@sha256:407fccb51e710f34752c1a3ef9b936d1f55f38d4ac7fa043b3759742d266fd9a
         healthcheck:
             test: [CMD-SHELL, mariadb-admin ping -h 127.0.0.1 -u"$$MARIADB_USER" -p"$$MARIADB_PASSWORD" --silent]
             start_period: 20s

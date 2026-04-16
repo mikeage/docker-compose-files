@@ -19,7 +19,7 @@ name: patchmon
 
 services:
     database:
-        image: postgres:17-alpine@sha256:6f30057d31f5861b66f3545d4821f987aacf1dd920765f0acadea0c58ff975b1
+        image: postgres:17-alpine@sha256:5ee0fc820fadd46a3c9ce6e3e768664cdbb1b0b763e05f7140974cf73b23f84a
         restart: unless-stopped
         environment:
             POSTGRES_DB: patchmon_db

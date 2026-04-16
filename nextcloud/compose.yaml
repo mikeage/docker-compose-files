@@ -57,7 +57,7 @@ services:
             redis:
                 condition: service_healthy
     web:
-        image: nginx:alpine-slim@sha256:bd016966d0ad6177695383a2851e60559e6b106e2d2e5b74dc8aea7f43844799
+        image: nginx:alpine-slim@sha256:c9366b8c560169b101ca0e5422ed063b20779e6454c2326b9c9704225c9b0c08
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1/status.php]

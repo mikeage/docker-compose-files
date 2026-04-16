@@ -2,7 +2,6 @@
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
 	"extends": [
 		"config:best-practices",
-		"docker:pinDigests",
 		"docker:enableMajor"
 	],
 	"labels": [
@@ -11,16 +10,7 @@
 	],
 	"packageRules": [
 		{
-			"matchDatasources": [
-				"docker"
-			],
-			"matchUpdateTypes": [
-				"digest"
-			],
-			"groupName": "docker digests"
-		},
-		{
-			"description": "Avoid major-version jumps for infrastructure and dependency images.",
+			"description": "Require manual approval for risky Docker major updates.",
 			"matchDatasources": [
 				"docker"
 			],
@@ -43,7 +33,7 @@
 			"matchUpdateTypes": [
 				"major"
 			],
-			"enabled": false
+			"dependencyDashboardApproval": true
 		}
 	]
 }

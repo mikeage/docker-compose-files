@@ -1,0 +1,30 @@
+---
+services:
+    shelfmark:
+        image: ghcr.io/calibrain/shelfmark:1.2.1
+        environment:
+            PUID: 1000
+            PGID: 1000
+        ports:
+            - 8034:8084
+        restart: unless-stopped
+        volumes:
+            - ebooks:/books  # Default destination for book downloads
+            - /opt/shelfmark/config:/config  # App configuration
+            - torrent_downloads:/data/torrent_downloads
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.shelfmark.rule=Host(`shelfmark.internal.mikeage.net`)
+volumes:
+    torrent_downloads:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/torrent_downloads
+    ebooks:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/media/ebooks

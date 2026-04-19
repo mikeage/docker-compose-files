@@ -113,6 +113,10 @@ name: seerr
 reference: refs/heads/main
 working_dir: seerr
 ---
+name: shelfmark
+reference: refs/heads/main
+working_dir: shelfmark
+---
 name: sonarr
 reference: refs/heads/main
 working_dir: sonarr

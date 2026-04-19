@@ -1,7 +1,7 @@
 ---
 services:
     shelfmark:
-        image: ghcr.io/calibrain/shelfmark:1.2.1
+        image: ghcr.io/calibrain/shelfmark:1.2.1@sha256:5e00d47cccaa3b67234855d950d016c50691b78197a68adf15a624f6c08acee2
         environment:
             PUID: 1000
             PGID: 1000

@@ -1,0 +1,212 @@
+---
+substitutions:
+    device_name: cyd-immich-memories
+    friendly_name: CYD Immich Memories
+    device_id: cyd-immich
+    service_base_url: https://cyd-immich-proxy.internal.mikeage.net
+    refresh_interval: 60s
+    wifi_ssid: ''
+    wifi_password: ''
+    memory_frame_slice_height: '80'
+    memory_frame_buffer_size: '8192'
+
+esphome:
+    name: ${device_name}
+    friendly_name: ${friendly_name}
+    on_boot:
+        priority: -10
+        then:
+            - lambda: |-
+                  id(memory_frame_clear_pending) = true;
+            - component.update: lcd
+            - lambda: |-
+                  id(memory_frame_clear_pending) = false;
+            - script.execute: refresh_memory_frame
+
+esp32:
+    board: esp32dev
+    framework:
+        type: esp-idf
+        advanced:
+            minimum_chip_revision: '3.1'
+
+# This template is intended for ESPHome 2026.4.1 and the current `mipi_spi`
+# display stack rather than the older `ili9xxx` path.
+#
+# Pin choices below follow the common ESP32-2432S028R / CYD mapping used in
+# community examples.
+
+wifi:
+    ssid: ${wifi_ssid}
+    password: ${wifi_password}
+    on_connect:
+        then:
+            - script.execute: refresh_memory_frame
+
+logger:
+
+api:
+
+ota:
+    - platform: esphome
+
+http_request:
+    verify_ssl: true
+    timeout: 10s
+    useragent: ${device_name}
+    # `online_image` uses the HTTP request component underneath. The ESP-IDF
+    # defaults are only 512-byte RX/TX buffers, which adds overhead when we
+    # fetch several JPEG slices back-to-back over HTTPS.
+    buffer_size_rx: 2048
+    buffer_size_tx: 2048
+
+spi:
+    - id: tft
+      clk_pin: GPIO14
+      mosi_pin: GPIO13
+
+output:
+    - platform: ledc
+      id: backlight_pwm
+      pin: GPIO21
+
+light:
+    - platform: monochromatic
+      output: backlight_pwm
+      id: backlight
+      name: Display Backlight
+      restore_mode: ALWAYS_ON
+      default_transition_length: 0.5s
+
+globals:
+    - id: memory_frame_generation
+      type: int
+      restore_value: false
+      initial_value: '0'
+    - id: memory_frame_request_generation
+      type: int
+      restore_value: false
+      initial_value: '0'
+    - id: memory_frame_next_top
+      type: int
+      restore_value: false
+      initial_value: '0'
+    - id: memory_frame_request_top
+      type: int
+      restore_value: false
+      initial_value: '0'
+    - id: memory_frame_request_height
+      type: int
+      restore_value: false
+      initial_value: '0'
+    - id: memory_frame_draw_top
+      type: int
+      restore_value: false
+      initial_value: '0'
+    - id: memory_frame_draw_pending
+      type: bool
+      restore_value: false
+      initial_value: 'false'
+    - id: memory_frame_clear_pending
+      type: bool
+      restore_value: false
+      initial_value: 'false'
+
+script:
+    - id: refresh_memory_frame
+      mode: restart
+      then:
+          - lambda: |-
+                id(memory_frame_generation) += 1;
+                id(memory_frame_next_top) = 0;
+          - script.execute: request_memory_frame_slice
+    - id: request_memory_frame_slice
+      mode: restart
+      then:
+          - lambda: |-
+                id(memory_frame_request_generation) = id(memory_frame_generation);
+                id(memory_frame_request_top) = id(memory_frame_next_top);
+                const int remaining = 240 - id(memory_frame_request_top);
+                id(memory_frame_request_height) =
+                    remaining < ${memory_frame_slice_height}
+                        ? remaining
+                        : ${memory_frame_slice_height};
+          - online_image.set_url:
+                id: memory_frame_slice
+                url: !lambda |-
+                    char url[256];
+                    snprintf(
+                        url,
+                        sizeof(url),
+                        "%s/api/v1/displays/%s/slice.jpg?top=%d&height=%d",
+                        "${service_base_url}",
+                        "${device_id}",
+                        id(memory_frame_request_top),
+                        id(memory_frame_request_height));
+                    return std::string(url);
+                update: false
+          - component.update: memory_frame_slice
+
+display:
+    - platform: mipi_spi
+      id: lcd
+      spi_id: tft
+      model: ESP32-2432S028
+      dimensions:
+          width: 320
+          height: 240
+      cs_pin: GPIO15
+      dc_pin: GPIO2
+      rotation: 0
+      update_interval: never
+      auto_clear_enabled: false
+      invert_colors: false
+      color_order: RGB
+      lambda: |-
+          if (id(memory_frame_clear_pending)) {
+            it.fill(Color(0, 0, 0));
+          }
+          if (id(memory_frame_draw_pending)) {
+            // The mipi_spi driver aborts a paged refresh when a page draws no
+            // pixels. Keep every internal page non-empty so the driver reaches
+            // slices below the first page.
+            it.vertical_line(319, 0, 240, Color(0, 0, 0));
+            it.image(0, id(memory_frame_draw_top), id(memory_frame_slice));
+          }
+
+online_image:
+    - id: memory_frame_slice
+      url: ${service_base_url}/api/v1/displays/${device_id}/slice.jpg?top=0&height=${memory_frame_slice_height}
+      format: jpeg
+      type: RGB565
+      buffer_size: ${memory_frame_buffer_size}
+      on_download_finished:
+          - lambda: |-
+                if (id(memory_frame_request_generation) != id(memory_frame_generation)) {
+                  return;
+                }
+                id(memory_frame_draw_top) = id(memory_frame_request_top);
+                id(memory_frame_draw_pending) = true;
+          - component.update: lcd
+          - lambda: |-
+                id(memory_frame_draw_pending) = false;
+          - delay: 50ms
+          - online_image.release: memory_frame_slice
+          - if:
+                condition:
+                    lambda: |-
+                        if (id(memory_frame_request_generation) != id(memory_frame_generation)) {
+                          return false;
+                        }
+                        id(memory_frame_next_top) =
+                            id(memory_frame_request_top) + id(memory_frame_request_height);
+                        return id(memory_frame_next_top) < 240;
+                then:
+                    - script.execute: request_memory_frame_slice
+      on_error:
+          - logger.log: Failed to download memory frame
+
+interval:
+    - interval: ${refresh_interval}
+      then:
+          - script.execute: refresh_memory_frame

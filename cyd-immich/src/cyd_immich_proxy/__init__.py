@@ -1,0 +1,1 @@
+"""CYD Immich proxy package."""

@@ -1,0 +1,32 @@
+---
+services:
+    cyd-immich-proxy:
+        build:
+            context: .
+        restart: unless-stopped
+        environment:
+            IMMICH_BASE_URL: ${IMMICH_BASE_URL}
+            IMMICH_API_KEY: ${IMMICH_API_KEY}
+            TIMEZONE: ${TIMEZONE}
+            ROTATION_SECONDS: ${ROTATION_SECONDS}
+            OUTPUT_WIDTH: ${OUTPUT_WIDTH}
+            OUTPUT_HEIGHT: ${OUTPUT_HEIGHT}
+            JPEG_QUALITY: ${JPEG_QUALITY}
+            YEAR_OVERLAY: ${YEAR_OVERLAY}
+        ports:
+            - 8623:8080
+        healthcheck:
+            test:
+                - CMD
+                - uv
+                - run
+                - python
+                - -c
+                - import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=5)
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 20s
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.cyd-immich-proxy.rule=Host(`cyd-immich-proxy.internal.mikeage.net`)

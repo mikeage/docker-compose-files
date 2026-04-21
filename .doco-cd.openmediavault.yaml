@@ -11,6 +11,10 @@ name: cross-seed
 reference: refs/heads/main
 working_dir: cross-seed
 ---
+name: cyd-immich
+reference: refs/heads/main
+working_dir: cyd-immich
+---
 name: cyd-monitor
 reference: refs/heads/main
 working_dir: cyd-monitor

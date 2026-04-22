@@ -18,6 +18,8 @@ jobs:
         steps:
             - name: Check out repository
               uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+              with:
+                  fetch-depth: 0
 
             - name: Set up uv
               uses: astral-sh/setup-uv@d4b2f3b6ecc6e67c4457f6d3e41ec42d3d0fcb86 # v5
@@ -34,14 +36,44 @@ jobs:
               run: uv run scripts/validate_compose.py
 
             - name: Build custom Dockerfiles
+              env:
+                  EVENT_NAME: ${{ github.event_name }}
+                  PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+                  PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
               run: |
                   set -euo pipefail
 
-                  while IFS= read -r dockerfile; do
+                  mapfile -t dockerfiles < <(find . \( -name Dockerfile -o -name 'Dockerfile.*' \) | sort)
+                  build_targets=()
+
+                  if [[ "$EVENT_NAME" == "pull_request" ]]; then
+                    mapfile -t changed_files < <(git diff --name-only "$PR_BASE_SHA" "$PR_HEAD_SHA")
+
+                    for dockerfile in "${dockerfiles[@]}"; do
+                      context_dir="$(dirname "$dockerfile")"
+                      context_path="${context_dir#./}"
+
+                      for changed_file in "${changed_files[@]}"; do
+                        if [[ "$changed_file" == "$context_path" || "$changed_file" == "$context_path/"* ]]; then
+                          build_targets+=("$dockerfile")
+                          break
+                        fi
+                      done
+                    done
+                  else
+                    build_targets=("${dockerfiles[@]}")
+                  fi
+
+                  if [[ ${#build_targets[@]} -eq 0 ]]; then
+                    echo "No Dockerfile contexts changed in this pull request."
+                    exit 0
+                  fi
+
+                  for dockerfile in "${build_targets[@]}"; do
                     context_dir="$(dirname "$dockerfile")"
                     tag_name="ci-$(echo "$context_dir" | tr '/.' '-')"
 
                     echo "::group::docker build $dockerfile"
                     docker buildx build --load --file "$dockerfile" --tag "$tag_name" "$context_dir"
                     echo "::endgroup::"
-                  done < <(find . \( -name Dockerfile -o -name 'Dockerfile.*' \) | sort)
+                  done

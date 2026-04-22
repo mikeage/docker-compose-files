@@ -27,6 +27,7 @@
 				"pinDigest"
 			],
 			"automerge": true,
+			"platformAutomerge": false,
 			"addLabels": [
 				"digest"
 			]

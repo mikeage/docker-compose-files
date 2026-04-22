@@ -10,6 +10,20 @@
 	],
 	"packageRules": [
 		{
+			"description": "Automerge Docker digest updates and label them clearly.",
+			"matchDatasources": [
+				"docker"
+			],
+			"matchUpdateTypes": [
+				"digest",
+				"pinDigest"
+			],
+			"automerge": true,
+			"addLabels": [
+				"digest"
+			]
+		},
+		{
 			"description": "Require manual approval for risky Docker major updates.",
 			"matchDatasources": [
 				"docker"

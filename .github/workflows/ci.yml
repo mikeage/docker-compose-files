@@ -1,0 +1,47 @@
+---
+name: CI
+
+on:
+    pull_request:
+    push:
+        branches:
+            - main
+    merge_group:
+
+permissions:
+    contents: read
+
+jobs:
+    validate:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Check out repository
+              uses: actions/checkout@v4
+
+            - name: Set up uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                  enable-cache: true
+
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v3
+
+            - name: Run prek
+              run: uvx prek run --all-files
+
+            - name: Validate compose files
+              run: uv run scripts/validate_compose.py
+
+            - name: Build custom Dockerfiles
+              run: |
+                  set -euo pipefail
+
+                  while IFS= read -r dockerfile; do
+                    context_dir="$(dirname "$dockerfile")"
+                    tag_name="ci-$(echo "$context_dir" | tr '/.' '-')"
+
+                    echo "::group::docker build $dockerfile"
+                    docker buildx build --load --file "$dockerfile" --tag "$tag_name" "$context_dir"
+                    echo "::endgroup::"
+                  done < <(find . \( -name Dockerfile -o -name 'Dockerfile.*' \) | sort)

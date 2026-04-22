@@ -5,10 +5,18 @@
 		"docker:enableMajor"
 	],
 	"labels": [
-		"dependencies",
-		"docker"
+		"dependencies"
 	],
 	"packageRules": [
+		{
+			"description": "Label Docker updates clearly.",
+			"matchDatasources": [
+				"docker"
+			],
+			"addLabels": [
+				"docker"
+			]
+		},
 		{
 			"description": "Automerge Docker digest updates and label them clearly.",
 			"matchDatasources": [

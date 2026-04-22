@@ -9,6 +9,15 @@
 	],
 	"packageRules": [
 		{
+			"description": "Label GitHub Actions updates clearly.",
+			"matchManagers": [
+				"github-actions"
+			],
+			"addLabels": [
+				"github-actions"
+			]
+		},
+		{
 			"description": "Label Docker updates clearly.",
 			"matchDatasources": [
 				"docker"

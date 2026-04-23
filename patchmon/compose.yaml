@@ -19,7 +19,7 @@ name: patchmon
 
 services:
     database:
-        image: postgres:17-alpine@sha256:c7526c0f6c3f30260a563d7bcf8ad778effac59a44f8ffa86678c35418338609
+        image: postgres:17-alpine@sha256:c7526c0f6c3f30260a563d7bcf8ad778effac59a44f8ffa86678c35418338609  # https://github.com/PatchMon/PatchMon/blob/main/docker/docker-compose.yml
         restart: unless-stopped
         environment:
             POSTGRES_DB: patchmon_db
@@ -33,7 +33,7 @@ services:
             timeout: 5s
             retries: 7
     redis:
-        image: redis:7-alpine@sha256:7aec734b2bb298a1d769fd8729f13b8514a41bf90fcdd1f38ec52267fbaa8ee6
+        image: redis:7-alpine@sha256:7aec734b2bb298a1d769fd8729f13b8514a41bf90fcdd1f38ec52267fbaa8ee6  # https://github.com/PatchMon/PatchMon/blob/main/docker/docker-compose.yml
         restart: unless-stopped
         command: redis-server --requirepass your-redis-password-here # CHANGE THIS TO YOUR REDIS PASSWORD
         volumes:

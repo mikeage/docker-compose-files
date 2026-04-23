@@ -3,6 +3,5 @@
     "gitAuthor": "Renovate Bot <renovate-bot@mikeage.net>",
     "platform": "github",
     "onboarding": false,
-    "requireConfig": "required",
-    "ignorePrAuthor": true
+    "requireConfig": "required"
 }

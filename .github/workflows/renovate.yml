@@ -6,6 +6,18 @@ concurrency:
     cancel-in-progress: false
 
 on:
+    push:
+        branches:
+            - main
+    issue_comment:
+        types:
+            - created
+    issues:
+        types:
+            - edited
+    pull_request:
+        types:
+            - edited
     workflow_dispatch:
     schedule:
         - cron: 2/15 * * * *
@@ -15,6 +27,25 @@ permissions:
 
 jobs:
     renovate:
+        if: >-
+            github.event_name == 'workflow_dispatch' ||
+            github.event_name == 'schedule' ||
+            github.event_name == 'push' ||
+            (
+                github.event_name == 'issue_comment' &&
+                github.event.action == 'created' &&
+                contains(github.event.comment.body, '@renovate')
+            ) ||
+            (
+                github.event_name == 'issues' &&
+                github.event.action == 'edited' &&
+                github.event.issue.title == 'Dependency Dashboard'
+            ) ||
+            (
+                github.event_name == 'pull_request' &&
+                github.event.action == 'edited' &&
+                startsWith(github.event.pull_request.head.ref, 'renovate/')
+            )
         runs-on: ubuntu-latest
         env:
             LOG_LEVEL: info

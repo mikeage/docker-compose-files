@@ -1,7 +1,7 @@
 ---
 services:
     headscale:
-        image: docker.io/headscale/headscale:v0.26@sha256:ea9b5ee06274d757a4d52103de56cd11a9c393acb19d9a35f4b9fe52ada410de
+        image: docker.io/headscale/headscale:v0.28@sha256:51b1b9182bb6219e97374fa89af6b9320d6f87ecc739e328d5357ea4fa7a5ce3
         restart: unless-stopped
         environment:
             - TZ=Asia/Jerusalem

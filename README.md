@@ -21,7 +21,6 @@ Each subdirectory contains the files needed to deploy a specific stack, typicall
   | **Media Management** ||
   | jellyfin | Media server for movies, TV, music, and more |
   | navidrome | Music server and streamer compatible with Subsonic/Airsonic |
-  | photoprism | Photo management with AI features |
   | piwigo | Photo gallery management system |
   | immich | Self-hosted photo and video backup platform |
   | photo-gallery | Lightweight photo gallery stack |
@@ -39,7 +38,6 @@ Each subdirectory contains the files needed to deploy a specific stack, typicall
   | kapowarr | Comic book management and reading |
   | komga | Media server for comics and manga |
   | picard | Music tagger and metadata organizer |
-  | pinchflat | YouTube downloader and media archiver |
   | bentopdf | Web-to-PDF conversion service |
   | **File Sharing & Storage** ||
   | nextcloud | File hosting and collaboration platform |
@@ -53,13 +51,10 @@ Each subdirectory contains the files needed to deploy a specific stack, typicall
   | cross-seed | Tool for cross-seeding torrents across trackers |
   | myanonamouse | Automatically update MAM_ID cookie for MyAnonamouse |
   | qbittorrent | qBittorrent stack with multiple dedicated instances |
-  | transmission | BitTorrent client |
   | qui | Lightweight UI for Autobrr |
   | **Home Automation & IoT** ||
   | frigate | NVR with real-time object detection for IP cameras |
   | homeassistant | Open source home automation platform |
-  | mosquitto | MQTT broker for IoT applications |
-  | room-assistant | Presence detection for home automation |
   | octoeverywhere | Remote access for 3D printers |
   | **Aviation & Tracking** ||
   | fr24feed | ADS-B client for Flightradar24 |
@@ -67,9 +62,7 @@ Each subdirectory contains the files needed to deploy a specific stack, typicall
   | ultrafeederPF | PlaneFence-oriented feeder stack |
   | **Dashboards & Monitoring** ||
   | cyd-monitor | Host metrics exporter |
-  | homarr | Dashboard for self-hosted services |
   | patchmon | Patch and package monitoring stack |
-  | uptime-kuma | Uptime monitoring tool |
   | whatsrunning | Container status dashboard |
   | **Productivity & Organization** ||
   | escher | Custom gallery application |
@@ -78,11 +71,8 @@ Each subdirectory contains the files needed to deploy a specific stack, typicall
   | karakeep | Bookmarking and knowledge capture tool |
   | seerr | Media request management |
   | **Mail, Network, and Access** ||
-  | consul | Service networking and discovery |
   | dovecot | Mail server components |
   | getmail6 | Mail retrieval service |
-  | headscale | Self-hosted Tailscale control server |
-  | registrator | Dynamic service registration helper |
   | roundcube | Webmail interface |
   | rspamd | Mail filtering stack |
   | tailscale-router | Tailscale-based routing container |

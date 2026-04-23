@@ -1,9 +1,0 @@
----
-services:
-    registrator:
-        image: marioezquerro/registrator:latest@sha256:16fe6abd5b169a89a89d1d8cadfc61a91a4e2ce26ab95d4c8deadbebb44d678e
-        restart: unless-stopped
-        network_mode: host
-        volumes:
-            - /var/run/docker.sock:/tmp/docker.sock
-        command: -ip ${HOSTNAME} consul://consul.lan:8500

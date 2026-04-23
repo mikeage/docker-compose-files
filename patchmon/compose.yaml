@@ -19,7 +19,7 @@ name: patchmon
 
 services:
     database:
-        image: postgres:17-alpine@sha256:c7526c0f6c3f30260a563d7bcf8ad778effac59a44f8ffa86678c35418338609  # https://github.com/PatchMon/PatchMon/blob/main/docker/docker-compose.yml
+        image: postgres:18-alpine@sha256:54451ecb8ab38c24c3ec123f2fd501303a3a1856a5c66e98cecf2460d5e1e9d7  # https://github.com/PatchMon/PatchMon/blob/main/docker/docker-compose.yml
         restart: unless-stopped
         environment:
             POSTGRES_DB: patchmon_db

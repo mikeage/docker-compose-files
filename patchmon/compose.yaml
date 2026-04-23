@@ -33,7 +33,7 @@ services:
             timeout: 5s
             retries: 7
     redis:
-        image: redis:7-alpine@sha256:7aec734b2bb298a1d769fd8729f13b8514a41bf90fcdd1f38ec52267fbaa8ee6  # https://github.com/PatchMon/PatchMon/blob/main/docker/docker-compose.yml
+        image: redis:8-alpine@sha256:c5e375abb885e6b2021c0377879e4890bf76f9065b8922ffc113f2b226b9fc17  # https://github.com/PatchMon/PatchMon/blob/main/docker/docker-compose.yml
         restart: unless-stopped
         command: redis-server --requirepass your-redis-password-here # CHANGE THIS TO YOUR REDIS PASSWORD
         volumes:

@@ -1,7 +1,7 @@
 ---
 services:
     transmission:
-        image: lscr.io/linuxserver/transmission:4.0.5@sha256:c6a95f014f7ec812c9173be5a0afef4656e7c09be1c2d063786f42bdc3ee3d8a
+        image: lscr.io/linuxserver/transmission:4.1.1@sha256:dd888c17f97eca1a2dda4aa7986c9080fe1b69a61aef845440f1bd9285aa3708
         environment:
             - PUID=1000
             - PGID=1000

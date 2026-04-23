@@ -1,7 +1,7 @@
 ---
 services:
     mysql:
-        image: mariadb:10@sha256:407fccb51e710f34752c1a3ef9b936d1f55f38d4ac7fa043b3759742d266fd9a
+        image: mariadb:12@sha256:e0236fc6386e7eacd9359e59d0a078bd7aa0d18280d36d13061121bedeaee903
         command: --transaction-isolation=READ-COMMITTED
         restart: unless-stopped
         healthcheck:

@@ -7,6 +7,9 @@
 	"labels": [
 		"dependencies"
 	],
+	"lockFileMaintenance": {
+		"automerge": true
+	},
 	"packageRules": [
 		{
 			"description": "Label GitHub Actions updates clearly.",

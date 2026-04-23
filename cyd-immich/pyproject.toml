@@ -2,7 +2,7 @@
 name = "cyd-immich-proxy"
 version = "0.1.0"
 description = "Immich on-this-day image proxy for CYD displays"
-requires-python = ">=3.12,<3.14"
+requires-python = ">=3.14,<3.15"
 dependencies = [
   "fastapi>=0.115.0,<1.0.0",
   "httpx>=0.28.0,<1.0.0",

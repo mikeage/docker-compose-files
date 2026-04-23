@@ -27,18 +27,22 @@
 			]
 		},
 		{
-			"description": "Automerge Docker digest updates and label them clearly.",
-			"matchDatasources": [
-				"docker"
-			],
+			"description": "Label digest updates clearly.",
 			"matchUpdateTypes": [
 				"digest",
 				"pinDigest"
 			],
-			"automerge": true,
 			"addLabels": [
 				"digest"
 			]
+		},
+		{
+			"description": "Automerge digest updates and pins.",
+			"matchUpdateTypes": [
+				"digest",
+				"pinDigest"
+			],
+			"automerge": true
 		},
 		{
 			"description": "Require manual approval for risky Docker major updates.",

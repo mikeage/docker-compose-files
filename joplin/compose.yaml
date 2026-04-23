@@ -1,7 +1,7 @@
 ---
 services:
     db:
-        image: postgres:16@sha256:65d6d1d12f304c426282337417e2770d3449e10557e74ac7c2f319124687411f
+        image: postgres:16@sha256:760ea41aae126965bedd587d35a23de37447bb13a6ac4444bef6ff73b8b72234
         healthcheck:
             test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
             start_period: 10s

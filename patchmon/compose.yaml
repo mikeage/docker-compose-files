@@ -21,7 +21,7 @@ name: patchmon
 services:
 
     server:
-        image: ghcr.io/patchmon/patchmon-server:latest
+        image: ghcr.io/patchmon/patchmon-server:latest@sha256:e572761a594f22f02afbe98b14cd2813814c5d864bd7d972604ea7a951cec306
         restart: unless-stopped
         env_file: .env
         ports:
@@ -82,7 +82,7 @@ services:
     #     max-file: "3"
 
     guacd:
-        image: guacamole/guacd:latest
+        image: guacamole/guacd:latest@sha256:2d266a525a72ad55d8ea7cd4ca8342a1b44075759b03660d8684821b3636a922
         restart: unless-stopped
         read_only: true
         tmpfs:

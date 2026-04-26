@@ -45,9 +45,9 @@ services:
             TZ: ${TZ}
             APPRISE_WORKER_COUNT: 1
         volumes:
-            - config:/config
-            - plugin:/plugin
-            - attach:/attach
+            - apprise-config:/config
+            - apprise-plugin:/plugin
+            - apprise-attach:/attach
 
 secrets:
     api_secret:
@@ -59,6 +59,6 @@ secrets:
     ssh_private_key:
         file: /opt/doco-cd/secrets/id_ed25519_doco
 volumes:
-    config:
-    plugin:
-    attach:
+    apprise-config:
+    apprise-plugin:
+    apprise-attach:

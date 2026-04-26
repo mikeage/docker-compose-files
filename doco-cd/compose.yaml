@@ -44,6 +44,10 @@ services:
         environment:
             TZ: ${TZ}
             APPRISE_WORKER_COUNT: 1
+        volumes:
+            - config:/config
+            - plugin:/plugin
+            - attach:/attach
 
 secrets:
     api_secret:
@@ -54,3 +58,7 @@ secrets:
         file: /opt/doco-cd/secrets/sops_age_key.txt
     ssh_private_key:
         file: /opt/doco-cd/secrets/id_ed25519_doco
+volumes:
+    config:
+    plugin:
+    attach:

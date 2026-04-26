@@ -42,13 +42,13 @@ volumes:
         driver_opts:
             type: nfs
             o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
-            device: :/storage/temporary/sonarr/media/TV
+            device: :/unreliable/sonarr/media/TV
     mediaKidsTV:
         driver: local
         driver_opts:
             type: nfs
             o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
-            device: :/storage/temporary/sonarr/media/KidsTV
+            device: :/unreliable/sonarr/media/KidsTV
     mediaMovies:
         driver: local
         driver_opts:

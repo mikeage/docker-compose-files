@@ -29,4 +29,4 @@ volumes:
         driver_opts:
             type: nfs
             o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
-            device: :/storage/temporary/sonarr
+            device: :/unreliable/sonarr

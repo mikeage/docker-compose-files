@@ -15,7 +15,7 @@ services:
             - 2468:2468
         volumes:
             - /opt/cross-seed.sonarr/config:/config
-            - /export/storage/temporary/sonarr/torrent_downloads:/data/torrent_downloads
+            - /export/unreliable/sonarr/torrent_downloads:/data/torrent_downloads
         command: daemon
         restart: unless-stopped
         labels:

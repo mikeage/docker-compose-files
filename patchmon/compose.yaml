@@ -21,7 +21,7 @@ name: patchmon
 services:
 
     server:
-        image: ghcr.io/patchmon/patchmon-server:latest@sha256:e572761a594f22f02afbe98b14cd2813814c5d864bd7d972604ea7a951cec306
+        image: ghcr.io/patchmon/patchmon-server:latest@sha256:70506d4383b3ebba8c75d42d9db4485c683add12259cc24769b100f74bde6348
         restart: unless-stopped
         env_file: .env
         ports:

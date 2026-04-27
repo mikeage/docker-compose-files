@@ -4,10 +4,6 @@
 		"config:best-practices",
 		"docker:enableMajor"
 	],
-	"assignAutomerge": true,
-	"assignees": [
-		"mikeage"
-	],
 	"labels": [
 		"dependencies"
 	],

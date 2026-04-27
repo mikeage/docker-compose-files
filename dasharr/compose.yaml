@@ -1,7 +1,7 @@
 ---
 services:
     db:
-        image: postgres:18.0
+        image: postgres:18.0@sha256:41fc5342eefba6cc2ccda736aaf034bbbb7c3df0fdb81516eba1ba33f360162c
         restart: unless-stopped
         shm_size: 128mb
         volumes:
@@ -15,7 +15,7 @@ services:
             retries: 5
 
     dasharr:
-        image: ghcr.io/arcadia-solutions/dasharr:latest
+        image: ghcr.io/arcadia-solutions/dasharr:latest@sha256:5503eebcfed469e2d20d6a4875ceee53bb2564841d68d23b515cae6bc51f6b27
         ports:
             - 3002:80
         environment:

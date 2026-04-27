@@ -6,7 +6,7 @@ repos:
             name: Ensure env files are sops encrypted
             entry: bash scripts/check_sops_env.sh
             language: system
-            files: (^|/)[^/]+\.env$
+            files: (^|/)[^/]*\.env$
     - repo: https://github.com/pre-commit/pre-commit-hooks
       rev: v6.0.0
       hooks:

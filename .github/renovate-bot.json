@@ -1,5 +1,6 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-global-schema.json",
+    "gitAuthor": "mikeage[bot] <github-bot@mikeage.net>",
     "platform": "github",
     "onboarding": false,
     "requireConfig": "required"

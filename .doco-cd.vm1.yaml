@@ -23,6 +23,10 @@ name: cyd-monitor
 reference: refs/heads/main
 working_dir: cyd-monitor
 ---
+name: dasharr
+reference: refs/heads/main
+working_dir: dasharr
+---
 name: escher
 reference: refs/heads/main
 working_dir: escher

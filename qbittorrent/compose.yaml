@@ -1,6 +1,6 @@
 ---
 services:
-    qbittorrent:
+    main:
         image: lscr.io/linuxserver/qbittorrent:5.1.4@sha256:3679a75dd2304b695525d83a4ff14c458708b5da4a7ce53044240932139590e1
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
@@ -16,7 +16,7 @@ services:
             WEBUI_PORT: 8012
             TORRENTING_PORT: 28345
         volumes:
-            - /opt/qbittorrent/config:/config
+            - /opt/qbittorrent/main-config:/config
             - /export/storage/torrent_downloads:/data/torrent_downloads
         ports:
             - 8012:8012
@@ -27,7 +27,7 @@ services:
             - traefik.enable=true
             - traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.internal.mikeage.net`)
             - traefik.http.services.qbittorrent.loadbalancer.server.port=8012
-    qbittorrent-keep:
+    keep:
         image: lscr.io/linuxserver/qbittorrent:5.1.4@sha256:3679a75dd2304b695525d83a4ff14c458708b5da4a7ce53044240932139590e1
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
@@ -43,7 +43,7 @@ services:
             WEBUI_PORT: 8014
             TORRENTING_PORT: 28344
         volumes:
-            - /opt/qbittorrent.keep/config:/config
+            - /opt/qbittorrent/keep-config:/config
             - /export/storage/permanent/torrent_downloads:/data/torrent_downloads
         ports:
             - 8014:8014
@@ -54,7 +54,34 @@ services:
             - traefik.enable=true
             - traefik.http.routers.qbittorrent-keep.rule=Host(`qbittorrent-keep.internal.mikeage.net`)
             - traefik.http.services.qbittorrent-keep.loadbalancer.server.port=8014
-    qbittorrent-sonarr:
+    fl:
+        image: lscr.io/linuxserver/qbittorrent:5.1.4@sha256:3679a75dd2304b695525d83a4ff14c458708b5da4a7ce53044240932139590e1
+        healthcheck:
+            test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
+                      r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
+            start_period: 20s
+            interval: 30s
+            timeout: 10s
+            retries: 5
+        environment:
+            PUID: 1000
+            PGID: 1000
+            TZ: Asia/Jerusalem
+            WEBUI_PORT: 8017
+            TORRENTING_PORT: 28346
+        volumes:
+            - /opt/qbittorrent/FL-config:/config
+            - /export/unreliable/FL_torrent_downloads/:/data/torrent_downloads
+        ports:
+            - 8017:8017
+            - 28346:28346
+            - 28346:28346/udp
+        restart: unless-stopped
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.qbittorrent-fl.rule=Host(`qbittorrent-fl.internal.mikeage.net`)
+            - traefik.http.services.qbittorrent-fl.loadbalancer.server.port=8017
+    sonarr:
         image: lscr.io/linuxserver/qbittorrent:5.1.4@sha256:3679a75dd2304b695525d83a4ff14c458708b5da4a7ce53044240932139590e1
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
@@ -70,7 +97,7 @@ services:
             WEBUI_PORT: 8015
             TORRENTING_PORT: 28343
         volumes:
-            - /opt/qbittorrent.sonarr/config:/config
+            - /opt/qbittorrent/sonarr-config:/config
             - /export/unreliable/sonarr/torrent_downloads:/data/torrent_downloads
         ports:
             - 8015:8015
@@ -81,7 +108,7 @@ services:
             - traefik.enable=true
             - traefik.http.routers.qbittorrent-sonarr.rule=Host(`qbittorrent-sonarr.internal.mikeage.net`)
             - traefik.http.services.qbittorrent-sonarr.loadbalancer.server.port=8015
-    qbittorrent-radarr:
+    radarr:
         image: lscr.io/linuxserver/qbittorrent:5.1.4@sha256:3679a75dd2304b695525d83a4ff14c458708b5da4a7ce53044240932139590e1
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
@@ -97,7 +124,7 @@ services:
             WEBUI_PORT: 8016
             TORRENTING_PORT: 28342
         volumes:
-            - /opt/qbittorrent.radarr/config:/config
+            - /opt/qbittorrent/radarr-config:/config
             - /export/storage/temporary/radarr/torrent_downloads:/data/torrent_downloads
         ports:
             - 8016:8016
@@ -108,7 +135,7 @@ services:
             - traefik.enable=true
             - traefik.http.routers.qbittorrent-radarr.rule=Host(`qbittorrent-radarr.internal.mikeage.net`)
             - traefik.http.services.qbittorrent-radarr.loadbalancer.server.port=8016
-    qbittorrent-gavriel:
+    gavriel:
         image: lscr.io/linuxserver/qbittorrent:5.1.4@sha256:3679a75dd2304b695525d83a4ff14c458708b5da4a7ce53044240932139590e1
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\

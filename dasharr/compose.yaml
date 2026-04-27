@@ -1,0 +1,30 @@
+---
+services:
+    db:
+        image: postgres:18.0
+        restart: unless-stopped
+        shm_size: 128mb
+        volumes:
+            - /opt/dasharr/db:/var/lib/postgresql/
+        env_file:
+            - .env
+        healthcheck:
+            test: [CMD-SHELL, pg_isready -U dasharr]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+
+    dasharr:
+        image: ghcr.io/arcadia-solutions/dasharr:latest
+        ports:
+            - 3002:80
+        environment:
+            - ENV=Docker
+        env_file:
+            - .env
+        depends_on:
+            db:
+                condition: service_healthy
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.dasharr.rule=Host(`dasharr.internal.mikeage.net`)

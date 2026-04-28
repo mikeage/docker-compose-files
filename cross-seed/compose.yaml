@@ -14,7 +14,7 @@ services:
         ports:
             - 2468:2468
         volumes:
-            - /opt/cross-seed.sonarr/config:/config
+            - /opt/cross-seed/sonarr-config:/config
             - /export/unreliable/sonarr/torrent_downloads:/data/torrent_downloads
         command: daemon
         restart: unless-stopped
@@ -35,7 +35,7 @@ services:
         ports:
             - 2469:2468
         volumes:
-            - /opt/cross-seed.radarr/config:/config
+            - /opt/cross-seed/radarr-config:/config
             - /export/storage/temporary/radarr/torrent_downloads:/data/torrent_downloads
         command: daemon
         restart: unless-stopped

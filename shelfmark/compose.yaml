@@ -11,6 +11,7 @@ services:
         volumes:
             - ebooks:/books  # Default destination for book downloads
             - audiobooks:/audiobooks
+            - kidsaudiobooks:/kidsaudiobooks
             - /opt/shelfmark/config:/config  # App configuration
             - torrent_downloads:/data/torrent_downloads
         labels:
@@ -35,3 +36,9 @@ volumes:
             type: nfs
             o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
             device: :/storage/media/audiobooks
+    kidsaudiobooks:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/media/KidsAudiobooks

@@ -27,10 +27,10 @@ name: nextcloud
 reference: refs/heads/main
 working_dir: nextcloud
 ---
-name: open-webui
-reference: refs/heads/main
-working_dir: open-webui
----
+# name: open-webui
+# reference: refs/heads/main
+# working_dir: open-webui
+# ---
 name: patchmon
 reference: refs/heads/main
 working_dir: patchmon

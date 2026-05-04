@@ -4,6 +4,9 @@
 		"config:best-practices",
 		"docker:enableMajor"
 	],
+	"assignees": [
+		"mikeage"
+	],
 	"labels": [
 		"dependencies"
 	],

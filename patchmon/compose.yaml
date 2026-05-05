@@ -62,7 +62,7 @@ services:
         #         max-file: '3'
 
     redis:
-        image: redis:7-alpine@sha256:7aec734b2bb298a1d769fd8729f13b8514a41bf90fcdd1f38ec52267fbaa8ee6  # https://github.com/PatchMon/PatchMon/blob/main/docker/docker-compose.yml
+        image: redis:7-alpine@sha256:286bd4264adb303147270bb2d735352497e950f7b73b2ca42364d63d7daf61ee  # https://github.com/PatchMon/PatchMon/blob/main/docker/docker-compose.yml
         restart: unless-stopped
         env_file: .env
         command: redis-server --requirepass ${REDIS_PASSWORD}

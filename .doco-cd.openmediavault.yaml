@@ -2,8 +2,8 @@
 name: autobrr
 reference: refs/heads/main
 working_dir: autobrr
-destroy: true
-destroy_opts:
+destroy:
+    enabled: true
     remove_dir: false
 ---
 name: autoheal

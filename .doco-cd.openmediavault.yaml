@@ -3,6 +3,8 @@ name: autobrr
 reference: refs/heads/main
 working_dir: autobrr
 destroy: true
+destroy_opts:
+    remove_dir: false
 ---
 name: autoheal
 reference: refs/heads/main

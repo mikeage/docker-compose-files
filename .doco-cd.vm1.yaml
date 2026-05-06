@@ -3,6 +3,8 @@ name: autoheal
 reference: refs/heads/main
 working_dir: autoheal
 destroy: true
+destroy_opts:
+    remove_dir: false
 ---
 name: audiobookshelf
 reference: refs/heads/main

@@ -2,6 +2,7 @@
 name: autoheal
 reference: refs/heads/main
 working_dir: autoheal
+destroy: true
 ---
 name: cyd-monitor
 reference: refs/heads/main

@@ -48,6 +48,12 @@ services:
             - apprise-config:/config
             - apprise-plugin:/plugin
             - apprise-attach:/attach
+        healthcheck:
+            test: [CMD, python3, -c, "import urllib.request; urllib.request.urlopen('http://localhost:8000/status', timeout=4).close()"]
+            start_period: 15s
+            interval: 30s
+            timeout: 5s
+            retries: 3
 
 secrets:
     api_secret:

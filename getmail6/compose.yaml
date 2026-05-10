@@ -9,3 +9,12 @@ services:
         volumes:
             - /opt/getmail6/config:/config:ro
             - /opt/getmail6/state:/state
+        healthcheck:
+            test:
+                - CMD-SHELL
+                - test -r "$${RCFILE:-/config/getmailrc}" && test -d "$${GETMAILDIR:-/state/getmaildir}" && test -w 
+                  "$${GETMAILDIR:-/state/getmaildir}"
+            start_period: 15s
+            interval: 30s
+            timeout: 5s
+            retries: 3

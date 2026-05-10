@@ -10,3 +10,9 @@ services:
       # Optional: include stderr too (enabled by default); add filters via labels later
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock:ro
+        healthcheck:
+            test: [CMD-SHELL, test -S /var/run/docker.sock && rsyslogd -N1]
+            start_period: 15s
+            interval: 30s
+            timeout: 5s
+            retries: 3

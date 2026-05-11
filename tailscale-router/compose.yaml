@@ -18,6 +18,6 @@ services:
             - /dev/net/tun:/dev/net/tun
             - /opt/tailscale/data:/var/lib/tailscale
         environment:
-            - TS_EXTRA_ARGS=--login-server https://headscale.mikeage.net --accept-dns=false --advertise-exit-node --advertise-routes=192.168.0.0/16
+            - TS_EXTRA_ARGS=--login-server https://headscale.mikeage.net --accept-dns=true --advertise-exit-node --advertise-routes=192.168.0.0/16
             - TS_STATE_DIR=/var/lib/tailscale
             - TZ=Asia/Jerusalem

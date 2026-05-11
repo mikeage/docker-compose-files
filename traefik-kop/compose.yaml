@@ -1,7 +1,7 @@
 ---
 services:
     traefik-kop:
-        image: ghcr.io/jittering/traefik-kop:0.20@sha256:47fe0d357acd0b0ac0e877c14f389745d7406f60783f2afc6d1848e36566d20e
+        image: ghcr.io/jittering/traefik-kop:0.20@sha256:f4919330407ae93f6d966cff7d7352198c09ed5e788c959a1bfd9d0eaf7e1091
         restart: unless-stopped
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock

@@ -46,6 +46,7 @@ services:
             - 8008:8000
         healthcheck:
             test: [CMD, curl, -f, http://localhost:8000]
+            start_period: 120s
             interval: 30s
             timeout: 10s
             retries: 5

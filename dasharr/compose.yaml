@@ -1,7 +1,7 @@
 ---
 services:
     db:
-        image: postgres:18.3@sha256:7e32e9833a6fb1c92c32552794cb6ed569d51b445a54907d35fc112ef39684db
+        image: postgres:18.4@sha256:f7ce845ee6873dd84be93c9828fe0d1fab0f9707dc9ac569694657398b290bce
         restart: unless-stopped
         shm_size: 128mb
         volumes:

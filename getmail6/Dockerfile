@@ -1,4 +1,4 @@
-FROM debian:stable-slim@sha256:e2af2b77f6cc577b9cde8f2d0fc75584b208169453681a98440548d72a2bbcfe
+FROM debian:stable-slim@sha256:5012d0517aa0075a7150a45aae67586641e898913b7af3b08228108565b5f90c
 
 RUN apt-get update \
   && apt-get install -y --no-install-recommends ca-certificates getmail6 swaks bash \

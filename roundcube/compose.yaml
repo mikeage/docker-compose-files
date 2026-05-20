@@ -38,7 +38,7 @@ services:
 
 
     roundcubedb:
-        image: postgres:18.4@sha256:7a329cef0fd5f39a1db2fc4b3f31ab21033d7971f0246832d8a671286791eca4
+        image: postgres:18.4@sha256:7aba8c66107ee218ddbaacb30eae46d774bf5e34ab77a917be819b4e227493c4
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']

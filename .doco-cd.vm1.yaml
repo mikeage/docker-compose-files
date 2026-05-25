@@ -78,6 +78,10 @@ name: paperless-ngx-gavriel
 reference: refs/heads/main
 working_dir: paperless-ngx-gavriel
 ---
+name: paperless-ngx-lindy
+reference: refs/heads/main
+working_dir: paperless-ngx-lindy
+---
 name: photo-gallery
 reference: refs/heads/main
 working_dir: photo-gallery

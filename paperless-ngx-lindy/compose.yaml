@@ -43,7 +43,7 @@ services:
             tika:
                 condition: service_healthy
         ports:
-            - 8018:8000
+            - 8028:8000
         healthcheck:
             test: [CMD, curl, -f, http://localhost:8000]
             start_period: 120s

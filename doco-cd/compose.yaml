@@ -39,7 +39,7 @@ services:
             retries: 3
 
     apprise:
-        image: caronc/apprise:latest@sha256:9df799f47aec5854f855fdacd5df4eac25b79ebe828fadc111360411b2c22181
+        image: caronc/apprise:latest@sha256:7492ccb43fb0bbb12ec5c91bef77102cfb2246f0ad63178c21b590da893487f2
         restart: unless-stopped
         environment:
             TZ: ${TZ}

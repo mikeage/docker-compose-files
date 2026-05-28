@@ -44,6 +44,12 @@ working_dir: rsyslog-dockerlogs
 environment:
     HOSTNAME: g4-gpu
 ---
+name: tailscale-router
+reference: refs/heads/main
+working_dir: tailscale-router
+environment:
+    TS_HOSTNAME: g4-gpu
+---
 name: traefik-kop
 reference: refs/heads/main
 working_dir: traefik-kop

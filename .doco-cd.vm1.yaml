@@ -136,7 +136,7 @@ name: tailscale-router
 reference: refs/heads/main
 working_dir: tailscale-router
 environment:
-    TS_HOSTNAME: vm1
+    TS_HOSTNAME: ts-vm1
 ---
 name: traefik-kop
 reference: refs/heads/main

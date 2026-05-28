@@ -135,6 +135,8 @@ working_dir: sonarr
 name: tailscale-router
 reference: refs/heads/main
 working_dir: tailscale-router
+environment:
+    TS_HOSTNAME: vm1
 ---
 name: traefik-kop
 reference: refs/heads/main

@@ -2,7 +2,7 @@
 services:
     tailscale-router:
         image: tailscale/tailscale:v1.98.3@sha256:854b77123b9536adae2e97f5a5fdb1790ed03438b911ab7f07780155e0af6ce2
-        hostname: tailscale-router
+        hostname: ${TS_HOSTNAME:?set TS_HOSTNAME}
         network_mode: host
         restart: unless-stopped
         healthcheck:
@@ -21,3 +21,4 @@ services:
             - TS_EXTRA_ARGS=--login-server https://headscale.mikeage.net --accept-dns=true --advertise-exit-node --advertise-routes=192.168.0.0/16
             - TS_STATE_DIR=/var/lib/tailscale
             - TZ=Asia/Jerusalem
+            - TS_HOSTNAME=${TS_HOSTNAME:?set TS_HOSTNAME}

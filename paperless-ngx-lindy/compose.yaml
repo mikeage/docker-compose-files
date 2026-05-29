@@ -79,7 +79,7 @@ services:
             - traefik.http.routers.paperless-ngx-lindy.rule=Host(`paperless-ngx-lindy.internal.mikeage.net`)
 
     gotenberg:
-        image: docker.io/gotenberg/gotenberg:8.27@sha256:d71ab8c13b6bd47c7bc81195082005dfb17eaa75e8b1fadd347a64ee66ed98d5
+        image: docker.io/gotenberg/gotenberg:8.33@sha256:bddd8ea9d076e2d08b6ddaa6efae6403185202c6dab65a6488ed0a6923d6d8e8
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, "curl --fail localhost:3000/health | grep '\"status\":\"up\",\"details\"'"]

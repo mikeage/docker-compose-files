@@ -1,7 +1,7 @@
 ---
 services:
     psitransfer:
-        image: psitrax/psitransfer:latest@sha256:d145ea03d0e37a80b0a9e10133e00a7304dfa36a0f5e865bc38b4df6c5a7ec63
+        image: psitrax/psitransfer:latest@sha256:870369ace957e2b37cf51979af202bbd2852f88d4f8672c48e7b211b0ca7d89b
         user: 1000:1000
         healthcheck:
             test: [CMD, node, -e, 'require("http").get("http://127.0.0.1:3000", (r) => process.exit(r.statusCode < 500 ? 0 : 1)).on("error", () => process.exit(1));']

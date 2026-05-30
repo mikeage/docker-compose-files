@@ -14,7 +14,7 @@ services:
         volumes:
             - /opt/paperless-ngx/redis_data:/data
     mariadb:
-        image: docker.io/library/mariadb:12@sha256:350261292d0129fd4b24f537dcf05ecd3ebe34d39d5b592af551f38310e7a167
+        image: docker.io/library/mariadb:12@sha256:e86a2f4b2e2dc59d5136cf6308058dc3a6caeb59fc9dec7984024be2b9b97ab8
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, mariadb-admin ping -h 127.0.0.1 -u"$$MARIADB_USER" -p"$$MARIADB_PASSWORD" --silent]

@@ -2,7 +2,7 @@
 services:
     openwebui:
         restart: unless-stopped
-        image: ghcr.io/open-webui/open-webui:main@sha256:74093dadc9c6aabc23987a74fd8c2fb8d995b1a5b22e83b0036fb9d6af590e8c
+        image: ghcr.io/open-webui/open-webui:main@sha256:0010ced098045adebf55850a579f741b4827f0405bb7ef0718345988f5547151
         ports:
             - 3006:8080
         volumes:

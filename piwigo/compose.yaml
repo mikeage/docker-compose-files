@@ -22,7 +22,7 @@ services:
             - 8083:80
         restart: unless-stopped
     mysql:
-        image: mariadb:12@sha256:f0b0a2b36cd621f919a7bbbff44d894aa274e3d32feecf032138557a483a6522
+        image: mariadb:12@sha256:b1c7bf836e64ed9406a8984af29509f40089d55cea14b32f12c4726a1f17104b
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, mariadb-admin ping -h 127.0.0.1 -u"$$MYSQL_USER" -p"$$MYSQL_PASSWORD" --silent]

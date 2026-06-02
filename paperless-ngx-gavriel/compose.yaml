@@ -1,7 +1,7 @@
 ---
 services:
     broker:
-        image: docker.io/library/redis:8@sha256:aa049e689e141a4358ad1d4562dc49c88a89fbab711fd8fcc33f684c80b26301
+        image: redis:8@sha256:aa049e689e141a4358ad1d4562dc49c88a89fbab711fd8fcc33f684c80b26301
         restart: unless-stopped
         healthcheck:
             test: [CMD, redis-cli, ping]
@@ -14,7 +14,7 @@ services:
         volumes:
             - redis_data:/data
     mariadb:
-        image: docker.io/library/mariadb:12@sha256:f0b0a2b36cd621f919a7bbbff44d894aa274e3d32feecf032138557a483a6522
+        image: mariadb:12@sha256:f0b0a2b36cd621f919a7bbbff44d894aa274e3d32feecf032138557a483a6522
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, mariadb-admin ping -h 127.0.0.1 -u"$$MARIADB_USER" -p"$$MARIADB_PASSWORD" --silent]

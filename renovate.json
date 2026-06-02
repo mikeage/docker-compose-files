@@ -58,12 +58,6 @@
 			],
 			"matchPackageNames": [
 				"apache/tika",
-				"docker.io/apache/tika",
-				"docker.io/gotenberg/gotenberg",
-				"docker.io/library/mariadb",
-				"docker.io/library/postgres",
-				"docker.io/library/redis",
-				"docker.io/valkey/valkey",
 				"getmeili/meilisearch",
 				"ghcr.io/immich-app/postgres",
 				"gotenberg/gotenberg",

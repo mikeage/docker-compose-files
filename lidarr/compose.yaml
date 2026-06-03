@@ -1,7 +1,7 @@
 ---
 services:
     lidarr:
-        image: lscr.io/linuxserver/lidarr:3.1.0@sha256:ca2f95634d422fdeccfbff2a42cbe3a4fed1170f7e3546d99d5d5f2c9c9aa03b
+        image: lscr.io/linuxserver/lidarr:3.1.0@sha256:b08b2194fa4ddb7f7ace9d1bfd82bd9b26f457d79aa70f42d923d2e15a820f0e
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8686; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\\
                       n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]

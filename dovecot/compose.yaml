@@ -1,7 +1,7 @@
 ---
 services:
     dovecot:
-        image: dovecot/dovecot:2.4.4@sha256:8da979a284cfea75af416ae710b7310b075f84736db5d1f31390e2dbdd41cd3e
+        image: dovecot/dovecot:2.4.4@sha256:723e3392fe16c6fad8ddc605ea767cc01b4bad9cd9f13eb1dbac15e79c89b2d4
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, doveadm service status imap-login >/dev/null 2>&1]

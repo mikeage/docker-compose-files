@@ -1,0 +1,30 @@
+services:
+  stacks:
+    image: zelest/stacks:latest
+    stop_signal: SIGTERM
+    stop_grace_period: 30s
+    ports:
+      - "7789:7788"
+    volumes:
+      - stacks-config:/opt/stacks/config
+      - /export/storage/permanent/Booksish:/opt/stacks/download
+      - stacks-logs:/opt/stacks/logs
+    restart: unless-stopped
+    environment:
+      USERNAME: ${USERNAME}
+      PASSWORD: ${PASSWORD}
+      # RESET_ADMIN: true
+      SOLVERR_URL: flaresolverr:8191
+      TZ: Asia/Jerusalem
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.stacks.rule=Host(`stacks.internal.mikeage.net`)
+
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    container_name: flaresolverr
+    ports:
+      - "8191:8191"
+    environment:
+      - LOG_LEVEL=info
+    restart: unless-stopped

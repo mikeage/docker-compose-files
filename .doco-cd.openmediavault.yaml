@@ -56,6 +56,10 @@ working_dir: rsyslog-dockerlogs
 environment:
     HOSTNAME: openmediavault
 ---
+name: stacks
+reference: refs/heads/main
+working_dir: stacks
+---
 name: traefik-kop
 reference: refs/heads/main
 working_dir: traefik-kop

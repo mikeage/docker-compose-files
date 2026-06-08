@@ -1,0 +1,20 @@
+---
+services:
+    ctbrec-alpine:
+        image: jafea7/ctbrec-alpine:26.5.20
+        restart: unless-stopped
+        environment:
+            - TZ=Asia/Jerusalem
+            - PGID=1000
+            - PUID=1000
+        ports:
+            - 18080:8080
+            - 18443:8443
+        volumes:
+            - ctbrec-config:/app/config:rw
+            - /export/unreliable/r/downloads/ctbrec:/app/media:rw
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.ctbrec.rule=Host(`ctbrec.internal.mikeage.net`)
+volumes:
+    ctbrec-config:

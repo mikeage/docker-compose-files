@@ -22,6 +22,10 @@ name: cyd-monitor
 reference: refs/heads/main
 working_dir: cyd-monitor
 ---
+name: ctbrec-alpine
+reference: refs/heads/main
+working_dir: ctbrec-alpine
+---
 name: dovecot
 reference: refs/heads/main
 working_dir: dovecot

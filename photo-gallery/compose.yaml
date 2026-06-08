@@ -15,6 +15,10 @@ services:
             - photo-gallery_photos_dummy:/photos
         ports:
             - 3080:3080
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.photo-gallery.rule=Host(`photo-gallery.internal.mikeage.net`)
+            - traefik.http.routers.photo-gallery.middlewares=basic-auth@file
         command:
             - -cname=Videos,path=/videos,thumbs=/thumbs
 volumes:

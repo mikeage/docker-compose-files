@@ -1,7 +1,7 @@
 ---
 services:
     ctbrec-alpine:
-        image: jafea7/ctbrec-alpine:26.5.20
+        image: jafea7/ctbrec-alpine:26.5.20@sha256:aa30a099df9e83d9502d8e3aca4c7dd2693f54be771b8357e64429e7fdedb8a7
         restart: unless-stopped
         environment:
             - TZ=Asia/Jerusalem

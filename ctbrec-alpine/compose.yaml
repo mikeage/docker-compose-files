@@ -15,6 +15,7 @@ services:
         labels:
             - traefik.enable=true
             - traefik.http.routers.ctbrec.rule=Host(`ctbrec.internal.mikeage.net`)
+            - traefik.http.routers.ctbrec.middlewares=basic-auth@file
             - traefik.http.services.ctbrec.loadbalancer.server.scheme=https
             - traefik.http.services.ctbrec.loadbalancer.serverstransport=insecure-skip-verify@file
 volumes:

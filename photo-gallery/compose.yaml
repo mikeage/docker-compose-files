@@ -1,7 +1,7 @@
 ---
 services:
     photo-gallery:
-        image: mikeage/photo-gallery:1.6.1post1
+        image: mikeage/photo-gallery:1.6.1post1@sha256:2cce49c9c1c7774244c5942c6891a0e0c4f26b0939d35434e1b38d442091d5f0
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:3080/]

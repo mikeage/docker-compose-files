@@ -1,3 +1,3 @@
-FROM wordpress:7.0.0-apache@sha256:d32999a243ee5051babf8580ff22e7254129fe2f209f3d10aacdc81fdcd33959
+FROM wordpress:7.0.0-apache@sha256:6e7a3abb78018cf6777f50626b4ed2259e7bda60188960a4012340a9ca92c26c
 
 RUN docker-php-ext-install calendar

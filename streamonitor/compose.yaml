@@ -1,7 +1,7 @@
 ---
 services:
     streamonitor:
-        image: ghcr.io/lossless1024/streamonitor:latest
+        image: ghcr.io/lossless1024/streamonitor:latest@sha256:54c86e5ef7ed8e59c77e431a9c10f0392ce7d61681f13415641f5487afbb241b
         restart: unless-stopped
         environment:
       # set timzeone

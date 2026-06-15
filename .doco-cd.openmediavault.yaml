@@ -64,6 +64,10 @@ name: stacks
 reference: refs/heads/main
 working_dir: stacks
 ---
+name: streamonitor
+reference: refs/heads/main
+working_dir: streamonitor
+---
 name: traefik-kop
 reference: refs/heads/main
 working_dir: traefik-kop

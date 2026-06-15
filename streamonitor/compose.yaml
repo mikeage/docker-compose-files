@@ -1,7 +1,7 @@
 ---
 services:
     streamonitor:
-        image: ghcr.io/wado729/streamonitor:latest
+        image: ghcr.io/mikeage/streamonitor:latest
         restart: unless-stopped
         environment:
             STRMNTR_PASSWORD: ${PASSWORD}

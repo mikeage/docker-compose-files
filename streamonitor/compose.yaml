@@ -1,0 +1,35 @@
+---
+services:
+    streamonitor:
+        image: ghcr.io/lossless1024/streamonitor:latest
+        restart: unless-stopped
+        environment:
+      # set timzeone
+      #TZ: Etc/UTC
+      # unset password (admin by default)
+            STRMNTR_PASSWORD: mikemiStreamonitorAdmin
+      # unbind web interface (bound to 127.0.0.1 by default)
+            STRMNTR_HOST: 0.0.0.0
+      # change confirm delete behavior: disable
+      #STRMNTR_CONFIRM_DEL: ""
+      # change confirm delete behavior: always-on
+      #STRMNTR_CONFIRM_DEL: "True"
+            STRMNTR_CONFIRM_DEL: MOBILE
+      # enable theater mode
+      #STRMNTR_THEATER_MODE: "True
+      # set refresh frequency on streamer page
+            STRMNTR_STATUS_FREQ: '5'
+      # set refresh frequency on list page
+            STRMNTR_LIST_FREQ: '30'
+        volumes:
+            - /opt/streamonitor/config.json:/app/config.json
+            - /export/unreliable/r/downloads/streamonitor:/app/downloads:rw
+      # - ./stripchat_mouflon_keys.json:/app/stripchat_mouflon_keys.json
+            - /etc/timezone:/etc/timezone:ro
+            - /etc/localtime:/etc/localtime:ro
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.streamonitor.rule=Host(`streamonitor.internal.mikeage.net`)
+      # - traefik.http.routers.streamonitor.middlewares=basic-auth@file
+        ports:
+            - 5005:5000

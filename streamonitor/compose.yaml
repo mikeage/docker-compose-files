@@ -1,7 +1,7 @@
 ---
 services:
     streamonitor:
-        image: ghcr.io/mikeage/streamonitor:latest
+        image: ghcr.io/mikeage/streamonitor:latest@sha256:78208332127bc3fe9a3adad73b65bab3ebfab8f308a6d403fb700a82827c4f54
         restart: unless-stopped
         environment:
             STRMNTR_PASSWORD: ${PASSWORD}

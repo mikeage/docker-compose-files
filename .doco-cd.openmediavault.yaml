@@ -25,6 +25,9 @@ working_dir: cyd-monitor
 name: ctbrec-alpine
 reference: refs/heads/main
 working_dir: ctbrec-alpine
+destroy:
+    enabled: true
+    remove_dir: false
 ---
 name: dovecot
 reference: refs/heads/main
@@ -67,6 +70,9 @@ working_dir: stacks
 name: streamonitor
 reference: refs/heads/main
 working_dir: streamonitor
+destroy:
+    enabled: true
+    remove_dir: false
 ---
 name: traefik-kop
 reference: refs/heads/main

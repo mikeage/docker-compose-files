@@ -37,7 +37,7 @@ services:
             - --remote-debugging-port=9222
             - --hide-scrollbars
     meilisearch:
-        image: getmeili/meilisearch:v1.42.1@sha256:e13a16ddc45f66fd065b3416230c2669426cfa8907f4a43f14a9c09a17691fa4
+        image: getmeili/meilisearch:v1.48.2@sha256:544bdb7d1934e2dbeb02225b65f9b813221bc045d567c241a5be7319b50122b6
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:7700/health]

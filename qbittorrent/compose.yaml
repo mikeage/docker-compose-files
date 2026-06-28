@@ -1,7 +1,7 @@
 ---
 services:
     main:
-        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:abbf2aeeb58b641977a012d0ab69939eb277cb827078450b142f782b1cd6893c
+        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:163f3384db6cba9f68eaa83ca5f4209298b6029ba2d07b5e67562d0715baf5b9
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
                       r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
@@ -28,7 +28,7 @@ services:
             - traefik.http.routers.qbittorrent.rule=Host(`qbittorrent.internal.mikeage.net`)
             - traefik.http.services.qbittorrent.loadbalancer.server.port=8012
     keep:
-        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:abbf2aeeb58b641977a012d0ab69939eb277cb827078450b142f782b1cd6893c
+        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:163f3384db6cba9f68eaa83ca5f4209298b6029ba2d07b5e67562d0715baf5b9
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
                       r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
@@ -55,7 +55,7 @@ services:
             - traefik.http.routers.qbittorrent-keep.rule=Host(`qbittorrent-keep.internal.mikeage.net`)
             - traefik.http.services.qbittorrent-keep.loadbalancer.server.port=8014
     fl:
-        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:abbf2aeeb58b641977a012d0ab69939eb277cb827078450b142f782b1cd6893c
+        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:163f3384db6cba9f68eaa83ca5f4209298b6029ba2d07b5e67562d0715baf5b9
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
                       r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
@@ -82,7 +82,7 @@ services:
             - traefik.http.routers.qbittorrent-fl.rule=Host(`qbittorrent-fl.internal.mikeage.net`)
             - traefik.http.services.qbittorrent-fl.loadbalancer.server.port=8017
     sonarr:
-        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:abbf2aeeb58b641977a012d0ab69939eb277cb827078450b142f782b1cd6893c
+        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:163f3384db6cba9f68eaa83ca5f4209298b6029ba2d07b5e67562d0715baf5b9
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
                       r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
@@ -109,7 +109,7 @@ services:
             - traefik.http.routers.qbittorrent-sonarr.rule=Host(`qbittorrent-sonarr.internal.mikeage.net`)
             - traefik.http.services.qbittorrent-sonarr.loadbalancer.server.port=8015
     radarr:
-        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:abbf2aeeb58b641977a012d0ab69939eb277cb827078450b142f782b1cd6893c
+        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:163f3384db6cba9f68eaa83ca5f4209298b6029ba2d07b5e67562d0715baf5b9
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
                       r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]
@@ -136,7 +136,7 @@ services:
             - traefik.http.routers.qbittorrent-radarr.rule=Host(`qbittorrent-radarr.internal.mikeage.net`)
             - traefik.http.services.qbittorrent-radarr.loadbalancer.server.port=8016
     gavriel:
-        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:abbf2aeeb58b641977a012d0ab69939eb277cb827078450b142f782b1cd6893c
+        image: lscr.io/linuxserver/qbittorrent:5.2.2@sha256:163f3384db6cba9f68eaa83ca5f4209298b6029ba2d07b5e67562d0715baf5b9
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/$${WEBUI_PORT}; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\\
                       r\\n\\r\\n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]

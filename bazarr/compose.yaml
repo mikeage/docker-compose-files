@@ -15,7 +15,10 @@ services:
             TZ: Asia/Jerusalem
         volumes:
             - /opt/bazarr/config:/config
-            - storage:/data
+            - storageTV:/data/media/TV
+            - storageKidsTV:/data/media/KidsTV
+            - storageMovies:/data/media/Movies
+            - storageKidsMovies:/data/media/Kids
         ports:
             - 6767:6767
         restart: unless-stopped
@@ -23,9 +26,27 @@ services:
             - traefik.enable=true
             - traefik.http.routers.bazarr.rule=Host(`bazarr.internal.mikeage.net`)
 volumes:
-    storage:
+    storageTV:
         driver: local
         driver_opts:
             type: nfs
             o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
-            device: :/storage
+            device: :/unreliable/sonarr/media/TV
+    storageKidsTV:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/unreliable/sonarr/media/KidsTV
+    storageMovies:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/temporary/radarr/media/Movies
+    storageKidsMovies:
+        driver: local
+        driver_opts:
+            type: nfs
+            o: addr=openmediavault.lan,nfsvers=4.2,soft,timeo=600,retrans=2,rsize=1048576,wsize=1048576
+            device: :/storage/temporary/radarr/media/Kids

@@ -20,7 +20,7 @@ services:
             mariadb:
                 condition: service_healthy
     mariadb:
-        image: mariadb:12@sha256:f2edccc553e049f6efc6fd34854022f39a3fd3f82eab26a40edc8b565e208c63
+        image: mariadb:12@sha256:628f228f0fd5913a220438693576b29b6fe4dc1fa0a1298c0e98579fae28635f
         healthcheck:
             test: [CMD-SHELL, mariadb-admin ping -h 127.0.0.1 -u"$$MYSQL_USER" -p"$$MYSQL_PASSWORD" --silent]
             start_period: 20s

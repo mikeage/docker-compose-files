@@ -50,7 +50,7 @@ services:
     #         - /var/log
     #     labels:
     planewatch:
-        image: ghcr.io/plane-watch/docker-plane-watch:v0.0.7@sha256:666edeea557adff1222a96bb5fd437b99e34fcf3156702b3e75bf289ced6a9c9
+        image: ghcr.io/plane-watch/docker-plane-watch:v0.0.8@sha256:f98637421cc8a61fc90bc59d92682ffc8a64a087c6db5f6657edb922d1e8874f
         tty: true
         restart: unless-stopped
         depends_on:

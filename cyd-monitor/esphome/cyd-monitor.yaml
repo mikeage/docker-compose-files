@@ -1,0 +1,515 @@
+---
+# ==============================================================================
+#  CYD 2.8" Monitor - Linux CPU and Load Dashboard
+# ==============================================================================
+substitutions:
+    # --- Device ---
+    device_name: cyd-monitor
+    friendly_name: cyd-monitor
+    # --- Polling ---
+    poll_slot_interval: 2s
+    heartbeat_ms: '60000'
+    failure_threshold: '3'
+    exporter_port: '9105'
+    # --- Network for exporter targets ---
+    host_omv: openmediavault.lan
+    host_vm1: vm1.lan
+    host_g4gpu: g4-gpu.lan
+    host_u59: u59-proxmox.lan
+    host_g4prox: g4-proxmox.lan
+# ==============================================================================
+esphome:
+    name: ${device_name}
+    friendly_name: ${friendly_name}
+esp32:
+    board: esp32dev
+    cpu_frequency: 160MHZ
+    framework:
+        type: esp-idf
+        advanced:
+            minimum_chip_revision: '3.1'
+            sram1_as_iram: true
+logger:
+    level: WARN
+api:
+ota:
+    - platform: esphome
+wifi:
+    ssid: ENC[AES256_GCM,data:fo3vc8hqDA==,iv:VOFZMV64n2Ar7kPqP+ly8Eu2AN3bWonDHa45ZxahIyU=,tag:ZuEvGFjEov10YMqISNmJWA==,type:str]
+    password: ENC[AES256_GCM,data:zZRAp+0KN9PmMG0G,iv:UMUjENozQ+2CaStB1JlHEA2uPwnGhhOQjWR8hAcK0yo=,tag:/YdwaAVSfUq9S8+pRqulsA==,type:str]
+    power_save_mode: NONE
+    fast_connect: true
+http_request:
+    timeout: 600ms
+    verify_ssl: false
+    follow_redirects: false
+output:
+    - platform: ledc
+      pin: GPIO21
+      id: backlight_pwm
+light:
+    - platform: monochromatic
+      output: backlight_pwm
+      id: backlight
+      name: Display Backlight
+      restore_mode: ALWAYS_ON
+      default_transition_length: 0.5s
+spi:
+    - id: tft
+      clk_pin: GPIO14
+      mosi_pin: GPIO13
+font:
+    - file: gfonts://Roboto Condensed
+      id: font_host
+      size: 15
+      glyphs: abcdefghijklmnopqrstuvwxyz0123456789-.
+    - file: gfonts://Roboto Mono
+      id: font_cpu
+      size: 24
+      glyphs: '0123456789CLX:%.- '
+sensor:
+    - platform: template
+      id: omv_cpu
+      name: openmediavault CPU Usage
+      unit_of_measurement: '%'
+      accuracy_decimals: 1
+      state_class: measurement
+      update_interval: never
+    - platform: template
+      id: omv_load1
+      name: openmediavault Load 1m
+      accuracy_decimals: 2
+      state_class: measurement
+      update_interval: never
+    - platform: template
+      id: vm1_cpu
+      name: vm1 CPU Usage
+      unit_of_measurement: '%'
+      accuracy_decimals: 1
+      state_class: measurement
+      update_interval: never
+    - platform: template
+      id: vm1_load1
+      name: vm1 Load 1m
+      accuracy_decimals: 2
+      state_class: measurement
+      update_interval: never
+    # --- g4-gpu ---
+    - platform: template
+      id: g4gpu_cpu
+      name: g4-gpu CPU Usage
+      unit_of_measurement: '%'
+      accuracy_decimals: 1
+      state_class: measurement
+      update_interval: never
+    - platform: template
+      id: g4gpu_load1
+      name: g4-gpu Load 1m
+      accuracy_decimals: 2
+      state_class: measurement
+      update_interval: never
+    - platform: template
+      id: u59_cpu
+      name: u59-proxmox CPU Usage
+      unit_of_measurement: '%'
+      accuracy_decimals: 1
+      state_class: measurement
+      update_interval: never
+    - platform: template
+      id: u59_load1
+      name: u59-proxmox Load 1m
+      accuracy_decimals: 2
+      state_class: measurement
+      update_interval: never
+    - platform: template
+      id: g4prox_cpu
+      name: g4-proxmox CPU Usage
+      unit_of_measurement: '%'
+      accuracy_decimals: 1
+      state_class: measurement
+      update_interval: never
+    - platform: template
+      id: g4prox_load1
+      name: g4-proxmox Load 1m
+      accuracy_decimals: 2
+      state_class: measurement
+      update_interval: never
+globals:
+    - id: next_poll_target
+      type: int
+      restore_value: no
+      initial_value: '0'
+    - id: active_poll_target
+      type: int
+      restore_value: no
+      initial_value: '-1'
+    - id: omv_last_ok_ms
+      type: uint32_t
+      restore_value: no
+      initial_value: '0'
+    - id: vm1_last_ok_ms
+      type: uint32_t
+      restore_value: no
+      initial_value: '0'
+    - id: g4gpu_last_ok_ms
+      type: uint32_t
+      restore_value: no
+      initial_value: '0'
+    - id: u59_last_ok_ms
+      type: uint32_t
+      restore_value: no
+      initial_value: '0'
+    - id: g4prox_last_ok_ms
+      type: uint32_t
+      restore_value: no
+      initial_value: '0'
+    - id: omv_fail_streak
+      type: int
+      restore_value: no
+      initial_value: '0'
+    - id: vm1_fail_streak
+      type: int
+      restore_value: no
+      initial_value: '0'
+    - id: g4gpu_fail_streak
+      type: int
+      restore_value: no
+      initial_value: '0'
+    - id: u59_fail_streak
+      type: int
+      restore_value: no
+      initial_value: '0'
+    - id: g4prox_fail_streak
+      type: int
+      restore_value: no
+      initial_value: '0'
+script:
+    - id: poll_omv
+      mode: single
+      then:
+          - if:
+                condition:
+                    wifi.connected:
+                then:
+                    - http_request.get:
+                          url: http://${host_omv}:${exporter_port}/snapshot
+                          capture_response: true
+                          max_response_buffer_size: 96
+                          request_headers:
+                              Connection: close
+                          on_response:
+                              then:
+                                  - lambda: |-
+                                        if (response->status_code != 200) {
+                                          ESP_LOGW("cyd_monitor", "OMV status %d", response->status_code);
+                                          id(omv_fail_streak) += 1;
+                                          return;
+                                        }
+
+                                        float cpu = NAN;
+                                        float load1 = NAN;
+                                        if (sscanf(body.c_str(), "%f,%f", &cpu, &load1) == 2) {
+                                          id(omv_cpu).publish_state(cpu);
+                                          id(omv_load1).publish_state(load1);
+                                          id(omv_last_ok_ms) = millis();
+                                          id(omv_fail_streak) = 0;
+                                        } else {
+                                          ESP_LOGW("cyd_monitor", "OMV parse failure: %s", body.c_str());
+                                          id(omv_fail_streak) += 1;
+                                        }
+                          on_error:
+                              then:
+                                  - logger.log: OMV request failed
+                                  - lambda: id(omv_fail_streak) += 1;
+                else:
+                    - logger.log: OMV poll skipped (wifi disconnected)
+    - id: poll_vm1
+      mode: single
+      then:
+          - if:
+                condition:
+                    wifi.connected:
+                then:
+                    - http_request.get:
+                          url: http://${host_vm1}:${exporter_port}/snapshot
+                          capture_response: true
+                          max_response_buffer_size: 96
+                          request_headers:
+                              Connection: close
+                          on_response:
+                              then:
+                                  - lambda: |-
+                                        if (response->status_code != 200) {
+                                          ESP_LOGW("cyd_monitor", "vm1 status %d", response->status_code);
+                                          id(vm1_fail_streak) += 1;
+                                          return;
+                                        }
+
+                                        float cpu = NAN;
+                                        float load1 = NAN;
+                                        if (sscanf(body.c_str(), "%f,%f", &cpu, &load1) == 2) {
+                                          id(vm1_cpu).publish_state(cpu);
+                                          id(vm1_load1).publish_state(load1);
+                                          id(vm1_last_ok_ms) = millis();
+                                          id(vm1_fail_streak) = 0;
+                                        } else {
+                                          ESP_LOGW("cyd_monitor", "vm1 parse failure: %s", body.c_str());
+                                          id(vm1_fail_streak) += 1;
+                                        }
+                          on_error:
+                              then:
+                                  - logger.log: vm1 request failed
+                                  - lambda: id(vm1_fail_streak) += 1;
+                else:
+                    - logger.log: vm1 poll skipped (wifi disconnected)
+    - id: poll_g4gpu
+      mode: single
+      then:
+          - if:
+                condition:
+                    wifi.connected:
+                then:
+                    - http_request.get:
+                          url: http://${host_g4gpu}:${exporter_port}/snapshot
+                          capture_response: true
+                          max_response_buffer_size: 96
+                          request_headers:
+                              Connection: close
+                          on_response:
+                              then:
+                                  - lambda: |-
+                                        if (response->status_code != 200) {
+                                          ESP_LOGW("cyd_monitor", "g4-gpu status %d", response->status_code);
+                                          id(g4gpu_fail_streak) += 1;
+                                          return;
+                                        }
+
+                                        float cpu = NAN;
+                                        float load1 = NAN;
+                                        if (sscanf(body.c_str(), "%f,%f", &cpu, &load1) == 2) {
+                                          id(g4gpu_cpu).publish_state(cpu);
+                                          id(g4gpu_load1).publish_state(load1);
+                                          id(g4gpu_last_ok_ms) = millis();
+                                          id(g4gpu_fail_streak) = 0;
+                                        } else {
+                                          ESP_LOGW("cyd_monitor", "g4-gpu parse failure: %s", body.c_str());
+                                          id(g4gpu_fail_streak) += 1;
+                                        }
+                          on_error:
+                              then:
+                                  - logger.log: g4-gpu request failed
+                                  - lambda: id(g4gpu_fail_streak) += 1;
+                else:
+                    - logger.log: g4-gpu poll skipped (wifi disconnected)
+    - id: poll_u59
+      mode: single
+      then:
+          - if:
+                condition:
+                    wifi.connected:
+                then:
+                    - http_request.get:
+                          url: http://${host_u59}:${exporter_port}/snapshot
+                          capture_response: true
+                          max_response_buffer_size: 96
+                          request_headers:
+                              Connection: close
+                          on_response:
+                              then:
+                                  - lambda: |-
+                                        if (response->status_code != 200) {
+                                          ESP_LOGW("cyd_monitor", "u59-proxmox status %d", response->status_code);
+                                          id(u59_fail_streak) += 1;
+                                          return;
+                                        }
+
+                                        float cpu = NAN;
+                                        float load1 = NAN;
+                                        if (sscanf(body.c_str(), "%f,%f", &cpu, &load1) == 2) {
+                                          id(u59_cpu).publish_state(cpu);
+                                          id(u59_load1).publish_state(load1);
+                                          id(u59_last_ok_ms) = millis();
+                                          id(u59_fail_streak) = 0;
+                                        } else {
+                                          ESP_LOGW("cyd_monitor", "u59-proxmox parse failure: %s", body.c_str());
+                                          id(u59_fail_streak) += 1;
+                                        }
+                          on_error:
+                              then:
+                                  - logger.log: u59-proxmox request failed
+                                  - lambda: id(u59_fail_streak) += 1;
+                else:
+                    - logger.log: u59-proxmox poll skipped (wifi disconnected)
+    - id: poll_g4prox
+      mode: single
+      then:
+          - if:
+                condition:
+                    wifi.connected:
+                then:
+                    - http_request.get:
+                          url: http://${host_g4prox}:${exporter_port}/snapshot
+                          capture_response: true
+                          max_response_buffer_size: 96
+                          request_headers:
+                              Connection: close
+                          on_response:
+                              then:
+                                  - lambda: |-
+                                        if (response->status_code != 200) {
+                                          ESP_LOGW("cyd_monitor", "g4-proxmox status %d", response->status_code);
+                                          id(g4prox_fail_streak) += 1;
+                                          return;
+                                        }
+
+                                        float cpu = NAN;
+                                        float load1 = NAN;
+                                        if (sscanf(body.c_str(), "%f,%f", &cpu, &load1) == 2) {
+                                          id(g4prox_cpu).publish_state(cpu);
+                                          id(g4prox_load1).publish_state(load1);
+                                          id(g4prox_last_ok_ms) = millis();
+                                          id(g4prox_fail_streak) = 0;
+                                        } else {
+                                          ESP_LOGW("cyd_monitor", "g4-proxmox parse failure: %s", body.c_str());
+                                          id(g4prox_fail_streak) += 1;
+                                        }
+                          on_error:
+                              then:
+                                  - logger.log: g4-proxmox request failed
+                                  - lambda: id(g4prox_fail_streak) += 1;
+                else:
+                    - logger.log: g4-proxmox poll skipped (wifi disconnected)
+    - id: poll_next
+      mode: single
+      then:
+          - if:
+                condition:
+                    wifi.connected:
+                then:
+                    - lambda: |-
+                          int target = id(next_poll_target);
+                          id(active_poll_target) = target;
+                          if (target == 0) {
+                            id(poll_vm1).execute();
+                          } else if (target == 1) {
+                            id(poll_g4gpu).execute();
+                          } else if (target == 2) {
+                            id(poll_omv).execute();
+                          } else if (target == 3) {
+                            id(poll_u59).execute();
+                          } else {
+                            id(poll_g4prox).execute();
+                          }
+                          id(next_poll_target) = (target + 1) % 5;
+                else:
+                    - logger.log: poll skipped (wifi disconnected)
+interval:
+    - interval: ${poll_slot_interval}
+      then:
+          - script.execute: poll_next
+      startup_delay: 2s
+display:
+    - platform: mipi_spi
+      id: my_display
+      model: ESP32-2432S028
+      spi_id: tft
+      cs_pin: GPIO15
+      dc_pin: GPIO2
+      reset_pin: GPIO4
+      invert_colors: false
+      color_order: RGB
+      color_depth: 8
+      data_rate: 20MHz
+      update_interval: 1s
+      auto_clear_enabled: false
+      dimensions:
+          width: 320
+          height: 240
+      transform:
+          swap_xy: false
+          mirror_y: false
+          mirror_x: true
+      lambda: |-
+          it.fill(Color(0x00, 0x00, 0x00));
+
+          auto cpu_color = [](float cpu) -> Color {
+            if (cpu < 50.0f) {
+              return Color(0x00, 0xFF, 0x3C);
+            }
+            if (cpu < 75.0f) {
+              return Color(0xFF, 0xE0, 0x00);
+            }
+            if (cpu < 90.0f) {
+              return Color(0xFF, 0x7A, 0x00);
+            }
+            return Color(0xFF, 0x00, 0x00);
+          };
+
+          auto load_color = [](float load1) -> Color {
+            if (load1 < 2.0f) {
+              return Color(0x00, 0xFF, 0x3C);
+            }
+            if (load1 < 5.0f) {
+              return Color(0xFF, 0xE0, 0x00);
+            }
+            if (load1 < 8.0f) {
+              return Color(0xFF, 0x7A, 0x00);
+            }
+            return Color(0xFF, 0x00, 0x00);
+          };
+
+          const uint32_t now = millis();
+          auto stale = [&](uint32_t last_ok_ms, int fail_streak) -> bool {
+            return last_ok_ms == 0 || fail_streak >= ${failure_threshold};
+          };
+          const uint32_t heartbeat_ms = ${heartbeat_ms};
+          uint32_t beat_ms = now % heartbeat_ms;
+          int bar_w = (int) ((beat_ms * 320U) / heartbeat_ms);
+
+          // 3x2 grid: 5 host tiles.
+          auto draw_node = [&](int x, int y, int host_index, const char *label, uint32_t last_ok_ms, float cpu, float load1, int fail_streak) {
+            const bool is_stale = stale(last_ok_ms, fail_streak);
+            const bool is_updating = host_index == id(active_poll_target);
+            it.filled_rectangle(x, y, 106, 118, Color(0x12, 0x17, 0x20));
+            if (is_updating) {
+              // Thick 3px blue frame around the entire host tile while being polled.
+              it.rectangle(x, y, 106, 118, Color(0x00, 0x40, 0xFF));
+              it.rectangle(x + 1, y + 1, 104, 116, Color(0x00, 0x40, 0xFF));
+              it.rectangle(x + 2, y + 2, 102, 114, Color(0x00, 0x40, 0xFF));
+            } else {
+              it.rectangle(x, y, 106, 118, Color(0x2A, 0x30, 0x3A));
+            }
+            it.printf(x + 6, y + 8, id(font_host), Color(0xD8, 0xE2, 0xEF), TextAlign::TOP_LEFT, "%s", label);
+            if (is_stale) {
+              it.printf(x + 6, y + 34, id(font_cpu), Color(0xFF, 0x00, 0x00), TextAlign::TOP_LEFT, "C:XXX");
+              it.printf(x + 6, y + 74, id(font_cpu), Color(0xFF, 0x00, 0x00), TextAlign::TOP_LEFT, "L:XXX");
+            } else {
+              it.printf(x + 6, y + 34, id(font_cpu), cpu_color(cpu), TextAlign::TOP_LEFT, "C:%.0f%%", cpu);
+              it.printf(x + 6, y + 74, id(font_cpu), load_color(load1), TextAlign::TOP_LEFT, "L:%.2f", load1);
+            }
+          };
+
+          draw_node(0, 3, 0, "vm1", id(vm1_last_ok_ms), id(vm1_cpu).state, id(vm1_load1).state, id(vm1_fail_streak));
+          draw_node(107, 3, 1, "g4-gpu", id(g4gpu_last_ok_ms), id(g4gpu_cpu).state, id(g4gpu_load1).state, id(g4gpu_fail_streak));
+          draw_node(214, 3, 2, "omv", id(omv_last_ok_ms), id(omv_cpu).state, id(omv_load1).state, id(omv_fail_streak));
+          draw_node(0, 122, 3, "u59", id(u59_last_ok_ms), id(u59_cpu).state, id(u59_load1).state, id(u59_fail_streak));
+          draw_node(107, 122, 4, "g4-prox", id(g4prox_last_ok_ms), id(g4prox_cpu).state, id(g4prox_load1).state, id(g4prox_fail_streak));
+
+          it.filled_rectangle(0, 0, bar_w, 3, Color(0x4D, 0xD0, 0xE1));
+sops:
+    age:
+        - enc: |
+              -----BEGIN AGE ENCRYPTED FILE-----
+              YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBSYjB2M3ROQWhFT2JDdkY1
+              bm9oU2dvdGVMUDI0VTlRVnV4YlZPSk85ejB3CkhBb1lUYWpGaEViTW5WbURZQzNa
+              K2ErbW9NaDlXZ1lPZTRacUtyeVdiMEUKLS0tIGhYM1BlZnVCRnZNblB6MDBJL0xr
+              M3UrR0FuaTJTdkd2M2prZXQxYTQ2ZjAKYjW41AWFdnEKuFMgTRHGn11xES2hR81x
+              6v6kcsFibHxU08lGxqeb2wYUOPx2stu1pM5/VlN8B2syXyAR+KS3jA==
+              -----END AGE ENCRYPTED FILE-----
+          recipient: age1dx779tg097xprk3y220678lm97vc9r44r0uc4xndfdm2pan9uu6qzn06wa
+    encrypted_regex: ^(ssid|password)$
+    lastmodified: '2026-07-13T10:05:45Z'
+    mac: 
+        ENC[AES256_GCM,data:qHRmW462nJPZWi8r7K1pt5A3xs0TH/9w8CPO8Us/EI6cfjbfIG7X8n6JwM2cl8a4vkLJ0FJw8Lp/j0bMCT6rce2a9rb5qCzGqotxOVqUHkig4EtSh+iJJ1WbPCm1W33kSfstBDN0oQvJiEMISj9+NO4PNWHsEKMUAIpT1lRwarE=,iv:lsvF+HhVjKv+FdOzdmZ6Mw/Fnj8MMtWPTuuy4RKb4+I=,tag:IE4GabR0D4Vse8OoNzqMpA==,type:str]
+    mac_only_encrypted: true
+    version: 3.13.2

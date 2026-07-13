@@ -1,7 +1,7 @@
 ---
 services:
     roundcubemail:
-        image: roundcube/roundcubemail:1.7.2-apache@sha256:e4f537d7ff16bba24ed8f3a6ed6dfe557cfd831b26afe112e6bb3562c131fb31
+        image: roundcube/roundcubemail:1.7.2-apache@sha256:76503fb00caf1cb0ee7731723d5bf31b492383b689d532fa943c70e885913687
         restart: unless-stopped
         healthcheck:
             test: [CMD, php, -r, exit((int)!@file_get_contents("http://127.0.0.1/"));]

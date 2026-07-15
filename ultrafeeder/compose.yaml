@@ -1,7 +1,7 @@
 ---
 services:
     radar1090:
-        image: ghcr.io/sdr-enthusiasts/docker-radar1090:latest@sha256:ac5260a9a73dab64e0bccfb30723d59e7792a3493916f1a20ec3b32af2702df7
+        image: ghcr.io/sdr-enthusiasts/docker-radar1090:latest-build-314@sha256:3434b8d5a7b9d8baa41495f6c3714689844f8cf003f0d1373439093642858329
         hostname: radar1090
         restart: unless-stopped
         environment:
@@ -14,7 +14,7 @@ services:
             - /tmp:size=128M
             - /var/log:size=32M
     opensky:
-        image: ghcr.io/sdr-enthusiasts/docker-opensky-network:2.1.7-1@sha256:fc2fe2238cf4ef20cc5cc8e53448ede36d3c753ccaaf34d914307af6ba7f3923
+        image: ghcr.io/sdr-enthusiasts/docker-opensky-network:latest-build-831@sha256:29694a86e56e9946c69bc413aab3b13a3ea41e0d83b56a7c25143c572f1be59a
         tty: true
         restart: unless-stopped
         depends_on:
@@ -66,7 +66,7 @@ services:
             - /run:exec,size=64M
             - /var/log
     ultrafeeder:
-        image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest@sha256:a5aba55cdcdbb86fa147f854132b1e2a1247a3feb281d1518b064bc6285f835c
+        image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-844@sha256:e8073b8932dc39bdf5c4badab36480862a98a92071a4a56b53a65a9e9e432494
     # Note - if you want to enable telegraf for use with InfluxDB/Prometheus and Grafana,
     # use the following image instead:
     # image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:telegraf

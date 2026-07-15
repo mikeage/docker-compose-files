@@ -34,6 +34,18 @@
 			]
 		},
 		{
+			"description": "Track and automerge SDR Enthusiasts build tags without pull requests.",
+			"matchDatasources": [
+				"docker"
+			],
+			"matchPackageNames": [
+				"/^ghcr\\.io/sdr-enthusiasts/.+$/"
+			],
+			"versioning": "regex:^latest-build-(?<major>\\d+)$",
+			"automerge": true,
+			"automergeType": "branch"
+		},
+		{
 			"description": "Label digest updates clearly.",
 			"matchUpdateTypes": [
 				"digest",

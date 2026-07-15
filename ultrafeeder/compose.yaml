@@ -89,7 +89,7 @@ services:
             READSB_EXTRA_ARGS: --write-json-globe-index --write-globe-history /var/globe_history
             ULTRAFEEDER_CONFIG: adsb,ff-2027.lan,30005,beast_in; adsb,feed.adsb.fi,30004,beast_reduce_plus_out; mlat,feed.adsb.fi,31090,39000; 
                 adsb,in.adsb.lol,30004,beast_reduce_plus_out; mlat,in.adsb.lol,31090,39001; 
-                adsb,feed1.adsbexchange.com,30004,beast_reduce_plus_out,uuid=${ADSBX_UUID}; mlat,feed.adsbexchange.com,31090,39005,uuid=${ADSBX_UUID};
+                adsb,feed1.adsbexchange.com,30004,beast_reduce_plus_out,uuid=${ADSBX_UUID}; mlat,feed.adsbexchange.com,31090,39005,uuid=${ADSBX_UUID}; 
                 adsb,feed.airplanes.live,30004,beast_reduce_plus_out; mlat,feed.airplanes.live,31090,39006; 
                 adsb,feed.theairtraffic.com,30004,beast_reduce_plus_out; mlat,feed.theairtraffic.com,31090,39007; 
                 adsb,feed.radarplane.com,30001,beast_reduce_plus_out; mlat,feed.radarplane.com,31090,39008; 

@@ -41,7 +41,7 @@
 			"matchPackageNames": [
 				"/^ghcr\\.io/sdr-enthusiasts/.+$/"
 			],
-			"versioning": "regex:^(telegraf|v\\d+-latest|latest)-build-(?<major>\\d+)$",
+			"versioning": "regex:^latest-build-(?<major>\\d+)$",
 			"automerge": true,
 			"automergeType": "branch"
 		},

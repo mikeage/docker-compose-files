@@ -1,7 +1,7 @@
 ---
 services:
     broker:
-        image: docker.io/valkey/valkey:9-alpine
+        image: docker.io/valkey/valkey:9-alpine@sha256:ee91f7a174ac4d6a6b0685b3a60e321f0a9dbbb691f9b0e285be2ba1d1be8328
         restart: unless-stopped
         healthcheck:
             test: [CMD, redis-cli, ping]
@@ -79,7 +79,7 @@ services:
             - traefik.http.routers.paperless-ngx-gavriel.rule=Host(`paperless-ngx.gavriel.mikeage.net`)
 
     gotenberg:
-        image: docker.io/gotenberg/gotenberg:8.34
+        image: docker.io/gotenberg/gotenberg:8.34@sha256:67097317623a503ba2a6a7e9ae8db6929a1f7e1bbd88077bacf2d325fbdab923
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, "curl --fail localhost:3000/health | grep '\"status\":\"up\",\"details\"'"]

@@ -3,6 +3,12 @@ services:
     broker:
         image: docker.io/valkey/valkey:9-alpine@sha256:ee91f7a174ac4d6a6b0685b3a60e321f0a9dbbb691f9b0e285be2ba1d1be8328
         restart: unless-stopped
+        healthcheck:
+            test: [CMD, redis-cli, ping]
+            start_period: 5s
+            interval: 10s
+            timeout: 5s
+            retries: 5
         environment:
             - TZ=Asia/Jerusalem
         volumes:

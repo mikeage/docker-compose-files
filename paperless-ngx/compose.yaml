@@ -1,14 +1,8 @@
 ---
 services:
     broker:
-        image: redis:8@sha256:234c902a2db49461a129e2d4aeff85b28cf20187ed274a67f6e50995fa713c7b
+        image: docker.io/valkey/valkey:9-alpine
         restart: unless-stopped
-        healthcheck:
-            test: [CMD, redis-cli, ping]
-            start_period: 5s
-            interval: 10s
-            timeout: 5s
-            retries: 5
         environment:
             - TZ=Asia/Jerusalem
         volumes:
@@ -77,7 +71,7 @@ services:
             - traefik.http.routers.paperless-ngx.rule=Host(`paperless-ngx.internal.mikeage.net`)
 
     gotenberg:
-        image: docker.io/gotenberg/gotenberg:8.27@sha256:d71ab8c13b6bd47c7bc81195082005dfb17eaa75e8b1fadd347a64ee66ed98d5
+        image: docker.io/gotenberg/gotenberg:8.34
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, "curl --fail localhost:3000/health | grep '\"status\":\"up\",\"details\"'"]

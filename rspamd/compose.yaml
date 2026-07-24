@@ -1,7 +1,7 @@
 ---
 services:
     redis:
-        image: redis:latest@sha256:234c902a2db49461a129e2d4aeff85b28cf20187ed274a67f6e50995fa713c7b  # https://github.com/rspamd/rspamd-docker/blob/main/examples/compose/compose.yaml
+        image: redis:latest@sha256:6355476c41744e7d3ddd547dc0be8b9d0658626c6b67c91ce4e3dcfd8707f7a4  # https://github.com/rspamd/rspamd-docker/blob/main/examples/compose/compose.yaml
         restart: unless-stopped
         healthcheck:
             test: [CMD, redis-cli, ping]

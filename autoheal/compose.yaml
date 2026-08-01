@@ -1,7 +1,7 @@
 ---
 services:
     autoheal:
-        image: willfarrell/autoheal:latest@sha256:cc3687207fbc8e2d296de6b8ecc449ca9dd6845bd4ed988331a3fb73ce2d42c2
+        image: willfarrell/autoheal:latest@sha256:74c00dafa7cffc99ca48b54239bc071db1b5902267fc341d074659926ec4de69
         network_mode: none
         environment:
             - AUTOHEAL_CONTAINER_LABEL=all

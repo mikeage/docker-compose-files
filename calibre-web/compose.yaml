@@ -1,7 +1,7 @@
 ---
 services:
     calibre-web:
-        image: lscr.io/linuxserver/calibre-web:0.6.26@sha256:7c0464228f2fdcf543b46e5327f36114596b097db6af0297c26b0452ed15f17c
+        image: lscr.io/linuxserver/calibre-web:0.6.27@sha256:0895ba9b13abf3bf80131c62cefdbf7e090a363a2dff1bc2b3dff173156a88b9
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8083; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\\
                       n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]

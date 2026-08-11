@@ -19,7 +19,7 @@ services:
             - traefik.enable=true
             - traefik.http.routers.karakeep.rule=Host(`karakeep.internal.mikeage.net`)
     chrome:
-        image: ghcr.io/karakeep-app/karakeep-chrome:release
+        image: ghcr.io/karakeep-app/karakeep-chrome:release@sha256:5b19bbb160e9ff60681a3abd97e1c4ec9f64212301410de658c3900ab7ef31e7
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:9222/json/version]

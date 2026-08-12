@@ -17,6 +17,12 @@ services:
     dasharr:
         image: ghcr.io/arcadia-solutions/dasharr:latest@sha256:5503eebcfed469e2d20d6a4875ceee53bb2564841d68d23b515cae6bc51f6b27
         restart: unless-stopped
+        healthcheck:
+            test: [CMD-SHELL, curl --fail --silent --show-error http://127.0.0.1/swagger-json/openapi.json > /dev/null]
+            start_period: 10s
+            interval: 30s
+            timeout: 5s
+            retries: 5
         ports:
             - 3002:80
         environment:

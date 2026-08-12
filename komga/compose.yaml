@@ -1,7 +1,7 @@
 ---
 services:
     komga:
-        image: gotson/komga:1.26.1@sha256:e109902ebebb8a05f633f48d84a2ac7bb1334bf0f6fbc17262a333082c7de44d
+        image: gotson/komga:1.26.3@sha256:6c2a967bbe9acefd05933b2eb498f34afe96a83c6f7f8ab0acb512a1bb3ab50f
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/25600; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\\
                       n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]

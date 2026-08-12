@@ -21,6 +21,17 @@ services:
     chrome:
         image: ghcr.io/karakeep-app/karakeep-chrome:release@sha256:5b19bbb160e9ff60681a3abd97e1c4ec9f64212301410de658c3900ab7ef31e7
         restart: unless-stopped
+        healthcheck:
+            test:
+                - CMD-SHELL
+                - >-
+                  /bin/bash -c 'exec 3<>/dev/tcp/127.0.0.1/9222 &&
+                  printf "GET /json/version HTTP/1.1\r\nHost: localhost\r\nConnection: close\r\n\r\n" >&3 &&
+                  grep -q "\"Browser\":" <&3'
+            start_period: 10s
+            interval: 30s
+            timeout: 5s
+            retries: 5
         environment:
             - TZ=Asia/Jerusalem
         init: true

@@ -1,7 +1,7 @@
 ---
 services:
     piwigo:
-        image: lscr.io/linuxserver/piwigo:16.4.0@sha256:1706f44c31daf23c1607dd2a6b6724d9fa55cf497da59c9220649335ced79215
+        image: lscr.io/linuxserver/piwigo:16.4.0@sha256:37d6bbb300aed84c293b9f8d4c6f649106c224595a27a83ded9ac6ed3e1f386c
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/80; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n\"\
                       \ >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]

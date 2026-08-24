@@ -65,3 +65,7 @@ reference: refs/heads/main
 working_dir: traefik-kop
 environment:
     HOSTNAME: openmediavault
+---
+name: lsr2
+reference: refs/heads/main
+working_dir: lsr2

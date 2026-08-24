@@ -1,0 +1,18 @@
+---
+services:
+    lsr2:
+        image: ambitious703/lsr2:latest
+        restart: unless-stopped
+        ports:
+            - 6080:8080
+        volumes:
+            - /export/unreliable/r/lsr2:/data
+        environment:
+            - PUID=1000 # id -u
+            - PGID=1000 # id -g
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.lsr2.rule=Host(`lsr2.internal.mikeage.net`)
+            - traefik.http.routers.lsr2.middlewares=basic-auth@file
+            - traefik.http.services.lsr2.loadbalancer.server.scheme=https
+            - traefik.http.services.lsr2.loadbalancer.serverstransport=insecure-skip-verify@file

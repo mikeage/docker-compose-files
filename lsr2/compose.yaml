@@ -14,5 +14,3 @@ services:
             - traefik.enable=true
             - traefik.http.routers.lsr2.rule=Host(`lsr2.internal.mikeage.net`)
             - traefik.http.routers.lsr2.middlewares=basic-auth@file
-            - traefik.http.services.lsr2.loadbalancer.server.scheme=https
-            - traefik.http.services.lsr2.loadbalancer.serverstransport=insecure-skip-verify@file

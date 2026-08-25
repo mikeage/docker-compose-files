@@ -1,7 +1,7 @@
 ---
 services:
     db:
-        image: postgres:16@sha256:e17e86066e5ef83e0952a9347f5c792b7ece00972e2aa787a6986f471b3dd3d5  # https://raw.githubusercontent.com/laurent22/joplin/dev/docker-compose.server.yml
+        image: postgres:16@sha256:c31077828b6a25f169fcd1bdf769af0e1c5cb8eb14a5729c8bc766842347580b  # https://raw.githubusercontent.com/laurent22/joplin/dev/docker-compose.server.yml
         healthcheck:
             test: [CMD-SHELL, 'pg_isready -U "$${POSTGRES_USER}" -d "$${POSTGRES_DB}"']
             start_period: 10s

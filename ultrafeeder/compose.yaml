@@ -94,6 +94,7 @@ services:
                 adsb,feed.theairtraffic.com,30004,beast_reduce_plus_out; mlat,feed.theairtraffic.com,31090,39007; 
                 adsb,feed.radarplane.com,30001,beast_reduce_plus_out; mlat,feed.radarplane.com,31090,39008; 
                 adsb,feed.planespotters.net,30004,beast_reduce_plus_out; mlat,mlat.planespotters.net,31090,39009; 
+                adsb,feed.adsb.win,30004,beast_reduce_plus_out,uuid=${ADSBWIN_UUID}; mlat,mlat.adsb.win,31090,39010,uuid=${ADSBWIN_UUID}; 
                 adsb,data.avdelphi.com,24999,beast_reduce_plus_out; adsb,skyfeed.hpradar.com,30004,beast_reduce_plus_out; 
                 mlat,skyfeed.hpradar.com,31090
             UUID: ${MULTIFEEDER_UUID}

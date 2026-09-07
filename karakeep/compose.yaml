@@ -42,7 +42,7 @@ services:
             - --disable-blink-features=AutomationControlled
             - --window-size=1440,900
     meilisearch:
-        image: getmeili/meilisearch:v1.42.1@sha256:e13a16ddc45f66fd065b3416230c2669426cfa8907f4a43f14a9c09a17691fa4
+        image: getmeili/meilisearch:v1.53.2@sha256:c94e58ca09662dd6e65e8f1b0fd145767be3da7d5422a863a27b8d2b68e090c9
         restart: unless-stopped
         healthcheck:
             test: [CMD, wget, --no-verbose, --tries=1, --spider, http://127.0.0.1:7700/health]

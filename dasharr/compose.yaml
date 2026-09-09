@@ -15,7 +15,7 @@ services:
             retries: 5
 
     dasharr:
-        image: ghcr.io/arcadia-solutions/dasharr:latest@sha256:74e771d8d96971fbd6836e120cacb6e44af8eb9bd32f221bef046591156f300f
+        image: ghcr.io/arcadia-solutions/dasharr:latest@sha256:190a6f1c0ebb05f91619831bc75074266541e619aac09863eeb4ee41e9b32a51
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, curl --fail --silent --show-error http://127.0.0.1/swagger-json/openapi.json > /dev/null]

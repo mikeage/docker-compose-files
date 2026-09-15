@@ -1,7 +1,7 @@
 ---
 services:
     dococd:
-        image: ghcr.io/kimdre/doco-cd:0.116.0@sha256:b56844c80dc5e227e5730e31439a0e9b8a2544f4ebb6050af61672c303fd254e
+        image: ghcr.io/kimdre/doco-cd:0.118.1@sha256:674c38e4988af5cf9028a002c3045d2c0aa7d15e3babc823b02e5e56e31685dc
         restart: unless-stopped
         depends_on:
             - apprise

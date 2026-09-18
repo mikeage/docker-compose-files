@@ -17,9 +17,6 @@ working_dir: frigate
 name: homeassistant
 reference: refs/heads/main
 working_dir: homeassistant
-destroy:
-    enabled: true
-    remove_dir: false
 ---
 name: jellyfin
 reference: refs/heads/main

@@ -11,7 +11,7 @@ services:
         environment:
             - TZ=Asia/Jerusalem
         volumes:
-            - /opt/homeassistant/config:/config
+            - /opt/homeassistant.new/config:/config
             - /etc/localtime:/etc/localtime:ro
         restart: unless-stopped
         privileged: true
@@ -30,7 +30,7 @@ services:
         ports:
             - 127.0.0.1:3306:3306
         volumes:
-            - /opt/homeassistant/db:/var/lib/mysql
+            - /opt/homeassistant.new/db:/var/lib/mysql
         environment:
             - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
             - MYSQL_USER=${DB_USER}

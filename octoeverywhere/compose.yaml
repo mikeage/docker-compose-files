@@ -2,7 +2,7 @@
 services:
     a1mini:
         restart: unless-stopped
-        image: octoeverywhere/octoeverywhere:5.3.0@sha256:891995b72071859120a5cfaa0c258038a77cc1dcccbe24875b58ca29f066cfe9
+        image: octoeverywhere/octoeverywhere:5.3.5@sha256:d2871d126e5e3519f8296e0039f7fa76a8bed23db336aadf8c75106959602fbf
         environment:
             - ACCESS_CODE=39994545
             - SERIAL_NUMBER=0309DA462001807

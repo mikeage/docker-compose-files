@@ -12,7 +12,7 @@ services:
         volumes:
             - redis-data:/data
     rspamd:
-        image: rspamd/rspamd:4.1.5@sha256:c307774c4c83bc445f0ae6696fd1798c92b0b89355ae1d87c9c39694c875e51e
+        image: rspamd/rspamd:4.2.0@sha256:063ba7817e2ffba07a8b7ec8224dcdcecf74aefad551f5cae6196dbf3e58603f
         restart: unless-stopped
         healthcheck:
             test: [CMD, rspamadm, control, stat]

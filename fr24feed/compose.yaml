@@ -1,7 +1,7 @@
 ---
 services:
     fr24feed:
-        image: ghcr.io/sdr-enthusiasts/docker-flightradar24:latest-build-860@sha256:917e53402d5158800eef746839dfb722e30cd3b21019e3bc318abb4f3d807c03
+        image: ghcr.io/sdr-enthusiasts/docker-flightradar24:latest-build-861@sha256:3e0fbd0274eb9d10f5506cd8bcbff5714476ae39b571400153f9aab264017b34
         restart: unless-stopped
         ports:
             - 8754:8754

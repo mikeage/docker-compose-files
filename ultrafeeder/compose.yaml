@@ -14,7 +14,7 @@ services:
             - /tmp:size=128M
             - /var/log:size=32M
     opensky:
-        image: ghcr.io/sdr-enthusiasts/docker-opensky-network:latest-build-847@sha256:434a94a02d6d6713dec6231fe1d3f08f1f007defa86e09f0a0cade644b485ca2
+        image: ghcr.io/sdr-enthusiasts/docker-opensky-network:latest-build-848@sha256:05b949ea8af0f1cd27195682cd680df1ea9420ce6e7f7f7cdeb33c057fa0e370
         tty: true
         restart: unless-stopped
         depends_on:

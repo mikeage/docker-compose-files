@@ -1,7 +1,7 @@
 ---
 services:
     prowlarr:
-        image: lscr.io/linuxserver/prowlarr:develop@sha256:85248c75ebf12f985bdd1d3b8f17deda23b7a5902aaa0888b9f13e57410580e9
+        image: lscr.io/linuxserver/prowlarr:develop@sha256:f0c51c56a8b781632313c06e530701a86d2cbf29fb5a529b84398cc702fc625a
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/9696; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\\
                       n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]

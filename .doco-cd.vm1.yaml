@@ -37,6 +37,9 @@ working_dir: escher
 name: fr24feed
 reference: refs/heads/main
 working_dir: fr24feed
+destroy:
+    enabled: true
+    remove_dir: false
 ---
 name: freshrss
 reference: refs/heads/main

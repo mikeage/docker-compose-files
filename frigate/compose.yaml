@@ -5,8 +5,7 @@ services:
         restart: unless-stopped
         #image: blakeblackshear/frigate:stable
         image: ghcr.io/blakeblackshear/frigate:0.18.0@sha256:9678a83a76e4730ac7d9ea7428370e32ae656d6b312aaad30d6c69f3fef14d35
-        # shm_size: 64mb # update for your cameras based on calculation above
-        shm_size: 170mb # update for your cameras based on calculation above
+        shm_size: 210mb # update for your cameras based on calculation above
         devices:
       # - /dev/bus/usb:/dev/bus/usb  # passes the USB Coral, needs to be modified for other versions
       # - /dev/apex_0:/dev/apex_0  # passes a PCIe Coral, follow driver instructions here https://coral.ai/docs/m2/get-started/#2a-on-linux

@@ -10,7 +10,6 @@ reference: refs/heads/main
 working_dir: autoheal
 destroy:
     enabled: true
-    remove_dir: false
 ---
 name: cross-seed
 reference: refs/heads/main

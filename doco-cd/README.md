@@ -59,9 +59,11 @@ To trigger an immediate poll without waiting for the next interval:
 ## Notes
 
 - `POLL_INTERVAL` is in seconds. The current value `300` means Git is polled every 5 minutes.
-- The `doco-cd` API is enabled with `API_SECRET_FILE` and bound only to `127.0.0.1:8080`.
+- The `doco-cd` API is enabled with `API_SECRET_FILE` and bound only to `127.0.0.1:8070`.
 - Email notifications are sent through the bundled `apprise` sidecar using `APPRISE_NOTIFY_URLS_FILE`.
+- `doco-cd` waits for the `apprise` sidecar to become healthy before starting.
 - SOPS decryption is enabled with `SOPS_AGE_KEY_FILE=/run/secrets/sops_age_key`.
+- Source-cache garbage collection is enabled with `SOURCE_GC_ENABLED=true`; unused source caches are removed after the default retention period.
 - `APPRISE_NOTIFY_LEVEL=info` means you also get start/in-progress notifications.
 - `DOCO_TARGET` must be set in the shell when you run `docker compose`, because it is intentionally not stored in `.env`.
 - `DOCO_TARGET` selects one of the repo root deployment files:

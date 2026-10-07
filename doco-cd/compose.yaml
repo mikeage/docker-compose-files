@@ -4,7 +4,8 @@ services:
         image: ghcr.io/kimdre/doco-cd:0.124.0@sha256:31d3755a206ba5c7bc2d12752a9170edf327b2f36f815a8bc992753434f04676
         restart: unless-stopped
         depends_on:
-            - apprise
+            apprise:
+                condition: service_healthy
         ports:
             - 127.0.0.1:8070:80
         environment:
@@ -21,6 +22,7 @@ services:
             APPRISE_API_URL: http://apprise:8000/notify
             APPRISE_NOTIFY_LEVEL: ${APPRISE_NOTIFY_LEVEL}
             APPRISE_NOTIFY_URLS_FILE: /run/secrets/apprise_notify_urls
+            SOURCE_GC_ENABLED: ${SOURCE_GC_ENABLED}
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
             - /opt/doco-cd/data:/data
@@ -31,12 +33,6 @@ services:
             - ssh_private_key
         cap_drop:
             - ALL
-        healthcheck:
-            test: [CMD, /doco-cd, healthcheck]
-            start_period: 15s
-            interval: 30s
-            timeout: 5s
-            retries: 3
 
     apprise:
         image: caronc/apprise:latest@sha256:0b2913b15c8eb47c25345722985ffbfae701326edde21909c205d296d62dd52c

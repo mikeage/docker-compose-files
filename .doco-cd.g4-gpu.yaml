@@ -4,7 +4,6 @@ reference: refs/heads/main
 working_dir: autoheal
 destroy:
     enabled: true
-    remove_dir: false
 ---
 name: cyd-monitor
 reference: refs/heads/main

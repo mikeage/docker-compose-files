@@ -21,6 +21,8 @@ working_dir: bentopdf
 name: calibre-web
 reference: refs/heads/main
 working_dir: calibre-web
+# calibre-web: 300 + 30 * 5 = 450
+timeout: 450
 ---
 name: cyd-monitor
 reference: refs/heads/main
@@ -76,14 +78,20 @@ working_dir: octoeverywhere
 name: paperless-ngx
 reference: refs/heads/main
 working_dir: paperless-ngx
+# gotenberg/tika -> webserver: (20 + 30 * 5) + (300 + 30 * 5) = 620
+timeout: 620
 ---
 name: paperless-ngx-gavriel
 reference: refs/heads/main
 working_dir: paperless-ngx-gavriel
+# gotenberg/tika -> webserver: (20 + 30 * 5) + (300 + 30 * 5) = 620
+timeout: 620
 ---
 name: paperless-ngx-lindy
 reference: refs/heads/main
 working_dir: paperless-ngx-lindy
+# gotenberg/tika -> webserver: (20 + 30 * 5) + (300 + 30 * 5) = 620
+timeout: 620
 ---
 name: photo-gallery
 reference: refs/heads/main

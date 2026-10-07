@@ -2,7 +2,8 @@
 name: autobrr
 reference: refs/heads/main
 working_dir: autobrr
-timeout: 600
+# autobrr: 900 + 30 * 5 = 1050
+timeout: 1050
 ---
 name: autoheal
 reference: refs/heads/main

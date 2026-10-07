@@ -29,6 +29,8 @@ working_dir: karakeep
 name: nextcloud
 reference: refs/heads/main
 working_dir: nextcloud
+# mysql -> nextcloud -> web: (20 + 10 * 6) + (20 + 30 * 5) + (20 + 30 * 5) = 420
+timeout: 420
 ---
 name: open-webui
 reference: refs/heads/main

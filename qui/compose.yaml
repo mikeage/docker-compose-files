@@ -1,7 +1,7 @@
 ---
 services:
     qui:
-        image: ghcr.io/autobrr/qui:v1.31.0@sha256:74ac327d7e0cad1309cbfe3d024bfc9e8136b9926a1450d2f6192c6970f66362
+        image: ghcr.io/autobrr/qui:v1.31.1@sha256:6ee1cf6df0a82687089e6e181aad09edb826b4b779603c56a28c803d19db99fd
         restart: unless-stopped
         ports:
             - 7476:7476

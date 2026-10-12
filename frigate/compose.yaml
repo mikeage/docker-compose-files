@@ -36,3 +36,6 @@ services:
             - traefik.enable=true
             - traefik.http.routers.frigate.rule=Host(`frigate.internal.mikeage.net`)
             - traefik.http.services.frigate.loadbalancer.server.port=8971
+            - traefik.tcp.routers.frigate-rtsp.rule=HostSNI(`*`)
+            - traefik.tcp.routers.frigate-rtsp.service=frigate-rtsp
+            - traefik.tcp.services.frigate-rtsp.loadbalancer.server.port=8554

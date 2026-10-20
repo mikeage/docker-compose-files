@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:python3.12-alpine@sha256:97da0beeced5b7071635b510eea8f0271af0c406caf1c641b51cb84eb6c9880d
+FROM ghcr.io/astral-sh/uv:python3.12-alpine@sha256:9033906810b07383055e7b59907ab2a534f6356e5ab91de14d753420fac345b6
 
 WORKDIR /app
 COPY metrics_exporter.py /app/metrics_exporter.py

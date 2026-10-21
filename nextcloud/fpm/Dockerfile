@@ -1,4 +1,4 @@
-FROM nextcloud:35.0.2-fpm@sha256:39ef77376de6290ea13326ee35794aeb612c0b87174f9283e336d5003f80967c
+FROM nextcloud:35.0.2-fpm@sha256:4ca36b4f08ae5e366f6b80225c10a7f65949f262bb20e3b92131cac16e44bad3
 # RUN apt-get update && \
 # 	apt-get install -y ffmpeg && \
 # 	apt-get clean && \

@@ -37,7 +37,7 @@ services:
             - traefik.tcp.routers.managesieve.service=managesieve
             - traefik.tcp.services.managesieve.loadbalancer.server.port=34190
     msmtpd:
-        image: crazymax/msmtpd:1.8.34@sha256:478a49e17b6d422d28208d99c5102b4bcf0d93cf481cb71376a98a8cc3a7cf54
+        image: crazymax/msmtpd:1.8.34@sha256:0f26e7c7500fe7b53bb00230de33243c48a6f1dcda44c5954e8edec75d8970e8
         restart: unless-stopped
         expose:
             - '2500'

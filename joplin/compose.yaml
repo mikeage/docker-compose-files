@@ -19,7 +19,7 @@ services:
             - POSTGRES_DB=${POSTGRES_DATABASE}
             - TZ=Asia/Jerusalem
     app:
-        image: joplin/server:3.7.2@sha256:3f7b852959aac38da10e3a451823bf149cbae6e74d8258db5b6e6e7f0db50c26
+        image: joplin/server:3.7.3@sha256:d951ce50b6d3d542393ebc4d08bd62d9a4fb0a6f6827abb861726c83560ecf97
         healthcheck:
             test: [CMD, node, -e, 'require("http").get("http://127.0.0.1:22300", (r) => process.exit(r.statusCode < 500 ? 0 : 1)).on("error", () => process.exit(1));']
             start_period: 20s

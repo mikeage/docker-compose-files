@@ -21,7 +21,7 @@ services:
             - 8084:8083
         restart: unless-stopped
     calibre:
-        image: lscr.io/linuxserver/calibre:9.16.0@sha256:2b931709295ca59808520428b05e0a2aec8695268e96f8baf76359da0e9c0f5c
+        image: lscr.io/linuxserver/calibre:9.17.0@sha256:1223ffddba4ae6faedbd029bcfaa27c43eeb6d172e34c7fac5e0fd5bbad27bf3
         healthcheck:
             test: [CMD-SHELL, "bash -ec 'exec 3<>/dev/tcp/127.0.0.1/8080; printf \"GET / HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\\
                       n\" >&3; grep -Eq \"HTTP/1\\\\.[01] (200|301|302)\" <&3'"]

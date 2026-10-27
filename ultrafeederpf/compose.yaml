@@ -1,7 +1,7 @@
 ---
 services:
     planewatch:
-        image: ghcr.io/plane-watch/docker-plane-watch:v0.0.11@sha256:24562527ff8ecd1b99f439646596bb9d4e2ee575d8dc09cafb663180767695d6
+        image: ghcr.io/plane-watch/docker-plane-watch:v0.0.11@sha256:e0f0f5e55847273bae1b9b1c6a8962e74065f38659bd180e97d7da9d0a2865c3
         tty: true
         restart: unless-stopped
         depends_on:

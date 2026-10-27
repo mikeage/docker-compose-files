@@ -18,6 +18,6 @@ services:
             - /opt/myanonamouse/config:/config
         environment:
             - DEBUG=1
-            - mam_id=xj0g%2FNw4B%2BSz9D4VJ%2BjhlGdqPkE66fy61duIj1bseCYjx4ZnJhoMdEGY%2BKKQnBRsSO7WQwT5FHVi1jZGhjQbSCXPCM0KpaR%2BxXuKs8YM5XYovIb1g9drmIDjZDarPNlyx32FQx6ToyJS8%2F0ABd31zLaTsxFlfdmILOkFC1jeBOnoYZJxVWjmm6FUIlBzYv4cNKEZ%2FRxjw%2BDBtiggnoVSMDId9tYgJUORaBxYhAyotuSFcLxn7JvsdaUO%2BDKdbarlWLtH68xM6BQpyexQGI3ygM2NNbWv4YMaZ02e5NFzE7vMoSaaYyQechTzyy3jUS2h
+            - mam_id=86K47dgPMnnDtBBMtKUQsWvpym3jxJT3bveQu4PLcXDYK27k10vGbTxamLEaYf8u7q-iHmypmN4FFg3sXtaRRlGDmV527u46joG3ACe5bv1dfBoqqwY6elEeOnBuBVfFn2RFNdG5tHr3z2eipQLm6tHXpTYbi3NNVAZDA0qnk8g4SX-ODiBissklQ0I3H_zhf2MBeEyNdjKitRTBfBYKTKb3bI8JcqpDmqujVgnfOZ8OZq5MLjARFfV5kk6a-YeWE9p2hoe1sOk-N6wP9CWGVfPufJkcgjB0OPE%3D
             - interval=1
             - TZ=Asia/Jerusalem

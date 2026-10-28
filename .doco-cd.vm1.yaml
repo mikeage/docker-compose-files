@@ -64,6 +64,12 @@ working_dir: lidarr
 name: myanonamouse
 reference: refs/heads/main
 working_dir: myanonamouse
+destroy:
+    enabled: true
+---
+name: mousehole
+reference: refs/heads/main
+working_dir: mousehole
 ---
 name: navidrome
 reference: refs/heads/main

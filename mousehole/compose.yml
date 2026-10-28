@@ -1,7 +1,7 @@
 ---
 services:
     mousehole:
-        image: tmmrtn/mousehole:latest
+        image: tmmrtn/mousehole:latest@sha256:2fc02b12362581e60bfd6adba788bda9eda93f8f31ed089581eeabcee4518b0d
         environment:
             TZ: Asia/Jerusalem
             MOUSEHOLE_AUTH_PASSWORD: ${PASSWORD}

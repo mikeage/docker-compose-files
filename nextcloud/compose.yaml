@@ -2,7 +2,11 @@
 services:
     mysql:
         image: mariadb:lts@sha256:d46e102fa8b9b72bfcdeb56f9dd538742092119dc8b11f31fe662605cd234cd9
-        command: --transaction-isolation=READ-COMMITTED
+        command: >-
+            --transaction-isolation=READ-COMMITTED
+            --slow-query-log=ON
+            --long-query-time=2
+            --innodb-log-file-size=256M
         restart: unless-stopped
         healthcheck:
             test: [CMD-SHELL, mariadb-admin ping -h 127.0.0.1 -u"$$MYSQL_USER" -p"$$MYSQL_PASSWORD" --silent]

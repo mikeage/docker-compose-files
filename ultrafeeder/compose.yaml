@@ -66,7 +66,7 @@ services:
             - /run:exec,size=64M
             - /var/log
     ultrafeeder:
-        image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-984@sha256:252d6af76a413841fd4de21161784111b60323ea426bd4bf4d38fe8c5da832ee
+        image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:latest-build-985@sha256:e1316ceea377f606c9d2c6dbe9462e14d81b93bce880e011232dba3b540c549d
     # Note - if you want to enable telegraf for use with InfluxDB/Prometheus and Grafana,
     # use the following image instead:
     # image: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder:telegraf

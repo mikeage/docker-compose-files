@@ -1,14 +1,11 @@
 ---
 services:
     matter-server:
-        image: ghcr.io/home-assistant-libs/python-matter-server:stable@sha256:170aa093ce91c76cde4cc390918307590f0f5558fcec93f913af3cb019e6562a
+        image: ghcr.io/matter-js/matterjs-server:1.5.5
         restart: unless-stopped
         network_mode: host
-        security_opt:
-            - apparmor:unconfined
         volumes:
             - /opt/homeassistant.new/matter-server-data:/data
-        command: --storage-path /data
     homeassistant:
         image: ghcr.io/home-assistant/home-assistant:2026.11.0@sha256:c6c1ca9931036bf3a2c4cc088d8db25dfea3b33935a5ecc83c40349462e2f69e
         healthcheck:

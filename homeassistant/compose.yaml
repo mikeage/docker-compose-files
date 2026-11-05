@@ -10,7 +10,7 @@ services:
             - /opt/homeassistant.new/matter-server-data:/data
         command: --storage-path /data
     homeassistant:
-        image: ghcr.io/home-assistant/home-assistant:2026.10.4@sha256:23f4dfbb69ce76315dbc4de7915504f1c2dcecd7ca2648113a493a385972e133
+        image: ghcr.io/home-assistant/home-assistant:2026.11.0@sha256:c6c1ca9931036bf3a2c4cc088d8db25dfea3b33935a5ecc83c40349462e2f69e
         healthcheck:
             test: [CMD, python3, -c, 'import urllib.request; urllib.request.urlopen("http://127.0.0.1:8123/", timeout=5)']
             start_period: 40s

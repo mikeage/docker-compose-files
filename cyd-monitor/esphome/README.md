@@ -11,17 +11,17 @@ EDITOR=nvim sops edit cyd-monitor.yaml
 Validate the configuration:
 
 ```bash
-sops exec-file --filename cyd-monitor.yaml cyd-monitor.yaml 'esphome config {}'
+sops exec-file --filename cyd-monitor.yaml cyd-monitor.yaml 'ESPHOME_DATA_DIR="$PWD/.esphome" uvx esphome config {}'
 ```
 
 Compile the firmware:
 
 ```bash
-ESPHOME_BUILD_PATH="$PWD/.esphome/build" sops exec-file --filename cyd-monitor.yaml cyd-monitor.yaml 'esphome compile {}'
+ESPHOME_DATA_DIR="$PWD/.esphome" ESPHOME_BUILD_PATH="$PWD/.esphome/build" sops exec-file --filename cyd-monitor.yaml cyd-monitor.yaml 'uvx esphome compile {}'
 ```
 
 Compile, upload, and follow logs:
 
 ```bash
-ESPHOME_BUILD_PATH="$PWD/.esphome/build" sops exec-file --filename cyd-monitor.yaml cyd-monitor.yaml 'esphome run {}'
+ESPHOME_DATA_DIR="$PWD/.esphome" ESPHOME_BUILD_PATH="$PWD/.esphome/build" sops exec-file --filename cyd-monitor.yaml cyd-monitor.yaml 'uvx esphome run {}'
 ```

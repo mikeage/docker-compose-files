@@ -35,8 +35,8 @@ api:
 ota:
     - platform: esphome
 wifi:
-    ssid: ENC[AES256_GCM,data:fo3vc8hqDA==,iv:VOFZMV64n2Ar7kPqP+ly8Eu2AN3bWonDHa45ZxahIyU=,tag:ZuEvGFjEov10YMqISNmJWA==,type:str]
-    password: ENC[AES256_GCM,data:zZRAp+0KN9PmMG0G,iv:UMUjENozQ+2CaStB1JlHEA2uPwnGhhOQjWR8hAcK0yo=,tag:/YdwaAVSfUq9S8+pRqulsA==,type:str]
+    ssid: ENC[AES256_GCM,data:fMIkEpGkaXnhOw==,iv:6MeaWaaxv5B1ILQHNobF5gpnU2L2UqDRsJg5hhssW1s=,tag:N+n0AebDPlN71zhV1gHxUw==,type:str]
+    password: ENC[AES256_GCM,data:wgofdEz4JrN5,iv:hskf2mygbmw66x7XLYONOCnNCGaibFOUIGKmucmtfjI=,tag:yK0hgqNdX+M+6xzrvyew1Q==,type:str]
     power_save_mode: NONE
     fast_connect: true
 http_request:
@@ -411,7 +411,7 @@ interval:
 display:
     - platform: mipi_spi
       id: my_display
-      model: ESP32-2432S028
+      model: ILI9341
       spi_id: tft
       cs_pin: GPIO15
       dc_pin: GPIO2
@@ -425,6 +425,10 @@ display:
       dimensions:
           width: 320
           height: 240
+          offset_width: 0
+          offset_height: 0
+          pad_width: 0
+          pad_height: 0
       transform:
           swap_xy: false
           mirror_y: false
@@ -508,8 +512,8 @@ sops:
               -----END AGE ENCRYPTED FILE-----
           recipient: age1dx779tg097xprk3y220678lm97vc9r44r0uc4xndfdm2pan9uu6qzn06wa
     encrypted_regex: ^(ssid|password)$
-    lastmodified: '2026-07-13T10:05:45Z'
+    lastmodified: '2026-11-06T11:49:29Z'
     mac: 
-        ENC[AES256_GCM,data:qHRmW462nJPZWi8r7K1pt5A3xs0TH/9w8CPO8Us/EI6cfjbfIG7X8n6JwM2cl8a4vkLJ0FJw8Lp/j0bMCT6rce2a9rb5qCzGqotxOVqUHkig4EtSh+iJJ1WbPCm1W33kSfstBDN0oQvJiEMISj9+NO4PNWHsEKMUAIpT1lRwarE=,iv:lsvF+HhVjKv+FdOzdmZ6Mw/Fnj8MMtWPTuuy4RKb4+I=,tag:IE4GabR0D4Vse8OoNzqMpA==,type:str]
+        ENC[AES256_GCM,data:AuCfKIa1DiUCWehO56EVLKlvRHgN5chHqGErbiULsX1t8Ik6m+MMVa7uxXUoOLqGBjuwCyw8F8ONnIVOQLtQoPcpna0O84I+iuaI9DGp1dh8ZeTTCgUjeslhEAq9kUysW8/AmrCnNxrQy1MkjZSE/N51m2xreJjgBUrbSHb4Xfw=,iv:/N43bgPWjKd/3bNeze3z1xb0xSstuY6xp7Ly+t149j4=,tag:ipyjNG29bSzWo3ErIeY7bw==,type:str]
     mac_only_encrypted: true
-    version: 3.13.2
+    version: 3.13.3

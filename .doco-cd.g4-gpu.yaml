@@ -39,6 +39,10 @@ name: patchmon
 reference: refs/heads/main
 working_dir: patchmon
 ---
+name: printguard
+reference: refs/heads/main
+working_dir: printguard
+---
 name: rsyslog-dockerlogs
 reference: refs/heads/main
 working_dir: rsyslog-dockerlogs

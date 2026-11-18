@@ -1,0 +1,26 @@
+---
+services:
+    printguard:
+    # GPU inference (the -intel image with a /dev/dri device, or the -nvidia image) is set up in
+    # docs/hardware.md; the CPU runtime needs nothing here.
+        image: ghcr.io/oliverbravery/printguard:latest-intel
+        restart: unless-stopped
+        ports:
+            - 8000:8000 # Published for the remote Traefik instance via traefik-kop.
+            - 8556:8554 # RTSP camera streams; 8554 is already used by Frigate on g4-gpu.
+        devices:
+            - /dev/dri:/dev/dri
+        volumes:
+            - /opt/printguard/data:/data
+        extra_hosts:
+            - host.docker.internal:host-gateway
+        environment:
+            PRINTGUARD_ORIGINS: https://printguard.internal.mikeage.net
+        labels:
+            - traefik.enable=true
+            - traefik.http.routers.printguard.rule=Host(`printguard.internal.mikeage.net`)
+            - traefik.http.services.printguard.loadbalancer.server.port=8000
+    # A camera plugged into this machine registers itself once you pass it in. List yours with
+    # `ls /dev/v4l/by-id/`, and see "Cameras plugged into the hub" in docs/cameras.md.
+    # devices:
+    #   - /dev/v4l/by-id/usb-046d_HD_Pro_Webcam_C920_A1B2C3-video-index0:/dev/nozzle-cam

@@ -3,7 +3,7 @@ services:
     printguard:
     # GPU inference (the -intel image with a /dev/dri device, or the -nvidia image) is set up in
     # docs/hardware.md; the CPU runtime needs nothing here.
-        image: ghcr.io/oliverbravery/printguard:latest-intel
+        image: ghcr.io/oliverbravery/printguard:latest-intel@sha256:63f0e829f92958ad6e9a525e7075264ef3e3f604e0bb478027e882a0b4ad10cb
         restart: unless-stopped
         ports:
             - 8000:8000 # Published for the remote Traefik instance via traefik-kop.

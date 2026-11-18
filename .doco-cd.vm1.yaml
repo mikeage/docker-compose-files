@@ -78,6 +78,8 @@ working_dir: navidrome
 name: octoeverywhere
 reference: refs/heads/main
 working_dir: octoeverywhere
+destroy:
+    enabled: true
 ---
 name: paperless-ngx
 reference: refs/heads/main

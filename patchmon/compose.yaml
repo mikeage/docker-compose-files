@@ -43,7 +43,7 @@ services:
             - traefik.http.routers.patchmon.rule=Host(`patchmon.internal.mikeage.net`)
 
     database:
-        image: postgres:17-alpine@sha256:a77aa70e641402a21411b92b721c58d10f23b50ae5fdd2333efd22d166e1e5f7 # https://github.com/PatchMon/PatchMon/blob/main/docker/docker-compose.yml
+        image: postgres:17-alpine@sha256:526f86d93c6ea08fd3f1fe5605650cacc781b2c6013169a0ad8f42c7d3d84f32 # https://github.com/PatchMon/PatchMon/blob/main/docker/docker-compose.yml
         restart: unless-stopped
         env_file: .env
         volumes:

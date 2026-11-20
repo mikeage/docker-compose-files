@@ -1,7 +1,7 @@
 ---
 services:
     mysql:
-        image: mariadb:lts@sha256:4ebbcf100a3ba320766dfa0e1af008df12261301db6ef72798c7650f70794aed
+        image: mariadb:lts@sha256:4aaf88b3106382c8c18e49f0cec60267be618fc22f858c4503afb2a2555afed3
         command: >-
             --transaction-isolation=READ-COMMITTED
             --slow-query-log=ON

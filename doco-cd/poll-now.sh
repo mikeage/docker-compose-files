@@ -8,7 +8,7 @@ source ./.env
 set +a
 
 DOCO_TARGET="${DOCO_TARGET:-$(hostname)}"
-API_SECRET="$(< /opt/doco-cd/secrets/api_secret)"
+API_KEY="$(uv run --script ./read-api-key.py /opt/doco-cd/secrets/api_keys.yaml)"
 
 curl \
     --fail \
@@ -17,7 +17,7 @@ curl \
     --request POST \
     --url 'http://127.0.0.1:8070/v1/api/poll/run?wait=true' \
     --header "content-type: application/json" \
-    --header "x-api-key: ${API_SECRET}" \
+    --header "x-api-key: ${API_KEY}" \
     --data @- <<EOF
 [
   {

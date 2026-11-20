@@ -17,11 +17,22 @@ chmod 700 /opt/doco-cd/secrets
 /opt/doco-cd/secrets/id_ed25519_doco
 ```
 
-3. Put the API secret at:
+3. Put the API key list at:
 
 ```text
-/opt/doco-cd/secrets/api_secret
+/opt/doco-cd/secrets/api_keys.yaml
 ```
+
+Example content (replace the placeholder with your API key):
+
+```yaml
+- key: replace-with-your-api-key
+  role: full
+```
+
+`poll-now.sh` reads the first key in this plaintext YAML file using `uv` and
+PyYAML. Install `uv` on each host, and ensure that key has permission to trigger
+polls (the `full` role above preserves the previous access).
 
 4. Put the Apprise notify URL at:
 
@@ -50,6 +61,30 @@ Use the same [compose.yaml](/Users/mikemi/src/docker-compose-files/doco-cd/compo
 
 This keeps one `doco-cd` stack definition and one shared committed non-secret env file, while keeping bootstrap secrets out of git.
 
+## Migrating from `API_SECRET_FILE`
+
+Doco-cd 0.134.0 removed `API_SECRET` and `API_SECRET_FILE`. The new
+`API_KEYS_FILE` expects a YAML list, so the old raw secret file cannot be used
+directly.
+
+On each host, create `/opt/doco-cd/secrets/api_keys.yaml` with the list shown
+above, using the existing value from `/opt/doco-cd/secrets/api_secret` as the
+`key`. The `full` role preserves the previous access. Once the updated
+`poll-now.sh` is installed, the old raw `api_secret` file is no longer needed.
+Keep the key files out of Git.
+
+After updating the local Compose configuration and creating the new secret file:
+
+```bash
+chmod 600 /opt/doco-cd/secrets/api_keys.yaml
+DOCO_TARGET=$(hostname) docker compose up -d
+docker compose logs --tail=50 dococd
+```
+
+The container must be recreated to apply the environment change; a restart alone
+does not apply it. If doco-cd is stopped, update the checkout and run these
+commands manually because it cannot deploy this fix itself.
+
 To trigger an immediate poll without waiting for the next interval:
 
 ```bash
@@ -59,7 +94,7 @@ To trigger an immediate poll without waiting for the next interval:
 ## Notes
 
 - `POLL_INTERVAL` is in seconds. The current value `300` means Git is polled every 5 minutes.
-- The `doco-cd` API is enabled with `API_SECRET_FILE` and bound only to `127.0.0.1:8070`.
+- The `doco-cd` API is enabled with `API_KEYS_FILE` and bound only to `127.0.0.1:8070`.
 - Email notifications are sent through the bundled `apprise` sidecar using `APPRISE_NOTIFY_URLS_FILE`.
 - `doco-cd` waits for the `apprise` sidecar to become healthy before starting.
 - SOPS decryption is enabled with `SOPS_AGE_KEY_FILE=/run/secrets/sops_age_key`.

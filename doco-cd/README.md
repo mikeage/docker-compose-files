@@ -34,6 +34,16 @@ Example content (replace the placeholder with your API key):
 PyYAML. Install `uv` on each host, and ensure that key has permission to trigger
 polls (the `full` role above preserves the previous access).
 
+Set the key file permissions so the container user can read the mounted secret:
+
+```bash
+chmod 644 /opt/doco-cd/secrets/api_keys.yaml
+```
+
+Keep `/opt/doco-cd/secrets` at mode `700` as shown above to restrict access
+through the host directory. The container accesses the file through its separate
+secret mount.
+
 4. Put the Apprise notify URL at:
 
 ```text
@@ -76,7 +86,7 @@ Keep the key files out of Git.
 After updating the local Compose configuration and creating the new secret file:
 
 ```bash
-chmod 600 /opt/doco-cd/secrets/api_keys.yaml
+chmod 644 /opt/doco-cd/secrets/api_keys.yaml
 DOCO_TARGET=$(hostname) docker compose up -d
 docker compose logs --tail=50 dococd
 ```

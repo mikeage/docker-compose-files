@@ -82,7 +82,7 @@ services:
     #     max-file: "3"
 
     guacd:
-        image: guacamole/guacd:latest@sha256:cbad4c8b0522c59ac08d9d6f6eda699b786679ebb084ceb09a673f7deba091a3
+        image: guacamole/guacd:latest@sha256:2267a4a8dd4c473725e413a645cb41040abbe7f46417ff0e4b57693d2c2f2286
         restart: unless-stopped
         read_only: true
         tmpfs:
